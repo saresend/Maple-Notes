@@ -1,0 +1,41 @@
+
+h1 {
+font-size: 45px;
+font-family: 'Aleo';
+}
+  
+h2 {
+font-size: 35px;
+font-family: 'Aleo';
+color: #898989;
+}
+
+h3 {
+font-size: 30px;
+font-family: 'Aleo';
+}
+
+h4 {
+font-size: 25px;
+font-family: 'Aleo';
+}
+
+h5 {
+font-size: 15px;
+font-family: 'Aleo';
+}
+
+h6 {
+font-size: 10px;
+font-family: 'Aleo';
+}
+
+p {
+    font-size: 20px;
+    font-family: 'Aleo'; 
+}
+
+hr {
+    background-color: gray;
+    opacity: 0.5;
+}
