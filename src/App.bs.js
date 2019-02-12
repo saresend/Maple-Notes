@@ -29,16 +29,16 @@ function make(_children) {
           /* willUnmount */maple[/* willUnmount */6],
           /* willUpdate */maple[/* willUpdate */7],
           /* shouldUpdate */maple[/* shouldUpdate */8],
-          /* render */(function (_self) {
+          /* render */(function (self) {
               return React.createElement("div", {
                           style: appStyle
-                        }, ReasonReact.element(undefined, undefined, FileTree$ReactTemplate.make(/* array */[])), React.createElement("div", {
+                        }, ReasonReact.element(undefined, undefined, FileTree$ReactTemplate.make(self[/* state */1][/* notes */0], /* array */[])), React.createElement("div", {
                               style: editorContainerStyle
                             }, ReasonReact.element(undefined, undefined, Editor$ReactTemplate.make(undefined, "Write Anything...", undefined, undefined, /* array */[]))));
             }),
           /* initialState */(function (param) {
               return /* record */[
-                      /* notes : TopLevel */Block.__(0, [/* array */[]]),
+                      /* notes : array */[],
                       /* current : record */[
                         /* id */"asdf",
                         /* title */"asdf",
@@ -49,28 +49,11 @@ function make(_children) {
             }),
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
-              var exit = 0;
-              switch (action.tag | 0) {
-                case 0 : 
-                case 1 : 
-                    exit = 1;
-                    break;
-                case 2 : 
-                    return /* Update */Block.__(0, [/* record */[
-                                /* notes */state[/* notes */0],
-                                /* current */action[0],
-                                /* isLoaded */state[/* isLoaded */2]
-                              ]]);
-                
-              }
-              if (exit === 1) {
-                return /* Update */Block.__(0, [/* record */[
-                            /* notes */action[0],
-                            /* current */state[/* current */1],
-                            /* isLoaded */state[/* isLoaded */2]
-                          ]]);
-              }
-              
+              return /* Update */Block.__(0, [/* record */[
+                          /* notes */state[/* notes */0],
+                          /* current */action[0],
+                          /* isLoaded */state[/* isLoaded */2]
+                        ]]);
             }),
           /* jsElementWrapped */maple[/* jsElementWrapped */13]
         ];
