@@ -9,14 +9,29 @@ type action =
 
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
-let editorContainerStyle = ReactDOMRe.Style.make(~padding="20px", ());
+let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
+
+let sampleData = [|
+  DirItem.Note({
+    id: "sadasdf",
+    title: "Sample Note 1",
+    body: "# Hello World",
+  }),
+  DirItem.Folder(
+    "Sample Folder",
+    [|
+      DirItem.Note({id: "asdf", title: "Sample Note", body: "# Hi There"}),
+      DirItem.Folder("Another Sample Folder", [||]),
+    |],
+  ),
+|];
 
 let maple = ReasonReact.reducerComponent("Maple");
 let make = _children => {
   ...maple,
 
   initialState: () => {
-    notes: [||],
+    notes: sampleData,
     current: {
       id: "asdf",
       title: "asdf",

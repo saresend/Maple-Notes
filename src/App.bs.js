@@ -13,8 +13,30 @@ var appStyle = {
 };
 
 var editorContainerStyle = {
-  padding: "20px"
+  padding: "45px"
 };
+
+var sampleData = /* array */[
+  /* Note */Block.__(1, [/* record */[
+        /* id */"sadasdf",
+        /* title */"Sample Note 1",
+        /* body */"# Hello World"
+      ]]),
+  /* Folder */Block.__(0, [
+      "Sample Folder",
+      /* array */[
+        /* Note */Block.__(1, [/* record */[
+              /* id */"asdf",
+              /* title */"Sample Note",
+              /* body */"# Hi There"
+            ]]),
+        /* Folder */Block.__(0, [
+            "Another Sample Folder",
+            /* array */[]
+          ])
+      ]
+    ])
+];
 
 var maple = ReasonReact.reducerComponent("Maple");
 
@@ -38,7 +60,7 @@ function make(_children) {
             }),
           /* initialState */(function (param) {
               return /* record */[
-                      /* notes : array */[],
+                      /* notes */sampleData,
                       /* current : record */[
                         /* id */"asdf",
                         /* title */"asdf",
@@ -61,6 +83,7 @@ function make(_children) {
 
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;
+exports.sampleData = sampleData;
 exports.maple = maple;
 exports.make = make;
 /* maple Not a pure module */

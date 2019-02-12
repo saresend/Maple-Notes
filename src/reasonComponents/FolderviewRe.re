@@ -1,5 +1,5 @@
 [@bs.module "../reactComponents/Folderview.react.js"]
-external mapleEditor: ReasonReact.reactClass = "default";
+external folderView: ReasonReact.reactClass = "default";
 
 [@bs.deriving abstract]
 type jsProps = {
@@ -9,7 +9,7 @@ type jsProps = {
 
 let make = (~title: string, ~folderItems: array(DirItem.dirItem), children) =>
   ReasonReact.wrapJsForReason(
-    ~reactClass=mapleEditor,
+    ~reactClass=folderView,
     ~props=jsProps(~title, ~folderItems),
     children,
   );

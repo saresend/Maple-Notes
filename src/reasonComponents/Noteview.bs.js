@@ -6,6 +6,30 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.statelessComponent("Noteview");
 
+var noteStyle = {
+  backgroundColor: "rgba(0,0,0,0)",
+  borderWidth: "0px",
+  color: "#898989",
+  fontFamily: "Aleo",
+  fontSize: "20px",
+  marginTop: "5px",
+  marginBottom: "5px",
+  outlineWidth: "0px",
+  opacity: "1.0"
+};
+
+var iconStyle = {
+  height: "20px",
+  marginRight: "10px",
+  width: "20px"
+};
+
+var containerStyle = {
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "row"
+};
+
 function make(note, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -18,7 +42,14 @@ function make(note, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              return React.createElement("p", undefined, "This is a note");
+              return React.createElement("div", {
+                          style: containerStyle
+                        }, React.createElement("img", {
+                              style: iconStyle,
+                              src: "https://img.icons8.com/ios/50/000000/paper.png"
+                            }), React.createElement("button", {
+                              style: noteStyle
+                            }, note[/* title */1]));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -27,6 +58,14 @@ function make(note, _children) {
         ];
 }
 
+var jsComponent = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
+        return make(jsProps.note, /* array */[]);
+      }));
+
 exports.component = component;
+exports.noteStyle = noteStyle;
+exports.iconStyle = iconStyle;
+exports.containerStyle = containerStyle;
 exports.make = make;
+exports.jsComponent = jsComponent;
 /* component Not a pure module */

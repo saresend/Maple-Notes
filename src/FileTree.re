@@ -20,11 +20,15 @@ let make = (~files: array(DirItem.dirItem), _children) => {
         item =>
           switch (item) {
           | DirItem.Folder(title, folderItems) =>
-            <Folderview title folderItems />
+            <FolderviewRe title folderItems />
           | DirItem.Note(note) => <Noteview note />
           },
         files,
       );
-    <div> ...components </div>;
+    <div style=fileTreeStyle>
+      <p style=titleStyle> {ReasonReact.string("Notes")} </p>
+      <hr />
+      {ReasonReact.array(components)}
+    </div>;
   },
 };
