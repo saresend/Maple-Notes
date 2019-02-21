@@ -2,9 +2,11 @@ type state = {
   notes: array(DirItem.dirItem),
   current: Note.note,
   isLoaded: bool,
+  menuBarOpen: bool,
 };
 
 type action =
+  | ToggleMenuBar
   | SelectNote(Note.note);
 
 let appStyle =
@@ -38,17 +40,20 @@ let make = _children => {
       body: "asdf",
     },
     isLoaded: false,
+    menuBarOpen: true,
   },
 
   reducer: (action, state) => {
     switch (action) {
+    | ToggleMenuBar =>
+      ReasonReact.Update({...state, menuBarOpen: !state.menuBarOpen})
     | SelectNote(note) => ReasonReact.Update({...state, current: note})
     };
   },
 
   render: self => {
     <div style=appStyle>
-      <FileTree files={self.state.notes} />
+      <ReactFiletree isOpen={self.state.menuBarOpen} />
       <div style=editorContainerStyle>
         <Editor placeholder="Write Anything..." />
       </div>

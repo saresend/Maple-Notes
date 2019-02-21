@@ -18,6 +18,8 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-spring": "^8.0.7",
+    "react-transition-group": "^2.5.3",
     "reason-react": ">=0.4.0",
     "rich-markdown-editor": "^8.1.9"
   },
