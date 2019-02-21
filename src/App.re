@@ -5,10 +5,6 @@ type state = {
   menuBarOpen: bool,
 };
 
-type action =
-  | ToggleMenuBar
-  | SelectNote(Note.note);
-
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
 let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
@@ -47,13 +43,13 @@ let make = _children => {
     switch (action) {
     | ToggleMenuBar =>
       ReasonReact.Update({...state, menuBarOpen: !state.menuBarOpen})
-    | SelectNote(note) => ReasonReact.Update({...state, current: note})
     };
   },
 
   render: self => {
     <div style=appStyle>
-      <ReactFiletree isOpen={self.state.menuBarOpen} />
+      <ReactFiletree dispatch={self.send} isOpen={self.state.menuBarOpen} />
+      <NoteListRe notes=false />
       <div style=editorContainerStyle>
         <Editor placeholder="Write Anything..." />
       </div>

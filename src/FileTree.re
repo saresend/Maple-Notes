@@ -11,6 +11,9 @@ let fileTreeStyle =
     (),
   );
 
+type action =
+  | ToggleMenuBar;
+
 let titleStyle = ReactDOMRe.Style.make(~margin="5px", ());
 let iconStyle = ReactDOMRe.Style.make(~color="#48d3f2", ~fontSize="20px", ());
 let iconContainerStyle =
@@ -34,7 +37,7 @@ let folderStyle =
 
 open NoteUIElement;
 
-let make = (~width: string, ~opacity: string, _children) => {
+let make = (~dispatch, ~width: string, ~opacity: string, _children) => {
   ...component,
   render: _self => {
     let allNotes = {title: "All Notes", numNotes: 10, noteType: NoteBook};
@@ -47,7 +50,7 @@ let make = (~width: string, ~opacity: string, _children) => {
     let fileTreeStyle =
       ReactDOMRe.Style.make(
         ~width,
-        ~marginRight="20px",
+        ~marginRight="0px",
         ~padding="20px",
         ~backgroundColor="#1e2326",
         ~borderRight="solid #898989 1px",
@@ -58,9 +61,21 @@ let make = (~width: string, ~opacity: string, _children) => {
       ReactDOMRe.Style.make(~color="#48d3f2", ~fontSize="20px", ~opacity, ());
     let optionStyle = ReactDOMRe.Style.make(~marginTop="30px", ~opacity, ());
 
+    let folderStyle =
+      ReactDOMRe.Style.make(
+        ~marginTop="100px",
+        ~overflow="hidden",
+        ~opacity,
+        (),
+      );
+
     <div style=fileTreeStyle>
       <div style=iconContainerStyle>
-        <i style=iconStyle className="fas fa-bars hover" />
+        <i
+          style=iconStyle
+          className="fas fa-bars hover"
+          onClick={_data => dispatch(ToggleMenuBar)}
+        />
         <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
       </div>
       <div style=optionStyle>
@@ -81,9 +96,15 @@ let make = (~width: string, ~opacity: string, _children) => {
 type jsProps = {
   opacity: string,
   width: string,
+  dispatch: action => unit,
 };
 
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~width=jsProps->widthGet, ~opacity=jsProps->opacityGet, [||])
+    make(
+      ~width=jsProps->widthGet,
+      ~opacity=jsProps->opacityGet,
+      ~dispatch=jsProps->dispatchGet,
+      [||],
+    )
   );

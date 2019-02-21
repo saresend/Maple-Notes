@@ -5,6 +5,7 @@ var Block = require("bs-platform/lib/js/block.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Editor$ReactTemplate = require("./Editor.bs.js");
+var NoteListRe$ReactTemplate = require("./reasonComponents/NoteListRe.bs.js");
 var ReactFiletree$ReactTemplate = require("./reasonBindings/ReactFiletree.bs.js");
 
 var appStyle = {
@@ -54,7 +55,7 @@ function make(_children) {
           /* render */(function (self) {
               return React.createElement("div", {
                           style: appStyle
-                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* state */1][/* menuBarOpen */3], /* array */[])), React.createElement("div", {
+                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(false, /* array */[])), React.createElement("div", {
                               style: editorContainerStyle
                             }, ReasonReact.element(undefined, undefined, Editor$ReactTemplate.make(undefined, "Write Anything...", undefined, undefined, /* array */[]))));
             }),
@@ -72,21 +73,12 @@ function make(_children) {
             }),
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
-              if (action) {
-                return /* Update */Block.__(0, [/* record */[
-                            /* notes */state[/* notes */0],
-                            /* current */action[0],
-                            /* isLoaded */state[/* isLoaded */2],
-                            /* menuBarOpen */state[/* menuBarOpen */3]
-                          ]]);
-              } else {
-                return /* Update */Block.__(0, [/* record */[
-                            /* notes */state[/* notes */0],
-                            /* current */state[/* current */1],
-                            /* isLoaded */state[/* isLoaded */2],
-                            /* menuBarOpen */!state[/* menuBarOpen */3]
-                          ]]);
-              }
+              return /* Update */Block.__(0, [/* record */[
+                          /* notes */state[/* notes */0],
+                          /* current */state[/* current */1],
+                          /* isLoaded */state[/* isLoaded */2],
+                          /* menuBarOpen */!state[/* menuBarOpen */3]
+                        ]]);
             }),
           /* jsElementWrapped */maple[/* jsElementWrapped */13]
         ];

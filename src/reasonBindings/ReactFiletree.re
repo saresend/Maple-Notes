@@ -2,11 +2,14 @@
 external reactFileTree: ReasonReact.reactClass = "default";
 
 [@bs.deriving abstract]
-type jsProps = {isOpen: bool};
+type jsProps = {
+  isOpen: bool,
+  dispatch: Actions.action => unit,
+};
 
-let make = (~isOpen, children) =>
+let make = (~dispatch, ~isOpen, children) =>
   ReasonReact.wrapJsForReason(
     ~reactClass=reactFileTree,
-    ~props=jsProps(~isOpen),
+    ~props=jsProps(~isOpen, ~dispatch),
     children,
   );
