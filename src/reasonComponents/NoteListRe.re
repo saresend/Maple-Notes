@@ -28,9 +28,17 @@ let searchBarStyle =
     (),
   );
 
-let make = (~notes, children) => {
+let make = (~dispatch, ~notes, _children) => {
   ...component,
   render: _self => {
+    let uuidGen: unit => string = [%bs.raw
+      {|
+        function () {
+          const uuidv4 = require('uuid/v4');
+          return uuidv4();
+        }|}
+    ];
+    let noteUi = Js.Array.map(note => <NoteDescriptionViewRe note />, notes);
     <div style=containerStyle>
       <div style=horizontalContainer>
         <input
@@ -38,12 +46,15 @@ let make = (~notes, children) => {
           style=searchBarStyle
           placeholder="Search"
         />
-        <i className="far fa-edit hover" />
+        <i
+          className="far fa-edit hover"
+          onClick={_data => {
+            let uuid = uuidGen();
+            dispatch(Actions.AddNewNote(uuid));
+          }}
+        />
       </div>
-      <NoteDescriptionViewRe note=false />
-      <NoteDescriptionViewRe note=false />
-      <NoteDescriptionViewRe note=false />
-      <NoteDescriptionViewRe note=false />
+      {ReasonReact.array(noteUi)}
     </div>;
   },
 };

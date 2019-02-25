@@ -41,15 +41,15 @@ let timeStampStyle =
     (),
   );
 
-let make = (~note, children) => {
+let make = (~note: Note.note, _children) => {
   ...component,
   render: _self => {
     <div style=containerStyle>
       <div style=horizontalStyle>
         <i style=iconStyle className="far fa-file-alt" />
-        <p style=titleStyle> {ReasonReact.string("Sample Title")} </p>
+        <p style=titleStyle> {ReasonReact.string(note.title)} </p>
       </div>
-      <p style=timeStampStyle> {ReasonReact.string("Jun 10th, 2019")} </p>
+      <p style=timeStampStyle> {ReasonReact.string(note.timestamp)} </p>
     </div>;
   },
 };

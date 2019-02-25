@@ -37,7 +37,7 @@ var timeStampStyle = {
   margin: "4px"
 };
 
-function make(note, children) {
+function make(note, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -58,9 +58,9 @@ function make(note, children) {
                                   style: iconStyle
                                 }), React.createElement("p", {
                                   style: titleStyle
-                                }, "Sample Title")), React.createElement("p", {
+                                }, note[/* title */1])), React.createElement("p", {
                               style: timeStampStyle
-                            }, "Jun 10th, 2019"));
+                            }, note[/* timestamp */3]));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],

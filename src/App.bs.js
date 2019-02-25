@@ -17,28 +17,6 @@ var editorContainerStyle = {
   padding: "45px"
 };
 
-var sampleData = /* array */[
-  /* Note */Block.__(1, [/* record */[
-        /* id */"sadasdf",
-        /* title */"Sample Note 1",
-        /* body */"# Hello World"
-      ]]),
-  /* Folder */Block.__(0, [
-      "Sample Folder",
-      /* array */[
-        /* Note */Block.__(1, [/* record */[
-              /* id */"asdf",
-              /* title */"Sample Note",
-              /* body */"# Hi There"
-            ]]),
-        /* Folder */Block.__(0, [
-            "Another Sample Folder",
-            /* array */[]
-          ])
-      ]
-    ])
-];
-
 var maple = ReasonReact.reducerComponent("Maple");
 
 function make(_children) {
@@ -55,30 +33,41 @@ function make(_children) {
           /* render */(function (self) {
               return React.createElement("div", {
                           style: appStyle
-                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(false, /* array */[])), React.createElement("div", {
+                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */2], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], self[/* state */1][/* notes */0], /* array */[])), React.createElement("div", {
                               style: editorContainerStyle
                             }, ReasonReact.element(undefined, undefined, Editor$ReactTemplate.make(undefined, "Write Anything...", undefined, undefined, /* array */[]))));
             }),
           /* initialState */(function (param) {
               return /* record */[
-                      /* notes */sampleData,
-                      /* current : record */[
-                        /* id */"asdf",
-                        /* title */"asdf",
-                        /* body */"asdf"
-                      ],
+                      /* notes : array */[],
                       /* isLoaded */false,
                       /* menuBarOpen */true
                     ];
             }),
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
-              return /* Update */Block.__(0, [/* record */[
-                          /* notes */state[/* notes */0],
-                          /* current */state[/* current */1],
-                          /* isLoaded */state[/* isLoaded */2],
-                          /* menuBarOpen */!state[/* menuBarOpen */3]
-                        ]]);
+              if (action) {
+                var note_000 = /* id */action[0];
+                var note_003 = /* timestamp */( Date.now() );
+                var note = /* record */[
+                  note_000,
+                  /* title */"New Note",
+                  /* body */"",
+                  note_003
+                ];
+                console.log(state[/* notes */0]);
+                return /* Update */Block.__(0, [/* record */[
+                            /* notes */state[/* notes */0].concat(/* array */[note]),
+                            /* isLoaded */state[/* isLoaded */1],
+                            /* menuBarOpen */state[/* menuBarOpen */2]
+                          ]]);
+              } else {
+                return /* Update */Block.__(0, [/* record */[
+                            /* notes */state[/* notes */0],
+                            /* isLoaded */state[/* isLoaded */1],
+                            /* menuBarOpen */!state[/* menuBarOpen */2]
+                          ]]);
+              }
             }),
           /* jsElementWrapped */maple[/* jsElementWrapped */13]
         ];
@@ -86,7 +75,6 @@ function make(_children) {
 
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;
-exports.sampleData = sampleData;
 exports.maple = maple;
 exports.make = make;
 /* maple Not a pure module */

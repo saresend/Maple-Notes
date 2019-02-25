@@ -21,7 +21,8 @@
     "react-spring": "^8.0.7",
     "react-transition-group": "^2.5.3",
     "reason-react": ">=0.4.0",
-    "rich-markdown-editor": "^8.1.9"
+    "rich-markdown-editor": "^8.1.9",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
