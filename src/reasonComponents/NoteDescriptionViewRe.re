@@ -8,10 +8,18 @@ let containerStyle =
     (),
   );
 
-let titleStyle =
+let unselectedTitleStyle =
   ReactDOMRe.Style.make(
     ~fontSize="17px",
     ~color="#999999",
+    ~margin="10px",
+    (),
+  );
+
+let selectedTitleStyle =
+  ReactDOMRe.Style.make(
+    ~fontSize="17px",
+    ~color="#48d3f2",
     ~margin="10px",
     (),
   );
@@ -33,6 +41,15 @@ let horizontalStyle =
     (),
   );
 
+let spaceAroundHoriz =
+  ReactDOMRe.Style.make(
+    ~display="flex",
+    ~flexDirection="row",
+    ~justifyContent="space-between",
+    ~alignItems="center",
+    (),
+  );
+
 let timeStampStyle =
   ReactDOMRe.Style.make(
     ~fontSize="13px",
@@ -41,15 +58,61 @@ let timeStampStyle =
     (),
   );
 
-let make = (~note: Note.note, _children) => {
+let unhighlightedBookmark =
+  ReactDOMRe.Style.make(~fontSize="15px", ~color="#aaaaaa", ());
+let highlightedBookmark =
+  ReactDOMRe.Style.make(~fontSize="15px", ~color="#48d3f2", ());
+
+let make = (~dispatch, ~note: Note.note, _children) => {
   ...component,
   render: _self => {
+    let dateString = [%bs.raw
+      {|
+      function (note) {
+        console.log(note);
+        var a = new Date(note[3]);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = month + ' ' + date + ',  ' + year;
+        return time;
+      }
+    |}
+    ];
+    let titleStyle =
+      note.isSelected ? selectedTitleStyle : unselectedTitleStyle;
+    let bookmarkStyle =
+      note.isStarred ? highlightedBookmark : unhighlightedBookmark;
     <div style=containerStyle>
-      <div style=horizontalStyle>
+      <div
+        style=horizontalStyle
+        onClick={_data => dispatch(Actions.SelectNote(note))}>
         <i style=iconStyle className="far fa-file-alt" />
-        <p style=titleStyle> {ReasonReact.string(note.title)} </p>
+        <input
+          style=titleStyle
+          value={note.title}
+          onChange={_data => {
+            let noteTitle: string = [%bs.raw {| _data.target.value |}];
+            let newNote: Note.note = {...note, title: noteTitle};
+            dispatch(Actions.EditNote(newNote));
+          }}
+        />
       </div>
-      <p style=timeStampStyle> {ReasonReact.string(note.timestamp)} </p>
+      <div style=spaceAroundHoriz>
+        <p style=timeStampStyle> {ReasonReact.string(dateString(note))} </p>
+        <i
+          style=bookmarkStyle
+          className="fas fa-bookmark hover"
+          onClick={_data => {
+            let newNote = {...note, isStarred: !note.isStarred};
+            dispatch(Actions.EditNote(newNote));
+          }}
+        />
+      </div>
     </div>;
   },
 };

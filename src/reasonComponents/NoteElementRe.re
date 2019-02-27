@@ -1,10 +1,19 @@
 let component = ReasonReact.statelessComponent("NoteElementRe");
 
-let textStyle =
+let unselectedTextStyle =
   ReactDOMRe.Style.make(
     ~color="#aaaaaa",
     ~margin="7px",
     ~marginLeft="15px",
+    (),
+  );
+
+let selectedTextStyle =
+  ReactDOMRe.Style.make(
+    ~color="#279af1",
+    ~margin="7px",
+    ~marginLeft="15px",
+    ~opacity="0.5",
     (),
   );
 
@@ -32,22 +41,26 @@ let iconContainerStyle =
   );
 
 let iconStyle = ReactDOMRe.Style.make(~fontSize="18px", ~color="#aaaaaa", ());
-open AnimationOptions;
-let make = (~info: NoteUIElement.noteUIElement, _children) => {
+open Actions;
+let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
   ...component,
   render: _self => {
-    let fromObj: animationOptions = {pub width = 10; pub opacity = 1.0};
-
-    let toObj: animationOptions = {pub width = 100; pub opacity = 0.5};
+    let textStyle = info.isSelected ? selectedTextStyle : unselectedTextStyle;
 
     let icon =
       switch (info.noteType) {
-      | Folder => <i style=iconStyle className="far fa-folder" />
+      | Folder(color) =>
+        let folderIconStyle =
+          ReactDOMRe.Style.make(~fontSize="18px", ~color, ());
+        <i style=folderIconStyle className="far fa-folder" />;
       | NoteBook => <i style=iconStyle className="far fa-file-alt" />
       | Starred => <i style=iconStyle className="far fa-bookmark" />
       | Trash => <i style=iconStyle className="far fa-trash-alt" />
       };
-    <div className="hover" style=containerStyle>
+    <div
+      className="hover"
+      onClick={_data => dispatch(SelectMenuBarItem(info))}
+      style=containerStyle>
       <div style=iconContainerStyle>
         icon
         <p style=textStyle> {ReasonReact.string(info.title)} </p>

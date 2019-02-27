@@ -4,7 +4,7 @@ let containerStyle =
   ReactDOMRe.Style.make(
     ~height="100vh",
     ~width="300px",
-    ~backgroundColor="#fbfbfb",
+    ~backgroundColor="#ffffff",
     (),
   );
 
@@ -24,7 +24,7 @@ let searchBarStyle =
     ~color="black",
     ~outline="0px",
     ~borderWidth="0px",
-    ~backgroundColor="#fbfbfb",
+    ~backgroundColor="#ffffff",
     (),
   );
 
@@ -38,7 +38,8 @@ let make = (~dispatch, ~notes, _children) => {
           return uuidv4();
         }|}
     ];
-    let noteUi = Js.Array.map(note => <NoteDescriptionViewRe note />, notes);
+    let noteUi =
+      Js.Array.map(note => <NoteDescriptionViewRe note dispatch />, notes);
     <div style=containerStyle>
       <div style=horizontalContainer>
         <input

@@ -35,6 +35,14 @@ p {
     font-family: 'Aleo'; 
 }
 
+input {
+    font-size: 16px;
+    font-family: 'Aleo'; 
+    background: transparent;
+    outline: 0px;
+    border-width: 0px;
+}
+
 hr {
     background-color: gray;
     opacity: 0.5;

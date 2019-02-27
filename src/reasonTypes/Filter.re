@@ -1,0 +1,1 @@
+type filter = {filterFunction: Note.note => bool};

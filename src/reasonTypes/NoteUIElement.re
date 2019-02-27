@@ -1,11 +1,14 @@
 type elementType =
-  | Folder
+  | Folder(string)
   | NoteBook
   | Trash
   | Starred;
 
 type noteUIElement = {
+  id: string,
   title: string,
   numNotes: int,
   noteType: elementType,
+  isSelected: bool,
+  filterFunction: (noteUIElement, Note.note) => bool,
 };

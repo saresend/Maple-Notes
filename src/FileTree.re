@@ -35,18 +35,17 @@ let topNoteStyle =
 let folderStyle =
   ReactDOMRe.Style.make(~marginTop="100px", ~overflow="hidden", ());
 
-open NoteUIElement;
-
-let make = (~dispatch, ~width: string, ~opacity: string, _children) => {
+let make =
+    (
+      ~dispatch,
+      ~topItems,
+      ~bottomItems,
+      ~width: string,
+      ~opacity: string,
+      _children,
+    ) => {
   ...component,
   render: _self => {
-    let allNotes = {title: "All Notes", numNotes: 10, noteType: NoteBook};
-    let starredNotes = {
-      title: "Starred Notes",
-      numNotes: 2,
-      noteType: Starred,
-    };
-    let trashNotes = {title: "Trash", numNotes: 3, noteType: Trash};
     let fileTreeStyle =
       ReactDOMRe.Style.make(
         ~width,
@@ -69,6 +68,17 @@ let make = (~dispatch, ~width: string, ~opacity: string, _children) => {
         (),
       );
 
+    let topUIElements =
+      Js.Array.map(
+        uiElem => <NoteElementRe dispatch info=uiElem />,
+        topItems,
+      );
+    let bottomUIElements =
+      Js.Array.map(
+        uiElem => <NoteElementRe dispatch info=uiElem />,
+        bottomItems,
+      );
+
     <div style=fileTreeStyle>
       <div style=iconContainerStyle>
         <i
@@ -78,15 +88,9 @@ let make = (~dispatch, ~width: string, ~opacity: string, _children) => {
         />
         <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
       </div>
-      <div style=optionStyle>
-        <NoteElementRe info=allNotes />
-        <NoteElementRe info=starredNotes />
-        <NoteElementRe info=trashNotes />
-      </div>
+      <div style=optionStyle> {ReasonReact.array(topUIElements)} </div>
       <FolderviewRe style=folderStyle>
-        <NoteElementRe info=allNotes />
-        <NoteElementRe info=starredNotes />
-        <NoteElementRe info=trashNotes />
+        {ReasonReact.array(bottomUIElements)}
       </FolderviewRe>
     </div>;
   },
@@ -96,7 +100,9 @@ let make = (~dispatch, ~width: string, ~opacity: string, _children) => {
 type jsProps = {
   opacity: string,
   width: string,
-  dispatch: action => unit,
+  dispatch: ReactTemplate.Actions.action => unit,
+  bottomItems: array(NoteUIElement.noteUIElement),
+  topItems: array(NoteUIElement.noteUIElement),
 };
 
 let default =
@@ -105,6 +111,8 @@ let default =
       ~width=jsProps->widthGet,
       ~opacity=jsProps->opacityGet,
       ~dispatch=jsProps->dispatchGet,
+      ~topItems=jsProps->topItemsGet,
+      ~bottomItems=jsProps->bottomItemsGet,
       [||],
     )
   );

@@ -15,7 +15,11 @@ export default class Folderview extends React.Component {
                 to={{ width: toWidth, opacity: toOpacity }}
                 from={{ width: fromWidth, opacity: fromOpacity }}
             >
-                {(props) => <FileTreeRe dispatch={this.props.dispatch} width={props.width + "px"} opacity={props.opacity + ""} />}
+                {(props) => <FileTreeRe
+                    topItems={this.props.topItems}
+                    bottomItems={this.props.bottomItems}
+                    dispatch={this.props.dispatch}
+                    width={props.width + "px"} opacity={props.opacity + ""} />}
             </Spring>
 
         );

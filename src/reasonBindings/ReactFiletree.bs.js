@@ -4,10 +4,12 @@
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var FileTreeReactReactJs = require("../reactComponents/FileTreeReact.react.js");
 
-function make(dispatch, isOpen, children) {
+function make(dispatch, isOpen, topItems, bottomItems, children) {
   return ReasonReact.wrapJsForReason(FileTreeReactReactJs.default, {
               isOpen: isOpen,
-              dispatch: dispatch
+              dispatch: dispatch,
+              topItems: topItems,
+              bottomItems: bottomItems
             }, children);
 }
 

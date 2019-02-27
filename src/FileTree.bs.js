@@ -44,7 +44,7 @@ var folderStyle = {
   overflow: "hidden"
 };
 
-function make(dispatch, width, opacity, _children) {
+function make(dispatch, topItems, bottomItems, width, opacity, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -56,21 +56,6 @@ function make(dispatch, width, opacity, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              var allNotes = /* record */[
-                /* title */"All Notes",
-                /* numNotes */10,
-                /* noteType : NoteBook */1
-              ];
-              var starredNotes = /* record */[
-                /* title */"Starred Notes",
-                /* numNotes */2,
-                /* noteType : Starred */3
-              ];
-              var trashNotes = /* record */[
-                /* title */"Trash",
-                /* numNotes */3,
-                /* noteType : Trash */2
-              ];
               var fileTreeStyle = {
                 backgroundColor: "#1e2326",
                 borderRight: "solid #898989 1px",
@@ -93,6 +78,12 @@ function make(dispatch, width, opacity, _children) {
                 overflow: "hidden",
                 opacity: opacity
               };
+              var topUIElements = topItems.map((function (uiElem) {
+                      return ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(dispatch, uiElem, /* array */[]));
+                    }));
+              var bottomUIElements = bottomItems.map((function (uiElem) {
+                      return ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(dispatch, uiElem, /* array */[]));
+                    }));
               return React.createElement("div", {
                           style: fileTreeStyle
                         }, React.createElement("div", {
@@ -108,11 +99,7 @@ function make(dispatch, width, opacity, _children) {
                                   style: fadedIconStyle
                                 })), React.createElement("div", {
                               style: optionStyle
-                            }, ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(allNotes, /* array */[])), ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(starredNotes, /* array */[])), ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(trashNotes, /* array */[]))), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(folderStyle, /* array */[
-                                  ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(allNotes, /* array */[])),
-                                  ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(starredNotes, /* array */[])),
-                                  ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(trashNotes, /* array */[]))
-                                ])));
+                            }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(folderStyle, /* array */[bottomUIElements])));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -122,7 +109,7 @@ function make(dispatch, width, opacity, _children) {
 }
 
 var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.dispatch, jsProps.width, jsProps.opacity, /* array */[]);
+        return make(jsProps.dispatch, jsProps.topItems, jsProps.bottomItems, jsProps.width, jsProps.opacity, /* array */[]);
       }));
 
 exports.component = component;
