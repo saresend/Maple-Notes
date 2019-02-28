@@ -67,7 +67,7 @@ function make(dispatch, notes, _children) {
                                   className: "far fa-edit hover",
                                   onClick: (function (_data) {
                                       var uuid = Curry._1(uuidGen, /* () */0);
-                                      return Curry._1(dispatch, /* AddNewNote */Block.__(2, [uuid]));
+                                      return Curry._1(dispatch, /* AddNewNote */Block.__(3, [uuid]));
                                     })
                                 })), noteUi);
             }),

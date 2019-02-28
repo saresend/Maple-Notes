@@ -76,7 +76,6 @@ function make(dispatch, note, _children) {
           /* render */(function (_self) {
               var dateString = (
       function (note) {
-        console.log(note);
         var a = new Date(note[3]);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var year = a.getFullYear();
@@ -125,7 +124,7 @@ function make(dispatch, note, _children) {
                                         newNote_006,
                                         newNote_007
                                       ];
-                                      return Curry._1(dispatch, /* EditNote */Block.__(1, [newNote]));
+                                      return Curry._1(dispatch, /* EditNote */Block.__(2, [newNote]));
                                     })
                                 })), React.createElement("div", {
                               style: spaceAroundHoriz
@@ -153,7 +152,7 @@ function make(dispatch, note, _children) {
                                         newNote_006,
                                         newNote_007
                                       ];
-                                      return Curry._1(dispatch, /* EditNote */Block.__(1, [newNote]));
+                                      return Curry._1(dispatch, /* EditNote */Block.__(2, [newNote]));
                                     })
                                 })));
             }),

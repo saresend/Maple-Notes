@@ -1,5 +1,6 @@
 type state = {
   notes: array(Note.note),
+  currentNote: option(Note.note),
   isLoaded: bool,
   menuBarOpen: bool,
   currentFilterElement: NoteUIElement.noteUIElement,
@@ -12,16 +13,17 @@ let appStyle =
 let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
 open Note;
 let maple = ReasonReact.reducerComponent("Maple");
-let uuidGen: unit => string = [%bs.raw
+let uuidGen: int => string = [%bs.raw
   {|
-        function () {
+    function (val) {
           const uuidv4 = require('uuid/v4');
           return uuidv4();
-        }|}
+    }|}
 ];
+Js.log(uuidGen(20));
 let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "All Notes",
     numNotes: 10,
     noteType: NoteBook,
@@ -29,7 +31,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     filterFunction: (_element, _note) => true,
   },
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "Starred Notes",
     numNotes: 2,
     noteType: Starred,
@@ -37,7 +39,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     filterFunction: (_element, note) => note.isStarred,
   },
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "Trash",
     numNotes: 3,
     noteType: Trash,
@@ -48,7 +50,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
 
 let initialBottomItems: array(NoteUIElement.noteUIElement) = [|
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "Algorithms",
     numNotes: 10,
     noteType: Folder("#ffc857"),
@@ -56,7 +58,7 @@ let initialBottomItems: array(NoteUIElement.noteUIElement) = [|
     filterFunction: (element, note) => note.folderID == element.id,
   },
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "Discrete Mathematics",
     numNotes: 2,
     noteType: Folder("#97efe9"),
@@ -64,7 +66,7 @@ let initialBottomItems: array(NoteUIElement.noteUIElement) = [|
     filterFunction: (element, note) => note.folderID == element.id,
   },
   {
-    id: uuidGen(),
+    id: uuidGen(10),
     title: "Software Engineering",
     numNotes: 3,
     noteType: Folder("#6a0f49"),
@@ -80,6 +82,7 @@ let make = _children => {
     notes: [||],
     isLoaded: false,
     menuBarOpen: true,
+    currentNote: None,
     currentFilterElement: initialTopItems[0],
     topMenuItems: initialTopItems,
     bottomMenuItems: initialBottomItems,
@@ -87,6 +90,13 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | TypeCurrentNote(inside) =>
+      switch (state.currentNote) {
+      | Some(currNote) =>
+        let newNote = {...currNote, body: inside};
+        ReasonReact.Update({...state, currentNote: Some(newNote)});
+      | None => ReasonReact.Update({...state, currentNote: None})
+      }
     | SelectMenuBarItem((element: NoteUIElement.noteUIElement)) =>
       let newTopMenuItems =
         Js.Array.map(
@@ -121,11 +131,19 @@ let make = _children => {
             if (oldNote.noteID == note.noteID) {
               {...note, isSelected: true};
             } else {
-              {...oldNote, isSelected: false};
+              switch (state.currentNote) {
+              | Some(currNote) =>
+                if (currNote.noteID == oldNote.noteID) {
+                  {...currNote, isSelected: false};
+                } else {
+                  {...oldNote, isSelected: false};
+                }
+              | None => {...oldNote, isSelected: false}
+              };
             },
           state.notes,
         );
-      ReasonReact.Update({...state, notes});
+      ReasonReact.Update({...state, notes, currentNote: Some(note)});
     | EditNote((note: Note.note)) =>
       let notes =
         Js.Array.map(
@@ -137,10 +155,11 @@ let make = _children => {
             },
           state.notes,
         );
-      ReasonReact.Update({...state, notes});
-    | AddNewNote(noteID) =>
+      ReasonReact.Update({...state, notes, currentNote: Some(note)});
+    | AddNewNote(_noteID) =>
+      let noteID2 = uuidGen(20);
       let note: Note.note = {
-        noteID,
+        noteID: noteID2,
         title: "New Note",
         body: "",
         timestamp: [%bs.raw {| Date.now() |}],
@@ -149,7 +168,6 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
-      Js.log(state.notes);
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),
@@ -160,6 +178,24 @@ let make = _children => {
   },
 
   render: self => {
+    let updateFunction = _value => {
+      let bodyText = [%bs.raw {| _value() |}];
+      self.send(TypeCurrentNote(bodyText));
+    };
+    let editorView =
+      switch (self.state.currentNote) {
+      | Some(note) =>
+        Js.log(note.noteID);
+        <div style=editorContainerStyle>
+          <Editor
+            key={note.noteID}
+            onChange=updateFunction
+            defaultValue={note.body}
+            placeholder="Write Anything..."
+          />
+        </div>;
+      | None => <div />
+      };
     let filteredNotes =
       Js.Array.filter(
         self.state.currentFilterElement.filterFunction(
@@ -175,9 +211,7 @@ let make = _children => {
         isOpen={self.state.menuBarOpen}
       />
       <NoteListRe dispatch={self.send} notes=filteredNotes />
-      <div style=editorContainerStyle>
-        <Editor placeholder="Write Anything..." />
-      </div>
+      editorView
     </div>;
   },
 };

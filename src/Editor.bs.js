@@ -8,14 +8,15 @@ var editorStyle = {
   fontFamily: "Open Sans"
 };
 
-function make(defaultValue, placeholder, $staropt$star, $staropt$star$1, children) {
+function make(defaultValue, placeholder, $staropt$star, onChange, $staropt$star$1, children) {
   var readOnly = $staropt$star !== undefined ? $staropt$star : false;
   var autoFocus = $staropt$star$1 !== undefined ? $staropt$star$1 : true;
   return ReasonReact.wrapJsForReason(RichMarkdownEditor.default, {
               defaultValue: defaultValue,
               placeholder: placeholder,
               autoFocus: autoFocus,
-              readOnly: readOnly
+              readOnly: readOnly,
+              onChange: onChange
             }, children);
 }
 

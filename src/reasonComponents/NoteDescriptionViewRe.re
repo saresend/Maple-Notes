@@ -69,7 +69,6 @@ let make = (~dispatch, ~note: Note.note, _children) => {
     let dateString = [%bs.raw
       {|
       function (note) {
-        console.log(note);
         var a = new Date(note[3]);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var year = a.getFullYear();
