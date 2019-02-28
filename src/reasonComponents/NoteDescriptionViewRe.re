@@ -59,9 +59,19 @@ let timeStampStyle =
   );
 
 let unhighlightedBookmark =
-  ReactDOMRe.Style.make(~fontSize="15px", ~color="#aaaaaa", ());
+  ReactDOMRe.Style.make(
+    ~fontSize="15px",
+    ~color="#aaaaaa",
+    ~margin="5px",
+    (),
+  );
 let highlightedBookmark =
-  ReactDOMRe.Style.make(~fontSize="15px", ~color="#48d3f2", ());
+  ReactDOMRe.Style.make(
+    ~fontSize="15px",
+    ~color="#48d3f2",
+    ~margin="5px",
+    (),
+  );
 
 let make = (~dispatch, ~note: Note.note, _children) => {
   ...component,
@@ -86,6 +96,8 @@ let make = (~dispatch, ~note: Note.note, _children) => {
       note.isSelected ? selectedTitleStyle : unselectedTitleStyle;
     let bookmarkStyle =
       note.isStarred ? highlightedBookmark : unhighlightedBookmark;
+    let trashStyle =
+      note.isTrash ? highlightedBookmark : unhighlightedBookmark;
     <div style=containerStyle>
       <div
         style=horizontalStyle
@@ -103,14 +115,24 @@ let make = (~dispatch, ~note: Note.note, _children) => {
       </div>
       <div style=spaceAroundHoriz>
         <p style=timeStampStyle> {ReasonReact.string(dateString(note))} </p>
-        <i
-          style=bookmarkStyle
-          className="fas fa-bookmark hover"
-          onClick={_data => {
-            let newNote = {...note, isStarred: !note.isStarred};
-            dispatch(Actions.EditNote(newNote));
-          }}
-        />
+        <div style=horizontalStyle>
+          <i
+            style=bookmarkStyle
+            className="fas fa-bookmark hover"
+            onClick={_data => {
+              let newNote = {...note, isStarred: !note.isStarred};
+              dispatch(Actions.EditNote(newNote));
+            }}
+          />
+          <i
+            style=trashStyle
+            className="fas fa-trash hover"
+            onClick={_data => {
+              let newNote = {...note, isTrash: !note.isTrash};
+              dispatch(Actions.EditNote(newNote));
+            }}
+          />
+        </div>
       </div>
     </div>;
   },

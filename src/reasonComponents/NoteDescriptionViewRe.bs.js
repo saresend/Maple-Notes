@@ -54,12 +54,14 @@ var timeStampStyle = {
 
 var unhighlightedBookmark = {
   color: "#aaaaaa",
-  fontSize: "15px"
+  fontSize: "15px",
+  margin: "5px"
 };
 
 var highlightedBookmark = {
   color: "#48d3f2",
-  fontSize: "15px"
+  fontSize: "15px",
+  margin: "5px"
 };
 
 function make(dispatch, note, _children) {
@@ -92,6 +94,8 @@ function make(dispatch, note, _children) {
               var titleStyle = match ? selectedTitleStyle : unselectedTitleStyle;
               var match$1 = note[/* isStarred */4];
               var bookmarkStyle = match$1 ? highlightedBookmark : unhighlightedBookmark;
+              var match$2 = note[/* isTrash */6];
+              var trashStyle = match$2 ? highlightedBookmark : unhighlightedBookmark;
               return React.createElement("div", {
                           style: containerStyle
                         }, React.createElement("div", {
@@ -130,31 +134,57 @@ function make(dispatch, note, _children) {
                               style: spaceAroundHoriz
                             }, React.createElement("p", {
                                   style: timeStampStyle
-                                }, Curry._1(dateString, note)), React.createElement("i", {
-                                  className: "fas fa-bookmark hover",
-                                  style: bookmarkStyle,
-                                  onClick: (function (_data) {
-                                      var newNote_000 = /* noteID */note[/* noteID */0];
-                                      var newNote_001 = /* title */note[/* title */1];
-                                      var newNote_002 = /* body */note[/* body */2];
-                                      var newNote_003 = /* timestamp */note[/* timestamp */3];
-                                      var newNote_004 = /* isStarred */!note[/* isStarred */4];
-                                      var newNote_005 = /* isSelected */note[/* isSelected */5];
-                                      var newNote_006 = /* isTrash */note[/* isTrash */6];
-                                      var newNote_007 = /* folderID */note[/* folderID */7];
-                                      var newNote = /* record */[
-                                        newNote_000,
-                                        newNote_001,
-                                        newNote_002,
-                                        newNote_003,
-                                        newNote_004,
-                                        newNote_005,
-                                        newNote_006,
-                                        newNote_007
-                                      ];
-                                      return Curry._1(dispatch, /* EditNote */Block.__(2, [newNote]));
-                                    })
-                                })));
+                                }, Curry._1(dateString, note)), React.createElement("div", {
+                                  style: horizontalStyle
+                                }, React.createElement("i", {
+                                      className: "fas fa-bookmark hover",
+                                      style: bookmarkStyle,
+                                      onClick: (function (_data) {
+                                          var newNote_000 = /* noteID */note[/* noteID */0];
+                                          var newNote_001 = /* title */note[/* title */1];
+                                          var newNote_002 = /* body */note[/* body */2];
+                                          var newNote_003 = /* timestamp */note[/* timestamp */3];
+                                          var newNote_004 = /* isStarred */!note[/* isStarred */4];
+                                          var newNote_005 = /* isSelected */note[/* isSelected */5];
+                                          var newNote_006 = /* isTrash */note[/* isTrash */6];
+                                          var newNote_007 = /* folderID */note[/* folderID */7];
+                                          var newNote = /* record */[
+                                            newNote_000,
+                                            newNote_001,
+                                            newNote_002,
+                                            newNote_003,
+                                            newNote_004,
+                                            newNote_005,
+                                            newNote_006,
+                                            newNote_007
+                                          ];
+                                          return Curry._1(dispatch, /* EditNote */Block.__(2, [newNote]));
+                                        })
+                                    }), React.createElement("i", {
+                                      className: "fas fa-trash hover",
+                                      style: trashStyle,
+                                      onClick: (function (_data) {
+                                          var newNote_000 = /* noteID */note[/* noteID */0];
+                                          var newNote_001 = /* title */note[/* title */1];
+                                          var newNote_002 = /* body */note[/* body */2];
+                                          var newNote_003 = /* timestamp */note[/* timestamp */3];
+                                          var newNote_004 = /* isStarred */note[/* isStarred */4];
+                                          var newNote_005 = /* isSelected */note[/* isSelected */5];
+                                          var newNote_006 = /* isTrash */!note[/* isTrash */6];
+                                          var newNote_007 = /* folderID */note[/* folderID */7];
+                                          var newNote = /* record */[
+                                            newNote_000,
+                                            newNote_001,
+                                            newNote_002,
+                                            newNote_003,
+                                            newNote_004,
+                                            newNote_005,
+                                            newNote_006,
+                                            newNote_007
+                                          ];
+                                          return Curry._1(dispatch, /* EditNote */Block.__(2, [newNote]));
+                                        })
+                                    }))));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],

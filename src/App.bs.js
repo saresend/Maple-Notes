@@ -36,8 +36,8 @@ var initialTopItems = /* array */[
     /* numNotes */10,
     /* noteType : NoteBook */0,
     /* isSelected */true,
-    /* filterFunction */(function (_element, _note) {
-        return true;
+    /* filterFunction */(function (_element, note) {
+        return !note[/* isTrash */6];
       })
   ],
   /* record */[

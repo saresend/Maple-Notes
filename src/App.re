@@ -28,7 +28,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     numNotes: 10,
     noteType: NoteBook,
     isSelected: true,
-    filterFunction: (_element, _note) => true,
+    filterFunction: (_element, note) => !note.isTrash,
   },
   {
     id: uuidGen(10),
