@@ -43,7 +43,10 @@ let make = (~dispatch, ~notes, _children) => {
     <div style=containerStyle>
       <div style=horizontalContainer>
         <input
-          onChange={data => Js.log(data)}
+          onChange={_data => {
+            let searchString: string = [%bs.raw {| _data.target.value |}];
+            dispatch(Actions.UpdateSearchFunction(searchString));
+          }}
           style=searchBarStyle
           placeholder="Search"
         />

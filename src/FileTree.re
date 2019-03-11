@@ -83,13 +83,13 @@ let make =
       <div style=iconContainerStyle>
         <i
           style=iconStyle
-          className="fas fa-bars hover"
           onClick={_data => dispatch(ToggleMenuBar)}
+          className="fas fa-bars hover"
         />
         <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
       </div>
       <div style=optionStyle> {ReasonReact.array(topUIElements)} </div>
-      <FolderviewRe style=folderStyle>
+      <FolderviewRe dispatch style=folderStyle>
         {ReasonReact.array(bottomUIElements)}
       </FolderviewRe>
     </div>;

@@ -4,6 +4,7 @@ type state = {
   isLoaded: bool,
   menuBarOpen: bool,
   currentFilterElement: NoteUIElement.noteUIElement,
+  searchFilter: Note.note => bool,
   topMenuItems: array(NoteUIElement.noteUIElement),
   bottomMenuItems: array(NoteUIElement.noteUIElement),
 };
@@ -20,7 +21,6 @@ let uuidGen: int => string = [%bs.raw
           return uuidv4();
     }|}
 ];
-Js.log(uuidGen(20));
 let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   {
     id: uuidGen(10),
@@ -48,32 +48,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   },
 |];
 
-let initialBottomItems: array(NoteUIElement.noteUIElement) = [|
-  {
-    id: uuidGen(10),
-    title: "Algorithms",
-    numNotes: 10,
-    noteType: Folder("#ffc857"),
-    isSelected: false,
-    filterFunction: (element, note) => note.folderID == element.id,
-  },
-  {
-    id: uuidGen(10),
-    title: "Discrete Mathematics",
-    numNotes: 2,
-    noteType: Folder("#97efe9"),
-    isSelected: false,
-    filterFunction: (element, note) => note.folderID == element.id,
-  },
-  {
-    id: uuidGen(10),
-    title: "Software Engineering",
-    numNotes: 3,
-    noteType: Folder("#6a0f49"),
-    isSelected: false,
-    filterFunction: (element, note) => note.folderID == element.id,
-  },
-|];
+let initialBottomItems: array(NoteUIElement.noteUIElement) = [||];
 open Actions;
 let make = _children => {
   ...maple,
@@ -84,12 +59,37 @@ let make = _children => {
     menuBarOpen: true,
     currentNote: None,
     currentFilterElement: initialTopItems[0],
+    searchFilter: _note => true,
     topMenuItems: initialTopItems,
     bottomMenuItems: initialBottomItems,
   },
 
   reducer: (action, state) => {
     switch (action) {
+    | UpdateSearchFunction(searchString) =>
+      if (searchString == "") {
+        ReasonReact.Update({...state, searchFilter: _note => true});
+      } else {
+        ReasonReact.Update({
+          ...state,
+          searchFilter: _note => {
+            true;
+                // note.body.contains(searchString) || note.title.contains(searchString);
+          },
+        });
+      }
+    | AddNewBottomBarItem =>
+      let newBottomItem: NoteUIElement.noteUIElement = {
+        id: uuidGen(10),
+        title: "New Folder",
+        numNotes: 0,
+        noteType: Folder(Utils.generateColor()),
+        isSelected: false,
+        filterFunction: (element, note) => note.folderID == element.id,
+      };
+      let newBottomItems =
+        Js.Array.concat([|newBottomItem|], state.bottomMenuItems);
+      ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
     | TypeCurrentNote(inside) =>
       switch (state.currentNote) {
       | Some(currNote) =>
@@ -185,15 +185,15 @@ let make = _children => {
     let editorView =
       switch (self.state.currentNote) {
       | Some(note) =>
-        Js.log(note.noteID);
         <div style=editorContainerStyle>
           <Editor
             key={note.noteID}
             onChange=updateFunction
             defaultValue={note.body}
+            autoFocus=true
             placeholder="Write Anything..."
           />
-        </div>;
+        </div>
       | None => <div />
       };
     let filteredNotes =
@@ -203,6 +203,8 @@ let make = _children => {
         ),
         self.state.notes,
       );
+    let searchFilteredNotes =
+      Js.Array.filter(self.state.searchFilter, filteredNotes);
     <div style=appStyle>
       <ReactFiletree
         topItems={self.state.topMenuItems}
@@ -210,7 +212,7 @@ let make = _children => {
         dispatch={self.send}
         isOpen={self.state.menuBarOpen}
       />
-      <NoteListRe dispatch={self.send} notes=filteredNotes />
+      <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
       editorView
     </div>;
   },

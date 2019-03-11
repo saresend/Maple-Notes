@@ -92,14 +92,14 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                                   className: "fas fa-bars hover",
                                   style: iconStyle,
                                   onClick: (function (_data) {
-                                      return Curry._1(dispatch, /* ToggleMenuBar */0);
+                                      return Curry._1(dispatch, /* ToggleMenuBar */1);
                                     })
                                 }), React.createElement("i", {
                                   className: "fas fa-ellipsis-h hover",
                                   style: fadedIconStyle
                                 })), React.createElement("div", {
                               style: optionStyle
-                            }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(folderStyle, /* array */[bottomUIElements])));
+                            }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(dispatch, folderStyle, /* array */[bottomUIElements])));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],

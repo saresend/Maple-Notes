@@ -97,7 +97,7 @@ function make(dispatch, info, _children) {
                           className: "hover",
                           style: containerStyle,
                           onClick: (function (_data) {
-                              return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(4, [info]));
+                              return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(5, [info]));
                             })
                         }, React.createElement("div", {
                               style: iconContainerStyle

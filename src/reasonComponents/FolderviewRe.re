@@ -16,13 +16,18 @@ let titleBarStyle =
     (),
   );
 
-let make = (~style, children) => {
+open Actions;
+let make = (~dispatch, ~style, children) => {
   ...component,
   render: _self => {
     <div style>
       <div style=titleBarStyle>
         <p style=titleStyle> {ReasonReact.string("My Storage")} </p>
-        <i style=iconStyle className="fas fa-plus hover" />
+        <i
+          onClick={_data => dispatch(AddNewBottomBarItem)}
+          style=iconStyle
+          className="fas fa-plus hover"
+        />
       </div>
       <div style=scrollStyle> ...children </div>
     </div>;

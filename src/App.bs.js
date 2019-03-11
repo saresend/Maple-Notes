@@ -6,6 +6,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var Utils$ReactTemplate = require("./Utils.bs.js");
 var Editor$ReactTemplate = require("./Editor.bs.js");
 var NoteListRe$ReactTemplate = require("./reasonComponents/NoteListRe.bs.js");
 var ReactFiletree$ReactTemplate = require("./reasonBindings/ReactFiletree.bs.js");
@@ -26,8 +27,6 @@ var uuidGen = (
           const uuidv4 = require('uuid/v4');
           return uuidv4();
     });
-
-console.log(Curry._1(uuidGen, 20));
 
 var initialTopItems = /* array */[
   /* record */[
@@ -62,38 +61,7 @@ var initialTopItems = /* array */[
   ]
 ];
 
-var initialBottomItems = /* array */[
-  /* record */[
-    /* id */Curry._1(uuidGen, 10),
-    /* title */"Algorithms",
-    /* numNotes */10,
-    /* noteType : Folder */["#ffc857"],
-    /* isSelected */false,
-    /* filterFunction */(function (element, note) {
-        return note[/* folderID */7] === element[/* id */0];
-      })
-  ],
-  /* record */[
-    /* id */Curry._1(uuidGen, 10),
-    /* title */"Discrete Mathematics",
-    /* numNotes */2,
-    /* noteType : Folder */["#97efe9"],
-    /* isSelected */false,
-    /* filterFunction */(function (element, note) {
-        return note[/* folderID */7] === element[/* id */0];
-      })
-  ],
-  /* record */[
-    /* id */Curry._1(uuidGen, 10),
-    /* title */"Software Engineering",
-    /* numNotes */3,
-    /* noteType : Folder */["#6a0f49"],
-    /* isSelected */false,
-    /* filterFunction */(function (element, note) {
-        return note[/* folderID */7] === element[/* id */0];
-      })
-  ]
-];
+var initialBottomItems = /* array */[];
 
 function make(_children) {
   return /* record */[
@@ -109,24 +77,25 @@ function make(_children) {
           /* render */(function (self) {
               var updateFunction = function (_value) {
                 var bodyText = ( _value() );
-                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(1, [bodyText]));
+                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(2, [bodyText]));
               };
               var match = self[/* state */1][/* currentNote */1];
               var editorView;
               if (match !== undefined) {
                 var note = match;
-                console.log(note[/* noteID */0]);
                 editorView = React.createElement("div", {
                       style: editorContainerStyle
-                    }, ReasonReact.element(note[/* noteID */0], undefined, Editor$ReactTemplate.make(note[/* body */2], "Write Anything...", undefined, updateFunction, undefined, /* array */[])));
+                    }, ReasonReact.element(note[/* noteID */0], undefined, Editor$ReactTemplate.make(note[/* body */2], "Write Anything...", undefined, updateFunction, true, /* array */[])));
               } else {
                 editorView = React.createElement("div", undefined);
               }
               var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */5], self[/* state */1][/* currentFilterElement */4]);
               var filteredNotes = self[/* state */1][/* notes */0].filter(Curry.__1(partial_arg));
+              var partial_arg$1 = self[/* state */1][/* searchFilter */5];
+              var searchFilteredNotes = filteredNotes.filter(Curry.__1(partial_arg$1));
               return React.createElement("div", {
                           style: appStyle
-                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], self[/* state */1][/* topMenuItems */5], self[/* state */1][/* bottomMenuItems */6], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], filteredNotes, /* array */[])), editorView);
+                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], self[/* state */1][/* topMenuItems */6], self[/* state */1][/* bottomMenuItems */7], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
             }),
           /* initialState */(function (param) {
               return /* record */[
@@ -135,6 +104,9 @@ function make(_children) {
                       /* isLoaded */false,
                       /* menuBarOpen */true,
                       /* currentFilterElement */Caml_array.caml_array_get(initialTopItems, 0),
+                      /* searchFilter */(function (_note) {
+                          return true;
+                        }),
                       /* topMenuItems */initialTopItems,
                       /* bottomMenuItems */initialBottomItems
                     ];
@@ -142,18 +114,74 @@ function make(_children) {
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
               if (typeof action === "number") {
-                return /* Update */Block.__(0, [/* record */[
-                            /* notes */state[/* notes */0],
-                            /* currentNote */state[/* currentNote */1],
-                            /* isLoaded */state[/* isLoaded */2],
-                            /* menuBarOpen */!state[/* menuBarOpen */3],
-                            /* currentFilterElement */state[/* currentFilterElement */4],
-                            /* topMenuItems */state[/* topMenuItems */5],
-                            /* bottomMenuItems */state[/* bottomMenuItems */6]
-                          ]]);
+                if (action === 0) {
+                  var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
+                  var newBottomItem_003 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
+                  var newBottomItem_005 = function (element, note) {
+                    return note[/* folderID */7] === element[/* id */0];
+                  };
+                  var newBottomItem = /* record */[
+                    newBottomItem_000,
+                    /* title */"New Folder",
+                    /* numNotes */0,
+                    newBottomItem_003,
+                    /* isSelected */false,
+                    newBottomItem_005
+                  ];
+                  var newBottomItems = state[/* bottomMenuItems */7].concat(/* array */[newBottomItem]);
+                  return /* Update */Block.__(0, [/* record */[
+                              /* notes */state[/* notes */0],
+                              /* currentNote */state[/* currentNote */1],
+                              /* isLoaded */state[/* isLoaded */2],
+                              /* menuBarOpen */state[/* menuBarOpen */3],
+                              /* currentFilterElement */state[/* currentFilterElement */4],
+                              /* searchFilter */state[/* searchFilter */5],
+                              /* topMenuItems */state[/* topMenuItems */6],
+                              /* bottomMenuItems */newBottomItems
+                            ]]);
+                } else {
+                  return /* Update */Block.__(0, [/* record */[
+                              /* notes */state[/* notes */0],
+                              /* currentNote */state[/* currentNote */1],
+                              /* isLoaded */state[/* isLoaded */2],
+                              /* menuBarOpen */!state[/* menuBarOpen */3],
+                              /* currentFilterElement */state[/* currentFilterElement */4],
+                              /* searchFilter */state[/* searchFilter */5],
+                              /* topMenuItems */state[/* topMenuItems */6],
+                              /* bottomMenuItems */state[/* bottomMenuItems */7]
+                            ]]);
+                }
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
+                      if (action[0] === "") {
+                        return /* Update */Block.__(0, [/* record */[
+                                    /* notes */state[/* notes */0],
+                                    /* currentNote */state[/* currentNote */1],
+                                    /* isLoaded */state[/* isLoaded */2],
+                                    /* menuBarOpen */state[/* menuBarOpen */3],
+                                    /* currentFilterElement */state[/* currentFilterElement */4],
+                                    /* searchFilter */(function (_note) {
+                                        return true;
+                                      }),
+                                    /* topMenuItems */state[/* topMenuItems */6],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  ]]);
+                      } else {
+                        return /* Update */Block.__(0, [/* record */[
+                                    /* notes */state[/* notes */0],
+                                    /* currentNote */state[/* currentNote */1],
+                                    /* isLoaded */state[/* isLoaded */2],
+                                    /* menuBarOpen */state[/* menuBarOpen */3],
+                                    /* currentFilterElement */state[/* currentFilterElement */4],
+                                    /* searchFilter */(function (_note) {
+                                        return true;
+                                      }),
+                                    /* topMenuItems */state[/* topMenuItems */6],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  ]]);
+                      }
+                  case 1 : 
                       var note = action[0];
                       var notes = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note[/* noteID */0]) {
@@ -214,10 +242,11 @@ function make(_children) {
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* menuBarOpen */state[/* menuBarOpen */3],
                                   /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* topMenuItems */state[/* topMenuItems */5],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */6]
+                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 1 : 
+                  case 2 : 
                       var match = state[/* currentNote */1];
                       if (match !== undefined) {
                         var currNote = match;
@@ -245,8 +274,9 @@ function make(_children) {
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* menuBarOpen */state[/* menuBarOpen */3],
                                     /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* topMenuItems */state[/* topMenuItems */5],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */6]
+                                    /* searchFilter */state[/* searchFilter */5],
+                                    /* topMenuItems */state[/* topMenuItems */6],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
                                   ]]);
                       } else {
                         return /* Update */Block.__(0, [/* record */[
@@ -255,11 +285,12 @@ function make(_children) {
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* menuBarOpen */state[/* menuBarOpen */3],
                                     /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* topMenuItems */state[/* topMenuItems */5],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */6]
+                                    /* searchFilter */state[/* searchFilter */5],
+                                    /* topMenuItems */state[/* topMenuItems */6],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
                                   ]]);
                       }
-                  case 2 : 
+                  case 3 : 
                       var note$1 = action[0];
                       var notes$1 = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note$1[/* noteID */0]) {
@@ -274,10 +305,11 @@ function make(_children) {
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* menuBarOpen */state[/* menuBarOpen */3],
                                   /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* topMenuItems */state[/* topMenuItems */5],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */6]
+                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 3 : 
+                  case 4 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
                       var note_007 = /* folderID */state[/* currentFilterElement */4][/* id */0];
@@ -297,12 +329,13 @@ function make(_children) {
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* menuBarOpen */state[/* menuBarOpen */3],
                                   /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* topMenuItems */state[/* topMenuItems */5],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */6]
+                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 4 : 
+                  case 5 : 
                       var element = action[0];
-                      var newTopMenuItems = state[/* topMenuItems */5].map((function (oldElement) {
+                      var newTopMenuItems = state[/* topMenuItems */6].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -323,7 +356,7 @@ function make(_children) {
                                       ];
                               }
                             }));
-                      var newBottomMenuItems = state[/* bottomMenuItems */6].map((function (oldElement) {
+                      var newBottomMenuItems = state[/* bottomMenuItems */7].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -350,6 +383,7 @@ function make(_children) {
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* menuBarOpen */state[/* menuBarOpen */3],
                                   /* currentFilterElement */element,
+                                  /* searchFilter */state[/* searchFilter */5],
                                   /* topMenuItems */newTopMenuItems,
                                   /* bottomMenuItems */newBottomMenuItems
                                 ]]);

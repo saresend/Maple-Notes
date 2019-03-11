@@ -59,15 +59,15 @@ function make(dispatch, notes, _children) {
                             }, React.createElement("input", {
                                   style: searchBarStyle,
                                   placeholder: "Search",
-                                  onChange: (function (data) {
-                                      console.log(data);
-                                      return /* () */0;
+                                  onChange: (function (_data) {
+                                      var searchString = ( _data.target.value );
+                                      return Curry._1(dispatch, /* UpdateSearchFunction */Block.__(0, [searchString]));
                                     })
                                 }), React.createElement("i", {
                                   className: "far fa-edit hover",
                                   onClick: (function (_data) {
                                       var uuid = Curry._1(uuidGen, /* () */0);
-                                      return Curry._1(dispatch, /* AddNewNote */Block.__(3, [uuid]));
+                                      return Curry._1(dispatch, /* AddNewNote */Block.__(4, [uuid]));
                                     })
                                 })), noteUi);
             }),
