@@ -52,10 +52,10 @@ export default class ContextMenuReact extends React.Component {
   render() {
     return (
       <div>
-        <ContextMenuTrigger id="some_unique_identifier">
+        <ContextMenuTrigger id={this.props.menuId}>
           {this.props.children}
         </ContextMenuTrigger>
-        <ContextMenu id="some_unique_identifier" style={menuContainerStyle}>
+        <ContextMenu id={this.props.menuId} style={menuContainerStyle}>
           <span style={titleMenuTextStyle}> Options </span>
           <MenuItem style={menuItemStyle} data={{ foo: 'bar' }} onClick={this.handleClick}>
             <div style={horizContainerStyle} className="contextMenuHover">

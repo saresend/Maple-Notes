@@ -57,17 +57,28 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
       | Starred => <i style=iconStyle className="far fa-bookmark" />
       | Trash => <i style=iconStyle className="far fa-trash-alt" />
       };
-    <div
-      className="hover"
-      onClick={_data => dispatch(SelectMenuBarItem(info))}
-      style=containerStyle>
-      <div style=iconContainerStyle>
-        icon
-        <p style=textStyle> {ReasonReact.string(info.title)} </p>
-      </div>
-      <p style=countStyle>
-        {ReasonReact.string(Js.Int.toString(info.numNotes))}
-      </p>
-    </div>;
+    let isFolder =
+      switch (info.noteType) {
+      | Folder(color_) => true
+      | _ => false
+      };
+    let internalItem =
+      <div
+        className="hover"
+        onClick={_data => dispatch(SelectMenuBarItem(info))}
+        style=containerStyle>
+        <div style=iconContainerStyle>
+          icon
+          <p style=textStyle> {ReasonReact.string(info.title)} </p>
+        </div>
+        <p style=countStyle>
+          {ReasonReact.string(Js.Int.toString(info.numNotes))}
+        </p>
+      </div>;
+    if (isFolder) {
+      <ContextMenuRe menuId={info.id}> internalItem </ContextMenuRe>;
+    } else {
+      internalItem;
+    };
   },
 };

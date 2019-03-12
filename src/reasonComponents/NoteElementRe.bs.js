@@ -5,6 +5,7 @@ var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var ContextMenuRe$ReactTemplate = require("../reasonBindings/ContextMenuRe.bs.js");
 
 var component = ReasonReact.statelessComponent("NoteElementRe");
 
@@ -93,19 +94,26 @@ function make(dispatch, info, _children) {
                       style: folderIconStyle
                     });
               }
-              return React.createElement("div", {
-                          className: "hover",
-                          style: containerStyle,
-                          onClick: (function (_data) {
-                              return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(5, [info]));
-                            })
-                        }, React.createElement("div", {
-                              style: iconContainerStyle
-                            }, icon, React.createElement("p", {
-                                  style: textStyle
-                                }, info[/* title */1])), React.createElement("p", {
-                              style: countStyle
-                            }, info[/* numNotes */2].toString()));
+              var match$2 = info[/* noteType */3];
+              var isFolder = typeof match$2 === "number" ? false : true;
+              var internalItem = React.createElement("div", {
+                    className: "hover",
+                    style: containerStyle,
+                    onClick: (function (_data) {
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(5, [info]));
+                      })
+                  }, React.createElement("div", {
+                        style: iconContainerStyle
+                      }, icon, React.createElement("p", {
+                            style: textStyle
+                          }, info[/* title */1])), React.createElement("p", {
+                        style: countStyle
+                      }, info[/* numNotes */2].toString()));
+              if (isFolder) {
+                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(info[/* id */0], /* array */[internalItem]));
+              } else {
+                return internalItem;
+              }
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
