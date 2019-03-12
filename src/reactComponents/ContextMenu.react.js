@@ -10,11 +10,11 @@ const menuItemStyle = {
 
 const menuContainerStyle = {
   "backgroundColor": "#ffffff",
-  "padding": "0px",
+  "padding": "15px",
   "borderWidth": "1px",
   "borderColor": "gray",
   "borderStyle": "solid",
-  "borderRadius": "10px",
+  "borderRadius": "4px",
 }
 
 const menuTextStyle = {
@@ -22,6 +22,24 @@ const menuTextStyle = {
   "marginTop": "5px",
   "marginBottom": "5px",
   "marginRight": "40px",
+  "fontSize": "17px",
+}
+
+const titleMenuTextStyle = {
+  "marginLeft": "5px",
+  "marginTop": "10px",
+  "fontFamily": "Aleo",
+  "color": "#aaaaaa",
+}
+
+const horizContainerStyle = {
+  "display": "flex",
+  "flexDirection": "row",
+  "justifyContent": "space-between",
+  "alignItems": "center",
+}
+
+const iconStyle = {
   "fontSize": "17px",
 }
 
@@ -38,11 +56,19 @@ export default class ContextMenuReact extends React.Component {
           {this.props.children}
         </ContextMenuTrigger>
         <ContextMenu id="some_unique_identifier" style={menuContainerStyle}>
+          <span style={titleMenuTextStyle}> Options </span>
           <MenuItem style={menuItemStyle} data={{ foo: 'bar' }} onClick={this.handleClick}>
-            <p className="contextMenuHover" style={menuTextStyle}>Rename</p>
+            <div style={horizContainerStyle} className="contextMenuHover">
+              <p style={menuTextStyle}>Rename Folder</p>
+              <i style={iconStyle} class="fas fa-pencil-alt" />
+            </div>
+
           </MenuItem>
           <MenuItem style={menuItemStyle} data={{ foo: 'bar' }} onClick={this.handleClick}>
-            <p className="contextMenuHover" style={menuTextStyle}>Delete</p>
+            <div style={horizContainerStyle} className="contextMenuHover">
+              <p className="contextMenuHover" style={menuTextStyle}>Delete Folder</p>
+              <i style={iconStyle} class="fas fa-trash-alt" />
+            </div>
           </MenuItem>
         </ContextMenu>
       </div>
