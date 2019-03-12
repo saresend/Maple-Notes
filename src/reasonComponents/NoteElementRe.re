@@ -59,7 +59,7 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
       };
     let isFolder =
       switch (info.noteType) {
-      | Folder(color_) => true
+      | Folder(_) => true
       | _ => false
       };
     let internalItem =
@@ -76,7 +76,7 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
         </p>
       </div>;
     if (isFolder) {
-      <ContextMenuRe menuId={info.id}> internalItem </ContextMenuRe>;
+      <ContextMenuRe dispatch menuId={info.id}> internalItem </ContextMenuRe>;
     } else {
       internalItem;
     };

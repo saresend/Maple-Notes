@@ -66,6 +66,14 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | DeleteBottomBarItem(menuItemId) =>
+      let newBottomItems =
+        Js.Array.filter(
+          (bottomBarItem: NoteUIElement.noteUIElement) =>
+            bottomBarItem.id != menuItemId,
+          state.bottomMenuItems,
+        );
+      ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
     | UpdateSearchFunction(searchString) =>
       if (searchString == "") {
         ReasonReact.Update({...state, searchFilter: _note => true});

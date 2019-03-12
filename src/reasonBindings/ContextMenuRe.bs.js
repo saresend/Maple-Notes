@@ -4,9 +4,10 @@
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var ContextMenuReact = require("../reactComponents/ContextMenu.react");
 
-function make(menuId, children) {
+function make(dispatch, menuId, children) {
   return ReasonReact.wrapJsForReason(ContextMenuReact.default, {
-              menuId: menuId
+              menuId: menuId,
+              dispatch: dispatch
             }, children);
 }
 

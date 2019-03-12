@@ -5,7 +5,6 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var FolderviewRe$ReactTemplate = require("./reasonComponents/FolderviewRe.bs.js");
-var ContextMenuRe$ReactTemplate = require("./reasonBindings/ContextMenuRe.bs.js");
 var NoteElementRe$ReactTemplate = require("./reasonComponents/NoteElementRe.bs.js");
 
 var component = ReasonReact.statelessComponent("FileTree");
@@ -87,18 +86,18 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                     }));
               return React.createElement("div", {
                           style: fileTreeStyle
-                        }, ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(/* array */[React.createElement("div", {
-                                        style: iconContainerStyle
-                                      }, React.createElement("i", {
-                                            className: "fas fa-bars hover",
-                                            style: iconStyle,
-                                            onClick: (function (_data) {
-                                                return Curry._1(dispatch, /* ToggleMenuBar */1);
-                                              })
-                                          }), React.createElement("i", {
-                                            className: "fas fa-ellipsis-h hover",
-                                            style: fadedIconStyle
-                                          }))])), React.createElement("div", {
+                        }, React.createElement("div", {
+                              style: iconContainerStyle
+                            }, React.createElement("i", {
+                                  className: "fas fa-bars hover",
+                                  style: iconStyle,
+                                  onClick: (function (_data) {
+                                      return Curry._1(dispatch, /* ToggleMenuBar */1);
+                                    })
+                                }), React.createElement("i", {
+                                  className: "fas fa-ellipsis-h hover",
+                                  style: fadedIconStyle
+                                })), React.createElement("div", {
                               style: optionStyle
                             }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(dispatch, folderStyle, /* array */[bottomUIElements])));
             }),

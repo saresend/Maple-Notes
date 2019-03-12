@@ -100,7 +100,7 @@ function make(dispatch, info, _children) {
                     className: "hover",
                     style: containerStyle,
                     onClick: (function (_data) {
-                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(5, [info]));
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(6, [info]));
                       })
                   }, React.createElement("div", {
                         style: iconContainerStyle
@@ -110,7 +110,7 @@ function make(dispatch, info, _children) {
                         style: countStyle
                       }, info[/* numNotes */2].toString()));
               if (isFolder) {
-                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(info[/* id */0], /* array */[internalItem]));
+                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* id */0], /* array */[internalItem]));
               } else {
                 return internalItem;
               }

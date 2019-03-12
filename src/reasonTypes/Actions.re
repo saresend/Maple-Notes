@@ -1,4 +1,5 @@
 type action =
+  | DeleteBottomBarItem(string)
   | AddNewBottomBarItem
   | UpdateSearchFunction(string)
   | SelectNote(Note.note)
