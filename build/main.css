@@ -57,6 +57,10 @@ hr {
     opacity: 0.5;
 }
 
+.contextMenuHover:hover {
+    color: #279af1;
+}
+
 ::-webkit-scrollbar {
     background: transparent;
 }
