@@ -17,6 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "react": "^16.2.0",
+    "react-contexify": "^4.0.2",
+    "react-contextmenu": "^2.10.0",
     "react-dom": "^16.2.0",
     "react-spring": "^8.0.7",
     "react-transition-group": "^2.5.3",
@@ -30,7 +32,9 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "bs-platform": "^4.0.18",
+    "css-loader": "^2.1.1",
     "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.0.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.8"

@@ -80,14 +80,16 @@ let make =
       );
 
     <div style=fileTreeStyle>
-      <div style=iconContainerStyle>
-        <i
-          style=iconStyle
-          onClick={_data => dispatch(ToggleMenuBar)}
-          className="fas fa-bars hover"
-        />
-        <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
-      </div>
+      <ContextMenuRe>
+        <div style=iconContainerStyle>
+          <i
+            style=iconStyle
+            onClick={_data => dispatch(ToggleMenuBar)}
+            className="fas fa-bars hover"
+          />
+          <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
+        </div>
+      </ContextMenuRe>
       <div style=optionStyle> {ReasonReact.array(topUIElements)} </div>
       <FolderviewRe dispatch style=folderStyle>
         {ReasonReact.array(bottomUIElements)}
