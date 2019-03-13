@@ -27,10 +27,15 @@ function generateColor(param) {
 }
 
 function sendDeleteMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(0, [messageId]));
+  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(2, [messageId]));
+}
+
+function sendRenameMessage(dispatchFunc, messageId) {
+  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(1, [messageId]));
 }
 
 exports.genRandomValue = genRandomValue;
 exports.generateColor = generateColor;
 exports.sendDeleteMessage = sendDeleteMessage;
+exports.sendRenameMessage = sendRenameMessage;
 /* No side effect */

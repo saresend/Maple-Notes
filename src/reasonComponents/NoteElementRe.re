@@ -62,15 +62,32 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
       | Folder(_) => true
       | _ => false
       };
+    let nameElement =
+      if (info.isEditable) {
+        <input
+          defaultValue={info.title}
+          style=textStyle
+          onChange={event => {
+            let textValue = event->ReactEvent.Form.target##value;
+            dispatch(
+              Actions.UpdateBottomBarItem({...info, title: textValue}),
+            );
+          }}
+          onBlur={_event =>
+            dispatch(
+              Actions.UpdateBottomBarItem({...info, isEditable: false}),
+            )
+          }
+        />;
+      } else {
+        <p style=textStyle> {ReasonReact.string(info.title)} </p>;
+      };
     let internalItem =
       <div
         className="hover"
         onClick={_data => dispatch(SelectMenuBarItem(info))}
         style=containerStyle>
-        <div style=iconContainerStyle>
-          icon
-          <p style=textStyle> {ReasonReact.string(info.title)} </p>
-        </div>
+        <div style=iconContainerStyle> icon nameElement </div>
         <p style=countStyle>
           {ReasonReact.string(Js.Int.toString(info.numNotes))}
         </p>

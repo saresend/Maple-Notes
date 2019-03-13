@@ -58,9 +58,9 @@ function make(dispatch, info, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              var match = info[/* isSelected */4];
+              var match = info[/* isSelected */5];
               var textStyle = match ? selectedTextStyle : unselectedTextStyle;
-              var match$1 = info[/* noteType */3];
+              var match$1 = info[/* noteType */4];
               var icon;
               if (typeof match$1 === "number") {
                 switch (match$1) {
@@ -94,21 +94,48 @@ function make(dispatch, info, _children) {
                       style: folderIconStyle
                     });
               }
-              var match$2 = info[/* noteType */3];
+              var match$2 = info[/* noteType */4];
               var isFolder = typeof match$2 === "number" ? false : true;
+              var nameElement = info[/* isEditable */2] ? React.createElement("input", {
+                      defaultValue: info[/* title */1],
+                      style: textStyle,
+                      onBlur: (function (_event) {
+                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(0, [/* record */[
+                                          /* id */info[/* id */0],
+                                          /* title */info[/* title */1],
+                                          /* isEditable */false,
+                                          /* numNotes */info[/* numNotes */3],
+                                          /* noteType */info[/* noteType */4],
+                                          /* isSelected */info[/* isSelected */5],
+                                          /* filterFunction */info[/* filterFunction */6]
+                                        ]]));
+                        }),
+                      onChange: (function ($$event) {
+                          var textValue = $$event.target.value;
+                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(0, [/* record */[
+                                          /* id */info[/* id */0],
+                                          /* title */textValue,
+                                          /* isEditable */info[/* isEditable */2],
+                                          /* numNotes */info[/* numNotes */3],
+                                          /* noteType */info[/* noteType */4],
+                                          /* isSelected */info[/* isSelected */5],
+                                          /* filterFunction */info[/* filterFunction */6]
+                                        ]]));
+                        })
+                    }) : React.createElement("p", {
+                      style: textStyle
+                    }, info[/* title */1]);
               var internalItem = React.createElement("div", {
                     className: "hover",
                     style: containerStyle,
                     onClick: (function (_data) {
-                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(6, [info]));
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(8, [info]));
                       })
                   }, React.createElement("div", {
                         style: iconContainerStyle
-                      }, icon, React.createElement("p", {
-                            style: textStyle
-                          }, info[/* title */1])), React.createElement("p", {
+                      }, icon, nameElement), React.createElement("p", {
                         style: countStyle
-                      }, info[/* numNotes */2].toString()));
+                      }, info[/* numNotes */3].toString()));
               if (isFolder) {
                 return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* id */0], /* array */[internalItem]));
               } else {

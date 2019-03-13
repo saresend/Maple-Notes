@@ -1,4 +1,6 @@
 type action =
+  | UpdateBottomBarItem(NoteUIElement.noteUIElement)
+  | SetEditableBottomBarItem(string)
   | DeleteBottomBarItem(string)
   | AddNewBottomBarItem
   | UpdateSearchFunction(string)

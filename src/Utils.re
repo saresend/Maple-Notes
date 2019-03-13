@@ -28,3 +28,7 @@ let generateColor = () => {
 let sendDeleteMessage = (dispatchFunc, messageId) => {
   dispatchFunc(Actions.DeleteBottomBarItem(messageId));
 };
+
+let sendRenameMessage = (dispatchFunc, messageId) => {
+  dispatchFunc(Actions.SetEditableBottomBarItem(messageId));
+};

@@ -101,7 +101,7 @@ function make(dispatch, note, _children) {
                         }, React.createElement("div", {
                               style: horizontalStyle,
                               onClick: (function (_data) {
-                                  return Curry._1(dispatch, /* SelectNote */Block.__(2, [note]));
+                                  return Curry._1(dispatch, /* SelectNote */Block.__(4, [note]));
                                 })
                             }, React.createElement("i", {
                                   className: "far fa-file-alt",
@@ -128,7 +128,7 @@ function make(dispatch, note, _children) {
                                         newNote_006,
                                         newNote_007
                                       ];
-                                      return Curry._1(dispatch, /* EditNote */Block.__(4, [newNote]));
+                                      return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
                                     })
                                 })), React.createElement("div", {
                               style: spaceAroundHoriz
@@ -158,7 +158,7 @@ function make(dispatch, note, _children) {
                                             newNote_006,
                                             newNote_007
                                           ];
-                                          return Curry._1(dispatch, /* EditNote */Block.__(4, [newNote]));
+                                          return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
                                         })
                                     }), React.createElement("i", {
                                       className: "fas fa-trash hover",
@@ -182,7 +182,7 @@ function make(dispatch, note, _children) {
                                             newNote_006,
                                             newNote_007
                                           ];
-                                          return Curry._1(dispatch, /* EditNote */Block.__(4, [newNote]));
+                                          return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
                                         })
                                     }))));
             }),

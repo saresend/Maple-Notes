@@ -26,6 +26,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     id: uuidGen(10),
     title: "All Notes",
     numNotes: 10,
+    isEditable: false,
     noteType: NoteBook,
     isSelected: true,
     filterFunction: (_element, note) => !note.isTrash,
@@ -34,6 +35,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     id: uuidGen(10),
     title: "Starred Notes",
     numNotes: 2,
+    isEditable: false,
     noteType: Starred,
     isSelected: false,
     filterFunction: (_element, note) => note.isStarred,
@@ -43,6 +45,7 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
     title: "Trash",
     numNotes: 3,
     noteType: Trash,
+    isEditable: false,
     isSelected: false,
     filterFunction: (_element, note) => note.isTrash,
   },
@@ -66,6 +69,30 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | UpdateBottomBarItem(newMenuItem) =>
+      let updatedMenuItems =
+        Js.Array.map(
+          (menuItem: NoteUIElement.noteUIElement) =>
+            if (menuItem.id == newMenuItem.id) {
+              newMenuItem;
+            } else {
+              menuItem;
+            },
+          state.bottomMenuItems,
+        );
+      ReasonReact.Update({...state, bottomMenuItems: updatedMenuItems});
+    | SetEditableBottomBarItem(menuItemId) =>
+      let newBottomItems =
+        Js.Array.map(
+          (menuItem: NoteUIElement.noteUIElement) =>
+            if (menuItem.id == menuItemId) {
+              {...menuItem, isEditable: true};
+            } else {
+              menuItem;
+            },
+          state.bottomMenuItems,
+        );
+      ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
     | DeleteBottomBarItem(menuItemId) =>
       let newBottomItems =
         Js.Array.filter(
@@ -91,6 +118,7 @@ let make = _children => {
         id: uuidGen(10),
         title: "New Folder",
         numNotes: 0,
+        isEditable: false,
         noteType: Folder(Utils.generateColor()),
         isSelected: false,
         filterFunction: (element, note) => note.folderID == element.id,

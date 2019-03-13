@@ -32,6 +32,7 @@ var initialTopItems = /* array */[
   /* record */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"All Notes",
+    /* isEditable */false,
     /* numNotes */10,
     /* noteType : NoteBook */0,
     /* isSelected */true,
@@ -42,6 +43,7 @@ var initialTopItems = /* array */[
   /* record */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"Starred Notes",
+    /* isEditable */false,
     /* numNotes */2,
     /* noteType : Starred */2,
     /* isSelected */false,
@@ -52,6 +54,7 @@ var initialTopItems = /* array */[
   /* record */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"Trash",
+    /* isEditable */false,
     /* numNotes */3,
     /* noteType : Trash */1,
     /* isSelected */false,
@@ -77,7 +80,7 @@ function make(_children) {
           /* render */(function (self) {
               var updateFunction = function (_value) {
                 var bodyText = ( _value() );
-                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(3, [bodyText]));
+                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(5, [bodyText]));
               };
               var match = self[/* state */1][/* currentNote */1];
               var editorView;
@@ -89,7 +92,7 @@ function make(_children) {
               } else {
                 editorView = React.createElement("div", undefined);
               }
-              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */5], self[/* state */1][/* currentFilterElement */4]);
+              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */6], self[/* state */1][/* currentFilterElement */4]);
               var filteredNotes = self[/* state */1][/* notes */0].filter(Curry.__1(partial_arg));
               var partial_arg$1 = self[/* state */1][/* searchFilter */5];
               var searchFilteredNotes = filteredNotes.filter(Curry.__1(partial_arg$1));
@@ -116,17 +119,18 @@ function make(_children) {
               if (typeof action === "number") {
                 if (action === 0) {
                   var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
-                  var newBottomItem_003 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
-                  var newBottomItem_005 = function (element, note) {
+                  var newBottomItem_004 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
+                  var newBottomItem_006 = function (element, note) {
                     return note[/* folderID */7] === element[/* id */0];
                   };
                   var newBottomItem = /* record */[
                     newBottomItem_000,
                     /* title */"New Folder",
+                    /* isEditable */false,
                     /* numNotes */0,
-                    newBottomItem_003,
+                    newBottomItem_004,
                     /* isSelected */false,
-                    newBottomItem_005
+                    newBottomItem_006
                   ];
                   var newBottomItems = state[/* bottomMenuItems */7].concat(/* array */[newBottomItem]);
                   return /* Update */Block.__(0, [/* record */[
@@ -154,9 +158,40 @@ function make(_children) {
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
+                      var newMenuItem = action[0];
+                      var updatedMenuItems = state[/* bottomMenuItems */7].map((function (menuItem) {
+                              if (menuItem[/* id */0] === newMenuItem[/* id */0]) {
+                                return newMenuItem;
+                              } else {
+                                return menuItem;
+                              }
+                            }));
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* menuBarOpen */state[/* menuBarOpen */3],
+                                  /* currentFilterElement */state[/* currentFilterElement */4],
+                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* bottomMenuItems */updatedMenuItems
+                                ]]);
+                  case 1 : 
                       var menuItemId = action[0];
-                      var newBottomItems$1 = state[/* bottomMenuItems */7].filter((function (bottomBarItem) {
-                              return bottomBarItem[/* id */0] !== menuItemId;
+                      var newBottomItems$1 = state[/* bottomMenuItems */7].map((function (menuItem) {
+                              if (menuItem[/* id */0] === menuItemId) {
+                                return /* record */[
+                                        /* id */menuItem[/* id */0],
+                                        /* title */menuItem[/* title */1],
+                                        /* isEditable */true,
+                                        /* numNotes */menuItem[/* numNotes */3],
+                                        /* noteType */menuItem[/* noteType */4],
+                                        /* isSelected */menuItem[/* isSelected */5],
+                                        /* filterFunction */menuItem[/* filterFunction */6]
+                                      ];
+                              } else {
+                                return menuItem;
+                              }
                             }));
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
@@ -168,7 +203,22 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */6],
                                   /* bottomMenuItems */newBottomItems$1
                                 ]]);
-                  case 1 : 
+                  case 2 : 
+                      var menuItemId$1 = action[0];
+                      var newBottomItems$2 = state[/* bottomMenuItems */7].filter((function (bottomBarItem) {
+                              return bottomBarItem[/* id */0] !== menuItemId$1;
+                            }));
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* menuBarOpen */state[/* menuBarOpen */3],
+                                  /* currentFilterElement */state[/* currentFilterElement */4],
+                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* bottomMenuItems */newBottomItems$2
+                                ]]);
+                  case 3 : 
                       if (action[0] === "") {
                         return /* Update */Block.__(0, [/* record */[
                                     /* notes */state[/* notes */0],
@@ -196,7 +246,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */7]
                                   ]]);
                       }
-                  case 2 : 
+                  case 4 : 
                       var note = action[0];
                       var notes = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note[/* noteID */0]) {
@@ -261,7 +311,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */6],
                                   /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 3 : 
+                  case 5 : 
                       var match = state[/* currentNote */1];
                       if (match !== undefined) {
                         var currNote = match;
@@ -305,7 +355,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */7]
                                   ]]);
                       }
-                  case 4 : 
+                  case 6 : 
                       var note$1 = action[0];
                       var notes$1 = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note$1[/* noteID */0]) {
@@ -324,7 +374,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */6],
                                   /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 5 : 
+                  case 7 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
                       var note_007 = /* folderID */state[/* currentFilterElement */4][/* id */0];
@@ -348,26 +398,28 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */6],
                                   /* bottomMenuItems */state[/* bottomMenuItems */7]
                                 ]]);
-                  case 6 : 
+                  case 8 : 
                       var element = action[0];
                       var newTopMenuItems = state[/* topMenuItems */6].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
                                         /* title */element[/* title */1],
-                                        /* numNotes */element[/* numNotes */2],
-                                        /* noteType */element[/* noteType */3],
+                                        /* isEditable */element[/* isEditable */2],
+                                        /* numNotes */element[/* numNotes */3],
+                                        /* noteType */element[/* noteType */4],
                                         /* isSelected */true,
-                                        /* filterFunction */element[/* filterFunction */5]
+                                        /* filterFunction */element[/* filterFunction */6]
                                       ];
                               } else {
                                 return /* record */[
                                         /* id */oldElement[/* id */0],
                                         /* title */oldElement[/* title */1],
-                                        /* numNotes */oldElement[/* numNotes */2],
-                                        /* noteType */oldElement[/* noteType */3],
+                                        /* isEditable */oldElement[/* isEditable */2],
+                                        /* numNotes */oldElement[/* numNotes */3],
+                                        /* noteType */oldElement[/* noteType */4],
                                         /* isSelected */false,
-                                        /* filterFunction */oldElement[/* filterFunction */5]
+                                        /* filterFunction */oldElement[/* filterFunction */6]
                                       ];
                               }
                             }));
@@ -376,19 +428,21 @@ function make(_children) {
                                 return /* record */[
                                         /* id */element[/* id */0],
                                         /* title */element[/* title */1],
-                                        /* numNotes */element[/* numNotes */2],
-                                        /* noteType */element[/* noteType */3],
+                                        /* isEditable */element[/* isEditable */2],
+                                        /* numNotes */element[/* numNotes */3],
+                                        /* noteType */element[/* noteType */4],
                                         /* isSelected */true,
-                                        /* filterFunction */element[/* filterFunction */5]
+                                        /* filterFunction */element[/* filterFunction */6]
                                       ];
                               } else {
                                 return /* record */[
                                         /* id */oldElement[/* id */0],
                                         /* title */oldElement[/* title */1],
-                                        /* numNotes */oldElement[/* numNotes */2],
-                                        /* noteType */oldElement[/* noteType */3],
+                                        /* isEditable */oldElement[/* isEditable */2],
+                                        /* numNotes */oldElement[/* numNotes */3],
+                                        /* noteType */oldElement[/* noteType */4],
                                         /* isSelected */false,
-                                        /* filterFunction */oldElement[/* filterFunction */5]
+                                        /* filterFunction */oldElement[/* filterFunction */6]
                                       ];
                               }
                             }));

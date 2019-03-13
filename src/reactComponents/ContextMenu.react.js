@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import { sendDeleteMessage } from "../utils.bs";
+import { sendDeleteMessage, sendRenameMessage } from "../utils.bs";
 
 const onClick = ({ event, props }) => console.log(event, props);
 
@@ -49,10 +49,15 @@ export default class ContextMenuReact extends React.Component {
   constructor(props) {
     super(props);
     this.deleteFolder = this.deleteFolder.bind(this);
+    this.renameFolder = this.renameFolder.bind(this);
   }
 
   deleteFolder() {
     sendDeleteMessage(this.props.dispatch, this.props.menuId);
+  }
+
+  renameFolder() {
+    sendRenameMessage(this.props.dispatch, this.props.menuId);
   }
 
   render() {
@@ -63,7 +68,7 @@ export default class ContextMenuReact extends React.Component {
         </ContextMenuTrigger>
         <ContextMenu id={this.props.menuId} style={menuContainerStyle}>
           <span style={titleMenuTextStyle}> Options </span>
-          <MenuItem style={menuItemStyle} onClick={this.deleteFolder}>
+          <MenuItem style={menuItemStyle} onClick={this.renameFolder}>
             <div style={horizContainerStyle}
 
               className="contextMenuHover">
