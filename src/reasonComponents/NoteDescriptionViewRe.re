@@ -99,41 +99,45 @@ let make = (~dispatch, ~note: Note.note, _children) => {
     let trashStyle =
       note.isTrash ? highlightedBookmark : unhighlightedBookmark;
     <div style=containerStyle>
-      <div
-        style=horizontalStyle
-        onClick={_data => dispatch(Actions.SelectNote(note))}>
-        <i style=iconStyle className="far fa-file-alt" />
-        <input
-          style=titleStyle
-          value={note.title}
-          onChange={_data => {
-            let noteTitle: string = [%bs.raw {| _data.target.value |}];
-            let newNote: Note.note = {...note, title: noteTitle};
-            dispatch(Actions.EditNote(newNote));
-          }}
-        />
-      </div>
-      <div style=spaceAroundHoriz>
-        <p style=timeStampStyle> {ReasonReact.string(dateString(note))} </p>
-        <div style=horizontalStyle>
-          <i
-            style=bookmarkStyle
-            className="fas fa-bookmark hover"
-            onClick={_data => {
-              let newNote = {...note, isStarred: !note.isStarred};
-              dispatch(Actions.EditNote(newNote));
-            }}
-          />
-          <i
-            style=trashStyle
-            className="fas fa-trash hover"
-            onClick={_data => {
-              let newNote = {...note, isTrash: !note.isTrash};
+      <ContextMenuRe dispatch suffix="Note" menuId={note.noteID}>
+        <div
+          style=horizontalStyle
+          onClick={_data => dispatch(Actions.SelectNote(note))}>
+          <i style=iconStyle className="far fa-file-alt" />
+          <input
+            style=titleStyle
+            value={note.title}
+            onChange={_data => {
+              let noteTitle: string = [%bs.raw {| _data.target.value |}];
+              let newNote: Note.note = {...note, title: noteTitle};
               dispatch(Actions.EditNote(newNote));
             }}
           />
         </div>
-      </div>
+        <div style=spaceAroundHoriz>
+          <p style=timeStampStyle>
+            {ReasonReact.string(dateString(note))}
+          </p>
+          <div style=horizontalStyle>
+            <i
+              style=bookmarkStyle
+              className="fas fa-bookmark hover"
+              onClick={_data => {
+                let newNote = {...note, isStarred: !note.isStarred};
+                dispatch(Actions.EditNote(newNote));
+              }}
+            />
+            <i
+              style=trashStyle
+              className="fas fa-trash hover"
+              onClick={_data => {
+                let newNote = {...note, isTrash: !note.isTrash};
+                dispatch(Actions.EditNote(newNote));
+              }}
+            />
+          </div>
+        </div>
+      </ContextMenuRe>
     </div>;
   },
 };

@@ -152,7 +152,7 @@ function make(dispatch, info, _children) {
                         style: countStyle
                       }, info[/* numNotes */3].toString()));
               if (isFolder) {
-                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* id */0], /* array */[internalItem]));
+                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* id */0], "Folder", /* array */[internalItem]));
               } else {
                 return internalItem;
               }

@@ -72,13 +72,13 @@ export default class ContextMenuReact extends React.Component {
             <div style={horizContainerStyle}
 
               className="contextMenuHover">
-              <p style={menuTextStyle}>Rename Folder</p>
+              <p style={menuTextStyle}>Rename {this.props.suffix}</p>
               <i style={iconStyle} className="fas fa-pencil-alt" />
             </div>
           </MenuItem>
           <MenuItem style={menuItemStyle} onClick={this.deleteFolder}>
             <div style={horizContainerStyle} className="contextMenuHover">
-              <p className="contextMenuHover" style={menuTextStyle}>Delete Folder</p>
+              <p className="contextMenuHover" style={menuTextStyle}>Delete {this.props.suffix}</p>
               <i style={iconStyle} className="fas fa-trash-alt" />
             </div>
           </MenuItem>

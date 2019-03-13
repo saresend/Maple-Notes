@@ -4,11 +4,12 @@ external contextMenuReact: ReasonReact.reactClass = "default";
 type jsProps = {
   menuId: string,
   dispatch: Actions.action => unit,
+  suffix: string,
 };
-let make = (~dispatch, ~menuId, children) => {
+let make = (~dispatch, ~menuId, ~suffix, children) => {
   ReasonReact.wrapJsForReason(
     ~reactClass=contextMenuReact,
-    ~props=jsProps(~menuId, ~dispatch),
+    ~props=jsProps(~menuId, ~dispatch, ~suffix),
     children,
   );
 };

@@ -112,7 +112,9 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
         </p>
       </div>;
     if (isFolder) {
-      <ContextMenuRe dispatch menuId={info.id}> internalItem </ContextMenuRe>;
+      <ContextMenuRe dispatch suffix="Folder" menuId={info.id}>
+        internalItem
+      </ContextMenuRe>;
     } else {
       internalItem;
     };
