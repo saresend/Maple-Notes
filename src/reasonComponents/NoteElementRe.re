@@ -41,6 +41,15 @@ let iconContainerStyle =
   );
 
 let iconStyle = ReactDOMRe.Style.make(~fontSize="18px", ~color="#aaaaaa", ());
+
+let editableTextStyle =
+  ReactDOMRe.Style.make(
+    ~color="#ffffff",
+    ~margin="7px",
+    ~marginLeft="15px",
+    ~opacity="1",
+    (),
+  );
 open Actions;
 let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
   ...component,
@@ -66,7 +75,17 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
       if (info.isEditable) {
         <input
           defaultValue={info.title}
-          style=textStyle
+          style=editableTextStyle
+          ref={input => {
+            let potentialInput = Js.Nullable.toOption(input);
+            switch (potentialInput) {
+            | Some(_nonNullInput) =>
+              %bs.raw
+              {| input.focus()
+              |}
+            | None => ()
+            };
+          }}
           onChange={event => {
             let textValue = event->ReactEvent.Form.target##value;
             dispatch(

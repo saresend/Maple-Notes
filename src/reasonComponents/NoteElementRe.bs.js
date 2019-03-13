@@ -46,6 +46,13 @@ var iconStyle = {
   fontSize: "18px"
 };
 
+var editableTextStyle = {
+  color: "#ffffff",
+  margin: "7px",
+  marginLeft: "15px",
+  opacity: "1"
+};
+
 function make(dispatch, info, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -97,8 +104,16 @@ function make(dispatch, info, _children) {
               var match$2 = info[/* noteType */4];
               var isFolder = typeof match$2 === "number" ? false : true;
               var nameElement = info[/* isEditable */2] ? React.createElement("input", {
+                      ref: (function (input) {
+                          if (input == null) {
+                            return /* () */0;
+                          } else {
+                            return ( input.focus()
+              );
+                          }
+                        }),
                       defaultValue: info[/* title */1],
-                      style: textStyle,
+                      style: editableTextStyle,
                       onBlur: (function (_event) {
                           return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(0, [/* record */[
                                           /* id */info[/* id */0],
@@ -156,5 +171,6 @@ exports.countStyle = countStyle;
 exports.containerStyle = containerStyle;
 exports.iconContainerStyle = iconContainerStyle;
 exports.iconStyle = iconStyle;
+exports.editableTextStyle = editableTextStyle;
 exports.make = make;
 /* component Not a pure module */
