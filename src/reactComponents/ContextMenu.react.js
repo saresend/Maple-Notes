@@ -46,15 +46,16 @@ const iconStyle = {
 
 export default class ContextMenuReact extends React.Component {
 
-  handleClick() {
-    //TODO: Dispatch Delete event, if it was delete that was selected
-    console.log(this.props.dispatch);
-    console.log(this.props.menuId);
-    // sendDeleteMessage(this.props.dispatch, this.props.menuId);
+  constructor(props) {
+    super(props);
+    this.deleteFolder = this.deleteFolder.bind(this);
+  }
+
+  deleteFolder() {
+    sendDeleteMessage(this.props.dispatch, this.props.menuId);
   }
 
   render() {
-    console.log(this.props.menuId);
     return (
       <div>
         <ContextMenuTrigger id={this.props.menuId}>
@@ -62,20 +63,22 @@ export default class ContextMenuReact extends React.Component {
         </ContextMenuTrigger>
         <ContextMenu id={this.props.menuId} style={menuContainerStyle}>
           <span style={titleMenuTextStyle}> Options </span>
-          <MenuItem style={menuItemStyle} onClick={this.handleClick}>
-            <div style={horizContainerStyle} className="contextMenuHover">
+          <MenuItem style={menuItemStyle} onClick={this.deleteFolder}>
+            <div style={horizContainerStyle}
+
+              className="contextMenuHover">
               <p style={menuTextStyle}>Rename Folder</p>
               <i style={iconStyle} className="fas fa-pencil-alt" />
             </div>
           </MenuItem>
-          <MenuItem style={menuItemStyle} onClick={this.handleClick}>
+          <MenuItem style={menuItemStyle} onClick={this.deleteFolder}>
             <div style={horizContainerStyle} className="contextMenuHover">
               <p className="contextMenuHover" style={menuTextStyle}>Delete Folder</p>
               <i style={iconStyle} className="fas fa-trash-alt" />
             </div>
           </MenuItem>
         </ContextMenu>
-      </div>
+      </div >
 
     )
   }
