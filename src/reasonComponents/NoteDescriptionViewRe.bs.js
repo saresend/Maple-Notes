@@ -109,6 +109,28 @@ function make(dispatch, note, _children) {
                         }),
                       style: titleStyle,
                       value: note[/* title */1],
+                      onBlur: (function (_data) {
+                          var newNote_000 = /* noteID */note[/* noteID */0];
+                          var newNote_001 = /* title */note[/* title */1];
+                          var newNote_002 = /* body */note[/* body */2];
+                          var newNote_003 = /* timestamp */note[/* timestamp */3];
+                          var newNote_004 = /* isStarred */note[/* isStarred */4];
+                          var newNote_005 = /* isSelected */note[/* isSelected */5];
+                          var newNote_007 = /* isTrash */note[/* isTrash */7];
+                          var newNote_008 = /* folderID */note[/* folderID */8];
+                          var newNote = /* record */[
+                            newNote_000,
+                            newNote_001,
+                            newNote_002,
+                            newNote_003,
+                            newNote_004,
+                            newNote_005,
+                            /* isEditable */false,
+                            newNote_007,
+                            newNote_008
+                          ];
+                          return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
+                        }),
                       onChange: (function (_data) {
                           var noteTitle = ( _data.target.value );
                           var newNote_000 = /* noteID */note[/* noteID */0];

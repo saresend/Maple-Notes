@@ -105,6 +105,10 @@ let make = (~dispatch, ~note: Note.note, _children) => {
         <input
           style=titleStyle
           value={note.title}
+          onBlur={(_data) => {
+            let newNote = {...note, isEditable: false};
+            dispatch(Actions.EditNote(newNote));
+          }}
           ref={input => {
             let potentialInput = Js.Nullable.toOption(input);
             switch (potentialInput) {
