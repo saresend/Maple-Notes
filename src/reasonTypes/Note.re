@@ -5,6 +5,7 @@ type note = {
   timestamp: string,
   isStarred: bool,
   isSelected: bool,
+  isEditable: bool,
   isTrash: bool,
   folderID: string,
 };

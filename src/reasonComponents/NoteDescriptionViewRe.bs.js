@@ -77,7 +77,7 @@ function make(dispatch, note, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              var dateString = (
+              var dateStringJS = (
       function (note) {
         var a = new Date(note[3]);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -95,8 +95,46 @@ function make(dispatch, note, _children) {
               var titleStyle = match ? selectedTitleStyle : unselectedTitleStyle;
               var match$1 = note[/* isStarred */4];
               var bookmarkStyle = match$1 ? highlightedBookmark : unhighlightedBookmark;
-              var match$2 = note[/* isTrash */6];
+              var match$2 = note[/* isTrash */7];
               var trashStyle = match$2 ? highlightedBookmark : unhighlightedBookmark;
+              var match$3 = note[/* isEditable */6];
+              var titleElement = match$3 ? React.createElement("input", {
+                      ref: (function (input) {
+                          if (input == null) {
+                            return /* () */0;
+                          } else {
+                            return ( input.focus()
+              );
+                          }
+                        }),
+                      style: titleStyle,
+                      value: note[/* title */1],
+                      onChange: (function (_data) {
+                          var noteTitle = ( _data.target.value );
+                          var newNote_000 = /* noteID */note[/* noteID */0];
+                          var newNote_002 = /* body */note[/* body */2];
+                          var newNote_003 = /* timestamp */note[/* timestamp */3];
+                          var newNote_004 = /* isStarred */note[/* isStarred */4];
+                          var newNote_005 = /* isSelected */note[/* isSelected */5];
+                          var newNote_006 = /* isEditable */note[/* isEditable */6];
+                          var newNote_007 = /* isTrash */note[/* isTrash */7];
+                          var newNote_008 = /* folderID */note[/* folderID */8];
+                          var newNote = /* record */[
+                            newNote_000,
+                            /* title */noteTitle,
+                            newNote_002,
+                            newNote_003,
+                            newNote_004,
+                            newNote_005,
+                            newNote_006,
+                            newNote_007,
+                            newNote_008
+                          ];
+                          return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
+                        })
+                    }) : React.createElement("p", {
+                      style: titleStyle
+                    }, note[/* title */1]);
               return React.createElement("div", {
                           style: containerStyle
                         }, ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, note[/* noteID */0], "Note", /* array */[
@@ -108,36 +146,12 @@ function make(dispatch, note, _children) {
                                       }, React.createElement("i", {
                                             className: "far fa-file-alt",
                                             style: iconStyle
-                                          }), React.createElement("input", {
-                                            style: titleStyle,
-                                            value: note[/* title */1],
-                                            onChange: (function (_data) {
-                                                var noteTitle = ( _data.target.value );
-                                                var newNote_000 = /* noteID */note[/* noteID */0];
-                                                var newNote_002 = /* body */note[/* body */2];
-                                                var newNote_003 = /* timestamp */note[/* timestamp */3];
-                                                var newNote_004 = /* isStarred */note[/* isStarred */4];
-                                                var newNote_005 = /* isSelected */note[/* isSelected */5];
-                                                var newNote_006 = /* isTrash */note[/* isTrash */6];
-                                                var newNote_007 = /* folderID */note[/* folderID */7];
-                                                var newNote = /* record */[
-                                                  newNote_000,
-                                                  /* title */noteTitle,
-                                                  newNote_002,
-                                                  newNote_003,
-                                                  newNote_004,
-                                                  newNote_005,
-                                                  newNote_006,
-                                                  newNote_007
-                                                ];
-                                                return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
-                                              })
-                                          })),
+                                          }), titleElement),
                                   React.createElement("div", {
                                         style: spaceAroundHoriz
                                       }, React.createElement("p", {
                                             style: timeStampStyle
-                                          }, Curry._1(dateString, note)), React.createElement("div", {
+                                          }, Curry._1(dateStringJS, note)), React.createElement("div", {
                                             style: horizontalStyle
                                           }, React.createElement("i", {
                                                 className: "fas fa-bookmark hover",
@@ -149,8 +163,9 @@ function make(dispatch, note, _children) {
                                                     var newNote_003 = /* timestamp */note[/* timestamp */3];
                                                     var newNote_004 = /* isStarred */!note[/* isStarred */4];
                                                     var newNote_005 = /* isSelected */note[/* isSelected */5];
-                                                    var newNote_006 = /* isTrash */note[/* isTrash */6];
-                                                    var newNote_007 = /* folderID */note[/* folderID */7];
+                                                    var newNote_006 = /* isEditable */note[/* isEditable */6];
+                                                    var newNote_007 = /* isTrash */note[/* isTrash */7];
+                                                    var newNote_008 = /* folderID */note[/* folderID */8];
                                                     var newNote = /* record */[
                                                       newNote_000,
                                                       newNote_001,
@@ -159,7 +174,8 @@ function make(dispatch, note, _children) {
                                                       newNote_004,
                                                       newNote_005,
                                                       newNote_006,
-                                                      newNote_007
+                                                      newNote_007,
+                                                      newNote_008
                                                     ];
                                                     return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
                                                   })
@@ -173,8 +189,9 @@ function make(dispatch, note, _children) {
                                                     var newNote_003 = /* timestamp */note[/* timestamp */3];
                                                     var newNote_004 = /* isStarred */note[/* isStarred */4];
                                                     var newNote_005 = /* isSelected */note[/* isSelected */5];
-                                                    var newNote_006 = /* isTrash */!note[/* isTrash */6];
-                                                    var newNote_007 = /* folderID */note[/* folderID */7];
+                                                    var newNote_006 = /* isEditable */note[/* isEditable */6];
+                                                    var newNote_007 = /* isTrash */!note[/* isTrash */7];
+                                                    var newNote_008 = /* folderID */note[/* folderID */8];
                                                     var newNote = /* record */[
                                                       newNote_000,
                                                       newNote_001,
@@ -183,7 +200,8 @@ function make(dispatch, note, _children) {
                                                       newNote_004,
                                                       newNote_005,
                                                       newNote_006,
-                                                      newNote_007
+                                                      newNote_007,
+                                                      newNote_008
                                                     ];
                                                     return Curry._1(dispatch, /* EditNote */Block.__(6, [newNote]));
                                                   })

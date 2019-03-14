@@ -76,7 +76,7 @@ let highlightedBookmark =
 let make = (~dispatch, ~note: Note.note, _children) => {
   ...component,
   render: _self => {
-    let dateString = [%bs.raw
+    let dateStringJS: Note.note => string = [%bs.raw
       {|
       function (note) {
         var a = new Date(note[3]);
@@ -92,27 +92,43 @@ let make = (~dispatch, ~note: Note.note, _children) => {
       }
     |}
     ];
+    let dateString = note => dateStringJS(note);
     let titleStyle =
       note.isSelected ? selectedTitleStyle : unselectedTitleStyle;
     let bookmarkStyle =
       note.isStarred ? highlightedBookmark : unhighlightedBookmark;
     let trashStyle =
       note.isTrash ? highlightedBookmark : unhighlightedBookmark;
+
+    let titleElement =
+      note.isEditable ?
+        <input
+          style=titleStyle
+          value={note.title}
+          ref={input => {
+            let potentialInput = Js.Nullable.toOption(input);
+            switch (potentialInput) {
+            | Some(_nonNullInput) =>
+              %bs.raw
+              {| input.focus()
+              |}
+            | None => ()
+            };
+          }}
+          onChange={_data => {
+            let noteTitle: string = [%bs.raw {| _data.target.value |}];
+            let newNote: Note.note = {...note, title: noteTitle};
+            dispatch(Actions.EditNote(newNote));
+          }}
+        /> :
+        <p style=titleStyle> {ReasonReact.string(note.title)} </p>;
     <div style=containerStyle>
       <ContextMenuRe dispatch suffix="Note" menuId={note.noteID}>
         <div
           style=horizontalStyle
           onClick={_data => dispatch(Actions.SelectNote(note))}>
           <i style=iconStyle className="far fa-file-alt" />
-          <input
-            style=titleStyle
-            value={note.title}
-            onChange={_data => {
-              let noteTitle: string = [%bs.raw {| _data.target.value |}];
-              let newNote: Note.note = {...note, title: noteTitle};
-              dispatch(Actions.EditNote(newNote));
-            }}
-          />
+          titleElement
         </div>
         <div style=spaceAroundHoriz>
           <p style=timeStampStyle>

@@ -25,10 +25,10 @@ let generateColor = () => {
 // This only exists because react doesn't know about Reason enum types, so
 // we wrap the function call in a reason function that gets exposed to react
 // instead.
-let sendDeleteMessage = (dispatchFunc, messageId) => {
+let sendDeleteFolderMessage = (dispatchFunc, messageId) => {
   dispatchFunc(Actions.DeleteBottomBarItem(messageId));
 };
 
-let sendRenameMessage = (dispatchFunc, messageId) => {
-  dispatchFunc(Actions.SetEditableBottomBarItem(messageId));
+let sendRenameNoteMessage = (dispatchFunc, messageId) => {
+  dispatchFunc(Actions.SetEditableNote(messageId));
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import { sendDeleteMessage, sendRenameMessage } from "../utils.bs";
+import { sendDeleteFolderMessage, sendRenameFolderMessage, sendRenameNoteMessage } from "../utils.bs";
 
 const onClick = ({ event, props }) => console.log(event, props);
 
@@ -53,11 +53,22 @@ export default class ContextMenuReact extends React.Component {
   }
 
   deleteFolder() {
-    sendDeleteMessage(this.props.dispatch, this.props.menuId);
+    if (this.props.suffix === "Folder") {
+      sendDeleteFolderMessage(this.props.dispatch, this.props.menuId);
+    }
+    else {
+
+    }
+
   }
 
   renameFolder() {
-    sendRenameMessage(this.props.dispatch, this.props.menuId);
+    if (this.props.suffix === "Folder") {
+      sendRenameFolderMessage(this.props.dispatch, this.props.menuId);
+    }
+    else {
+      sendRenameNoteMessage(this.props.dispatch, this.props.menuId);
+    }
   }
 
   render() {
@@ -70,7 +81,6 @@ export default class ContextMenuReact extends React.Component {
           <span style={titleMenuTextStyle}> Options </span>
           <MenuItem style={menuItemStyle} onClick={this.renameFolder}>
             <div style={horizContainerStyle}
-
               className="contextMenuHover">
               <p style={menuTextStyle}>Rename {this.props.suffix}</p>
               <i style={iconStyle} className="fas fa-pencil-alt" />

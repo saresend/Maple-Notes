@@ -8,5 +8,6 @@ type action =
   | TypeCurrentNote(string)
   | EditNote(Note.note)
   | AddNewNote(string)
+  | SetEditableNote(string)
   | SelectMenuBarItem(NoteUIElement.noteUIElement)
   | ToggleMenuBar;

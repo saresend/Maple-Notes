@@ -69,6 +69,18 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | SetEditableNote(noteId) =>
+      let newNotes =
+        Js.Array.map(
+          (note: Note.note) =>
+            if (note.noteID == noteId) {
+              {...note, isEditable: true};
+            } else {
+              note;
+            },
+          state.notes,
+        );
+      ReasonReact.Update({...state, notes: newNotes});
     | UpdateBottomBarItem(newMenuItem) =>
       let updatedMenuItems =
         Js.Array.map(
@@ -199,6 +211,7 @@ let make = _children => {
         title: "New Note",
         body: "",
         timestamp: [%bs.raw {| Date.now() |}],
+        isEditable: false,
         isStarred: false,
         isSelected: false,
         isTrash: false,

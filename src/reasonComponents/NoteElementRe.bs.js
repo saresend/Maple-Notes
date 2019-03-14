@@ -144,7 +144,7 @@ function make(dispatch, info, _children) {
                     className: "hover",
                     style: containerStyle,
                     onClick: (function (_data) {
-                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(8, [info]));
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(9, [info]));
                       })
                   }, React.createElement("div", {
                         style: iconContainerStyle
