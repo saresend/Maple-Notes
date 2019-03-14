@@ -30,6 +30,10 @@ function sendDeleteFolderMessage(dispatchFunc, messageId) {
   return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(2, [messageId]));
 }
 
+function sendRenameFolderMessage(dispatchFunc, messageId) {
+  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(1, [messageId]));
+}
+
 function sendRenameNoteMessage(dispatchFunc, messageId) {
   return Curry._1(dispatchFunc, /* SetEditableNote */Block.__(8, [messageId]));
 }
@@ -37,5 +41,6 @@ function sendRenameNoteMessage(dispatchFunc, messageId) {
 exports.genRandomValue = genRandomValue;
 exports.generateColor = generateColor;
 exports.sendDeleteFolderMessage = sendDeleteFolderMessage;
+exports.sendRenameFolderMessage = sendRenameFolderMessage;
 exports.sendRenameNoteMessage = sendRenameNoteMessage;
 /* No side effect */

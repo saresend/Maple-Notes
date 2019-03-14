@@ -105,7 +105,7 @@ let make = (~dispatch, ~note: Note.note, _children) => {
         <input
           style=titleStyle
           value={note.title}
-          onBlur={(_data) => {
+          onBlur={_data => {
             let newNote = {...note, isEditable: false};
             dispatch(Actions.EditNote(newNote));
           }}

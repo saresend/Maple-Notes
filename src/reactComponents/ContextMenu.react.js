@@ -63,6 +63,7 @@ export default class ContextMenuReact extends React.Component {
   }
 
   renameFolder() {
+    console.log(this.props.suffix);
     if (this.props.suffix === "Folder") {
       sendRenameFolderMessage(this.props.dispatch, this.props.menuId);
     }

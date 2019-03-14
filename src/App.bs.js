@@ -370,16 +370,44 @@ function make(_children) {
                                 return oldNote;
                               }
                             }));
-                      return /* Update */Block.__(0, [/* record */[
-                                  /* notes */notes$1,
-                                  /* currentNote */note$1,
-                                  /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
-                                ]]);
+                      var match$1 = state[/* currentNote */1];
+                      if (match$1 !== undefined) {
+                        var match$2 = match$1[/* noteID */0] === note$1[/* noteID */0];
+                        if (match$2) {
+                          return /* Update */Block.__(0, [/* record */[
+                                      /* notes */notes$1,
+                                      /* currentNote */note$1,
+                                      /* isLoaded */state[/* isLoaded */2],
+                                      /* menuBarOpen */state[/* menuBarOpen */3],
+                                      /* currentFilterElement */state[/* currentFilterElement */4],
+                                      /* searchFilter */state[/* searchFilter */5],
+                                      /* topMenuItems */state[/* topMenuItems */6],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    ]]);
+                        } else {
+                          return /* Update */Block.__(0, [/* record */[
+                                      /* notes */notes$1,
+                                      /* currentNote */state[/* currentNote */1],
+                                      /* isLoaded */state[/* isLoaded */2],
+                                      /* menuBarOpen */state[/* menuBarOpen */3],
+                                      /* currentFilterElement */state[/* currentFilterElement */4],
+                                      /* searchFilter */state[/* searchFilter */5],
+                                      /* topMenuItems */state[/* topMenuItems */6],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    ]]);
+                        }
+                      } else {
+                        return /* Update */Block.__(0, [/* record */[
+                                    /* notes */notes$1,
+                                    /* currentNote */state[/* currentNote */1],
+                                    /* isLoaded */state[/* isLoaded */2],
+                                    /* menuBarOpen */state[/* menuBarOpen */3],
+                                    /* currentFilterElement */state[/* currentFilterElement */4],
+                                    /* searchFilter */state[/* searchFilter */5],
+                                    /* topMenuItems */state[/* topMenuItems */6],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  ]]);
+                      }
                   case 7 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );

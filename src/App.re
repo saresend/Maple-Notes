@@ -203,7 +203,15 @@ let make = _children => {
             },
           state.notes,
         );
-      ReasonReact.Update({...state, notes, currentNote: Some(note)});
+      switch (state.currentNote) {
+      | Some(currNote) =>
+        currNote.noteID == note.noteID ?
+          ReasonReact.Update({...state, notes, currentNote: Some(note)}) :
+          ReasonReact.Update({...state, notes})
+
+      | None => ReasonReact.Update({...state, notes})
+      };
+
     | AddNewNote(_noteID) =>
       let noteID2 = uuidGen(20);
       let note: Note.note = {
