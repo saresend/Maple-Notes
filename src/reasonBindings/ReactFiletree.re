@@ -2,8 +2,8 @@
 type jsProps = {
   isOpen: bool,
   dispatch: Actions.action => unit,
-  topItems: array(NoteUIElement.noteUIElement),
-  bottomItems: array(NoteUIElement.noteUIElement),
+  topItems: array(SynthesizedFileTreeElement.synthesizedFileTreeElement),
+  bottomItems: array(SynthesizedFileTreeElement.synthesizedFileTreeElement),
 };
 
 [@bs.module "../reactComponents/FileTreeReact.react.js"]

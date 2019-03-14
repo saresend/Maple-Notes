@@ -25,7 +25,6 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   {
     id: uuidGen(10),
     title: "All Notes",
-    numNotes: 10,
     isEditable: false,
     noteType: NoteBook,
     isSelected: true,
@@ -34,7 +33,6 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   {
     id: uuidGen(10),
     title: "Starred Notes",
-    numNotes: 2,
     isEditable: false,
     noteType: Starred,
     isSelected: false,
@@ -43,13 +41,34 @@ let initialTopItems: array(NoteUIElement.noteUIElement) = [|
   {
     id: uuidGen(10),
     title: "Trash",
-    numNotes: 3,
     noteType: Trash,
     isEditable: false,
     isSelected: false,
     filterFunction: (_element, note) => note.isTrash,
   },
 |];
+open SynthesizedFileTreeElement;
+
+let augmentMenuItems:
+  (array(Note.note), array(NoteUIElement.noteUIElement)) =>
+  array(SynthesizedFileTreeElement.synthesizedFileTreeElement) =
+  (
+    notes: array(Note.note),
+    fileTreeElements: array(NoteUIElement.noteUIElement),
+  ) => {
+    Js.Array.map(
+      (ftElement: NoteUIElement.noteUIElement) => {
+        let filteredNotes =
+          Js.Array.filter(
+            (note: Note.note) => ftElement.filterFunction(ftElement, note),
+            notes,
+          );
+        let noteLength = Js.Array.length(filteredNotes);
+        {noteElement: ftElement, numNotes: noteLength};
+      },
+      fileTreeElements,
+    );
+  };
 
 let initialBottomItems: array(NoteUIElement.noteUIElement) = [||];
 open Actions;
@@ -129,7 +148,6 @@ let make = _children => {
       let newBottomItem: NoteUIElement.noteUIElement = {
         id: uuidGen(10),
         title: "New Folder",
-        numNotes: 0,
         isEditable: false,
         noteType: Folder(Utils.generateColor()),
         isSelected: false,
@@ -264,8 +282,11 @@ let make = _children => {
       Js.Array.filter(self.state.searchFilter, filteredNotes);
     <div style=appStyle>
       <ReactFiletree
-        topItems={self.state.topMenuItems}
-        bottomItems={self.state.bottomMenuItems}
+        topItems={augmentMenuItems(self.state.notes, self.state.topMenuItems)}
+        bottomItems={augmentMenuItems(
+          self.state.notes,
+          self.state.bottomMenuItems,
+        )}
         dispatch={self.send}
         isOpen={self.state.menuBarOpen}
       />

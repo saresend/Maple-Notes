@@ -65,9 +65,9 @@ function make(dispatch, info, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
-              var match = info[/* isSelected */5];
+              var match = info[/* noteElement */0][/* isSelected */4];
               var textStyle = match ? selectedTextStyle : unselectedTextStyle;
-              var match$1 = info[/* noteType */4];
+              var match$1 = info[/* noteElement */0][/* noteType */3];
               var icon;
               if (typeof match$1 === "number") {
                 switch (match$1) {
@@ -101,9 +101,9 @@ function make(dispatch, info, _children) {
                       style: folderIconStyle
                     });
               }
-              var match$2 = info[/* noteType */4];
+              var match$2 = info[/* noteElement */0][/* noteType */3];
               var isFolder = typeof match$2 === "number" ? false : true;
-              var nameElement = info[/* isEditable */2] ? React.createElement("input", {
+              var nameElement = info[/* noteElement */0][/* isEditable */2] ? React.createElement("input", {
                       ref: (function (input) {
                           if (input == null) {
                             return /* () */0;
@@ -112,47 +112,47 @@ function make(dispatch, info, _children) {
               );
                           }
                         }),
-                      defaultValue: info[/* title */1],
+                      defaultValue: info[/* noteElement */0][/* title */1],
                       style: editableTextStyle,
                       onBlur: (function (_event) {
+                          var init = info[/* noteElement */0];
                           return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(0, [/* record */[
-                                          /* id */info[/* id */0],
-                                          /* title */info[/* title */1],
+                                          /* id */init[/* id */0],
+                                          /* title */init[/* title */1],
                                           /* isEditable */false,
-                                          /* numNotes */info[/* numNotes */3],
-                                          /* noteType */info[/* noteType */4],
-                                          /* isSelected */info[/* isSelected */5],
-                                          /* filterFunction */info[/* filterFunction */6]
+                                          /* noteType */init[/* noteType */3],
+                                          /* isSelected */init[/* isSelected */4],
+                                          /* filterFunction */init[/* filterFunction */5]
                                         ]]));
                         }),
                       onChange: (function ($$event) {
                           var textValue = $$event.target.value;
+                          var init = info[/* noteElement */0];
                           return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(0, [/* record */[
-                                          /* id */info[/* id */0],
+                                          /* id */init[/* id */0],
                                           /* title */textValue,
-                                          /* isEditable */info[/* isEditable */2],
-                                          /* numNotes */info[/* numNotes */3],
-                                          /* noteType */info[/* noteType */4],
-                                          /* isSelected */info[/* isSelected */5],
-                                          /* filterFunction */info[/* filterFunction */6]
+                                          /* isEditable */init[/* isEditable */2],
+                                          /* noteType */init[/* noteType */3],
+                                          /* isSelected */init[/* isSelected */4],
+                                          /* filterFunction */init[/* filterFunction */5]
                                         ]]));
                         })
                     }) : React.createElement("p", {
                       style: textStyle
-                    }, info[/* title */1]);
+                    }, info[/* noteElement */0][/* title */1]);
               var internalItem = React.createElement("div", {
                     className: "hover",
                     style: containerStyle,
                     onClick: (function (_data) {
-                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(9, [info]));
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(9, [info[/* noteElement */0]]));
                       })
                   }, React.createElement("div", {
                         style: iconContainerStyle
                       }, icon, nameElement), React.createElement("p", {
                         style: countStyle
-                      }, info[/* numNotes */3].toString()));
+                      }, info[/* numNotes */1].toString()));
               if (isFolder) {
-                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* id */0], "Folder", /* array */[internalItem]));
+                return ReasonReact.element(undefined, undefined, ContextMenuRe$ReactTemplate.make(dispatch, info[/* noteElement */0][/* id */0], "Folder", /* array */[internalItem]));
               } else {
                 return internalItem;
               }

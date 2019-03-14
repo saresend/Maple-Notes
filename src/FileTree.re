@@ -101,8 +101,8 @@ type jsProps = {
   opacity: string,
   width: string,
   dispatch: ReactTemplate.Actions.action => unit,
-  bottomItems: array(NoteUIElement.noteUIElement),
-  topItems: array(NoteUIElement.noteUIElement),
+  bottomItems: array(SynthesizedFileTreeElement.synthesizedFileTreeElement),
+  topItems: array(SynthesizedFileTreeElement.synthesizedFileTreeElement),
 };
 
 let default =

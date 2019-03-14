@@ -51,13 +51,19 @@ let editableTextStyle =
     (),
   );
 open Actions;
-let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
+let make =
+    (
+      ~dispatch,
+      ~info: SynthesizedFileTreeElement.synthesizedFileTreeElement,
+      _children,
+    ) => {
   ...component,
   render: _self => {
-    let textStyle = info.isSelected ? selectedTextStyle : unselectedTextStyle;
+    let textStyle =
+      info.noteElement.isSelected ? selectedTextStyle : unselectedTextStyle;
 
     let icon =
-      switch (info.noteType) {
+      switch (info.noteElement.noteType) {
       | Folder(color) =>
         let folderIconStyle =
           ReactDOMRe.Style.make(~fontSize="18px", ~color, ());
@@ -67,14 +73,14 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
       | Trash => <i style=iconStyle className="far fa-trash-alt" />
       };
     let isFolder =
-      switch (info.noteType) {
+      switch (info.noteElement.noteType) {
       | Folder(_) => true
       | _ => false
       };
     let nameElement =
-      if (info.isEditable) {
+      if (info.noteElement.isEditable) {
         <input
-          defaultValue={info.title}
+          defaultValue={info.noteElement.title}
           style=editableTextStyle
           ref={input => {
             let potentialInput = Js.Nullable.toOption(input);
@@ -89,22 +95,28 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
           onChange={event => {
             let textValue = event->ReactEvent.Form.target##value;
             dispatch(
-              Actions.UpdateBottomBarItem({...info, title: textValue}),
+              Actions.UpdateBottomBarItem({
+                ...info.noteElement,
+                title: textValue,
+              }),
             );
           }}
           onBlur={_event =>
             dispatch(
-              Actions.UpdateBottomBarItem({...info, isEditable: false}),
+              Actions.UpdateBottomBarItem({
+                ...info.noteElement,
+                isEditable: false,
+              }),
             )
           }
         />;
       } else {
-        <p style=textStyle> {ReasonReact.string(info.title)} </p>;
+        <p style=textStyle> {ReasonReact.string(info.noteElement.title)} </p>;
       };
     let internalItem =
       <div
         className="hover"
-        onClick={_data => dispatch(SelectMenuBarItem(info))}
+        onClick={_data => dispatch(SelectMenuBarItem(info.noteElement))}
         style=containerStyle>
         <div style=iconContainerStyle> icon nameElement </div>
         <p style=countStyle>
@@ -112,7 +124,7 @@ let make = (~dispatch, ~info: NoteUIElement.noteUIElement, _children) => {
         </p>
       </div>;
     if (isFolder) {
-      <ContextMenuRe dispatch suffix="Folder" menuId={info.id}>
+      <ContextMenuRe dispatch suffix="Folder" menuId={info.noteElement.id}>
         internalItem
       </ContextMenuRe>;
     } else {

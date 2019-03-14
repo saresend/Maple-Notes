@@ -33,7 +33,6 @@ var initialTopItems = /* array */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"All Notes",
     /* isEditable */false,
-    /* numNotes */10,
     /* noteType : NoteBook */0,
     /* isSelected */true,
     /* filterFunction */(function (_element, note) {
@@ -44,7 +43,6 @@ var initialTopItems = /* array */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"Starred Notes",
     /* isEditable */false,
-    /* numNotes */2,
     /* noteType : Starred */2,
     /* isSelected */false,
     /* filterFunction */(function (_element, note) {
@@ -55,7 +53,6 @@ var initialTopItems = /* array */[
     /* id */Curry._1(uuidGen, 10),
     /* title */"Trash",
     /* isEditable */false,
-    /* numNotes */3,
     /* noteType : Trash */1,
     /* isSelected */false,
     /* filterFunction */(function (_element, note) {
@@ -63,6 +60,19 @@ var initialTopItems = /* array */[
       })
   ]
 ];
+
+function augmentMenuItems(notes, fileTreeElements) {
+  return fileTreeElements.map((function (ftElement) {
+                var filteredNotes = notes.filter((function (note) {
+                        return Curry._2(ftElement[/* filterFunction */5], ftElement, note);
+                      }));
+                var noteLength = filteredNotes.length;
+                return /* record */[
+                        /* noteElement */ftElement,
+                        /* numNotes */noteLength
+                      ];
+              }));
+}
 
 var initialBottomItems = /* array */[];
 
@@ -92,13 +102,13 @@ function make(_children) {
               } else {
                 editorView = React.createElement("div", undefined);
               }
-              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */6], self[/* state */1][/* currentFilterElement */4]);
+              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */5], self[/* state */1][/* currentFilterElement */4]);
               var filteredNotes = self[/* state */1][/* notes */0].filter(Curry.__1(partial_arg));
               var partial_arg$1 = self[/* state */1][/* searchFilter */5];
               var searchFilteredNotes = filteredNotes.filter(Curry.__1(partial_arg$1));
               return React.createElement("div", {
                           style: appStyle
-                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], self[/* state */1][/* topMenuItems */6], self[/* state */1][/* bottomMenuItems */7], /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
+                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */6]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */7]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
             }),
           /* initialState */(function (param) {
               return /* record */[
@@ -119,18 +129,17 @@ function make(_children) {
               if (typeof action === "number") {
                 if (action === 0) {
                   var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
-                  var newBottomItem_004 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
-                  var newBottomItem_006 = function (element, note) {
+                  var newBottomItem_003 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
+                  var newBottomItem_005 = function (element, note) {
                     return note[/* folderID */8] === element[/* id */0];
                   };
                   var newBottomItem = /* record */[
                     newBottomItem_000,
                     /* title */"New Folder",
                     /* isEditable */false,
-                    /* numNotes */0,
-                    newBottomItem_004,
+                    newBottomItem_003,
                     /* isSelected */false,
-                    newBottomItem_006
+                    newBottomItem_005
                   ];
                   var newBottomItems = state[/* bottomMenuItems */7].concat(/* array */[newBottomItem]);
                   return /* Update */Block.__(0, [/* record */[
@@ -184,10 +193,9 @@ function make(_children) {
                                         /* id */menuItem[/* id */0],
                                         /* title */menuItem[/* title */1],
                                         /* isEditable */true,
-                                        /* numNotes */menuItem[/* numNotes */3],
-                                        /* noteType */menuItem[/* noteType */4],
-                                        /* isSelected */menuItem[/* isSelected */5],
-                                        /* filterFunction */menuItem[/* filterFunction */6]
+                                        /* noteType */menuItem[/* noteType */3],
+                                        /* isSelected */menuItem[/* isSelected */4],
+                                        /* filterFunction */menuItem[/* filterFunction */5]
                                       ];
                               } else {
                                 return menuItem;
@@ -470,20 +478,18 @@ function make(_children) {
                                         /* id */element[/* id */0],
                                         /* title */element[/* title */1],
                                         /* isEditable */element[/* isEditable */2],
-                                        /* numNotes */element[/* numNotes */3],
-                                        /* noteType */element[/* noteType */4],
+                                        /* noteType */element[/* noteType */3],
                                         /* isSelected */true,
-                                        /* filterFunction */element[/* filterFunction */6]
+                                        /* filterFunction */element[/* filterFunction */5]
                                       ];
                               } else {
                                 return /* record */[
                                         /* id */oldElement[/* id */0],
                                         /* title */oldElement[/* title */1],
                                         /* isEditable */oldElement[/* isEditable */2],
-                                        /* numNotes */oldElement[/* numNotes */3],
-                                        /* noteType */oldElement[/* noteType */4],
+                                        /* noteType */oldElement[/* noteType */3],
                                         /* isSelected */false,
-                                        /* filterFunction */oldElement[/* filterFunction */6]
+                                        /* filterFunction */oldElement[/* filterFunction */5]
                                       ];
                               }
                             }));
@@ -493,20 +499,18 @@ function make(_children) {
                                         /* id */element[/* id */0],
                                         /* title */element[/* title */1],
                                         /* isEditable */element[/* isEditable */2],
-                                        /* numNotes */element[/* numNotes */3],
-                                        /* noteType */element[/* noteType */4],
+                                        /* noteType */element[/* noteType */3],
                                         /* isSelected */true,
-                                        /* filterFunction */element[/* filterFunction */6]
+                                        /* filterFunction */element[/* filterFunction */5]
                                       ];
                               } else {
                                 return /* record */[
                                         /* id */oldElement[/* id */0],
                                         /* title */oldElement[/* title */1],
                                         /* isEditable */oldElement[/* isEditable */2],
-                                        /* numNotes */oldElement[/* numNotes */3],
-                                        /* noteType */oldElement[/* noteType */4],
+                                        /* noteType */oldElement[/* noteType */3],
                                         /* isSelected */false,
-                                        /* filterFunction */oldElement[/* filterFunction */6]
+                                        /* filterFunction */oldElement[/* filterFunction */5]
                                       ];
                               }
                             }));
@@ -533,6 +537,7 @@ exports.editorContainerStyle = editorContainerStyle;
 exports.maple = maple;
 exports.uuidGen = uuidGen;
 exports.initialTopItems = initialTopItems;
+exports.augmentMenuItems = augmentMenuItems;
 exports.initialBottomItems = initialBottomItems;
 exports.make = make;
 /* maple Not a pure module */
