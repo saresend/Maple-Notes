@@ -227,7 +227,8 @@ function make(_children) {
                                   /* bottomMenuItems */newBottomItems$2
                                 ]]);
                   case 3 : 
-                      if (action[0] === "") {
+                      var searchString = action[0];
+                      if (searchString === "") {
                         return /* Update */Block.__(0, [/* record */[
                                     /* notes */state[/* notes */0],
                                     /* currentNote */state[/* currentNote */1],
@@ -247,8 +248,17 @@ function make(_children) {
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* menuBarOpen */state[/* menuBarOpen */3],
                                     /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* searchFilter */(function (_note) {
-                                        return true;
+                                    /* searchFilter */(function (note) {
+                                        var regex = new RegExp(searchString);
+                                        var result = regex.exec(note[/* body */2]);
+                                        var bodySearch = result !== null;
+                                        var result$1 = regex.exec(note[/* title */1]);
+                                        var titleSearch = result$1 !== null;
+                                        if (bodySearch) {
+                                          return true;
+                                        } else {
+                                          return titleSearch;
+                                        }
                                       }),
                                     /* topMenuItems */state[/* topMenuItems */6],
                                     /* bottomMenuItems */state[/* bottomMenuItems */7]

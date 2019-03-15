@@ -138,9 +138,23 @@ let make = _children => {
       } else {
         ReasonReact.Update({
           ...state,
-          searchFilter: _note => {
-            true;
-                // note.body.contains(searchString) || note.title.contains(searchString);
+          searchFilter: note => {
+            let regex = Js.Re.fromString(searchString);
+            let result = Js.Re.exec(note.body, regex);
+            let bodySearch =
+              switch (result) {
+              | Some(_) => true
+              | None => false
+              };
+
+            let result = Js.Re.exec(note.title, regex);
+            let titleSearch =
+              switch (result) {
+              | Some(_) => true
+              | None => false
+              };
+
+            bodySearch || titleSearch;
           },
         });
       }
