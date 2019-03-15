@@ -9,6 +9,7 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Utils$ReactTemplate = require("./Utils.bs.js");
 var Editor$ReactTemplate = require("./Editor.bs.js");
 var NoteListRe$ReactTemplate = require("./reasonComponents/NoteListRe.bs.js");
+var SigninPage$ReactTemplate = require("./signinComponents/SigninPage.bs.js");
 var ReactFiletree$ReactTemplate = require("./reasonBindings/ReactFiletree.bs.js");
 
 var appStyle = {
@@ -102,19 +103,27 @@ function make(_children) {
               } else {
                 editorView = React.createElement("div", undefined);
               }
-              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */4][/* filterFunction */5], self[/* state */1][/* currentFilterElement */4]);
+              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */5][/* filterFunction */5], self[/* state */1][/* currentFilterElement */5]);
               var filteredNotes = self[/* state */1][/* notes */0].filter(Curry.__1(partial_arg));
-              var partial_arg$1 = self[/* state */1][/* searchFilter */5];
+              var partial_arg$1 = self[/* state */1][/* searchFilter */6];
               var searchFilteredNotes = filteredNotes.filter(Curry.__1(partial_arg$1));
-              return React.createElement("div", {
-                          style: appStyle
-                        }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */3], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */6]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */7]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
+              var noteApplication = React.createElement("div", {
+                    style: appStyle
+                  }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */4], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */7]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */8]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
+              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(/* array */[]));
+              var match$1 = self[/* state */1][/* isUserSignedIn */3];
+              if (match$1) {
+                return noteApplication;
+              } else {
+                return signinPage;
+              }
             }),
           /* initialState */(function (param) {
               return /* record */[
                       /* notes : array */[],
                       /* currentNote */undefined,
                       /* isLoaded */false,
+                      /* isUserSignedIn */false,
                       /* menuBarOpen */true,
                       /* currentFilterElement */Caml_array.caml_array_get(initialTopItems, 0),
                       /* searchFilter */(function (_note) {
@@ -141,15 +150,16 @@ function make(_children) {
                     /* isSelected */false,
                     newBottomItem_005
                   ];
-                  var newBottomItems = state[/* bottomMenuItems */7].concat(/* array */[newBottomItem]);
+                  var newBottomItems = state[/* bottomMenuItems */8].concat(/* array */[newBottomItem]);
                   return /* Update */Block.__(0, [/* record */[
                               /* notes */state[/* notes */0],
                               /* currentNote */state[/* currentNote */1],
                               /* isLoaded */state[/* isLoaded */2],
-                              /* menuBarOpen */state[/* menuBarOpen */3],
-                              /* currentFilterElement */state[/* currentFilterElement */4],
-                              /* searchFilter */state[/* searchFilter */5],
-                              /* topMenuItems */state[/* topMenuItems */6],
+                              /* isUserSignedIn */state[/* isUserSignedIn */3],
+                              /* menuBarOpen */state[/* menuBarOpen */4],
+                              /* currentFilterElement */state[/* currentFilterElement */5],
+                              /* searchFilter */state[/* searchFilter */6],
+                              /* topMenuItems */state[/* topMenuItems */7],
                               /* bottomMenuItems */newBottomItems
                             ]]);
                 } else {
@@ -157,18 +167,19 @@ function make(_children) {
                               /* notes */state[/* notes */0],
                               /* currentNote */state[/* currentNote */1],
                               /* isLoaded */state[/* isLoaded */2],
-                              /* menuBarOpen */!state[/* menuBarOpen */3],
-                              /* currentFilterElement */state[/* currentFilterElement */4],
-                              /* searchFilter */state[/* searchFilter */5],
-                              /* topMenuItems */state[/* topMenuItems */6],
-                              /* bottomMenuItems */state[/* bottomMenuItems */7]
+                              /* isUserSignedIn */state[/* isUserSignedIn */3],
+                              /* menuBarOpen */!state[/* menuBarOpen */4],
+                              /* currentFilterElement */state[/* currentFilterElement */5],
+                              /* searchFilter */state[/* searchFilter */6],
+                              /* topMenuItems */state[/* topMenuItems */7],
+                              /* bottomMenuItems */state[/* bottomMenuItems */8]
                             ]]);
                 }
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
                       var newMenuItem = action[0];
-                      var updatedMenuItems = state[/* bottomMenuItems */7].map((function (menuItem) {
+                      var updatedMenuItems = state[/* bottomMenuItems */8].map((function (menuItem) {
                               if (menuItem[/* id */0] === newMenuItem[/* id */0]) {
                                 return newMenuItem;
                               } else {
@@ -179,15 +190,16 @@ function make(_children) {
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */updatedMenuItems
                                 ]]);
                   case 1 : 
                       var menuItemId = action[0];
-                      var newBottomItems$1 = state[/* bottomMenuItems */7].map((function (menuItem) {
+                      var newBottomItems$1 = state[/* bottomMenuItems */8].map((function (menuItem) {
                               if (menuItem[/* id */0] === menuItemId) {
                                 return /* record */[
                                         /* id */menuItem[/* id */0],
@@ -205,25 +217,27 @@ function make(_children) {
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */newBottomItems$1
                                 ]]);
                   case 2 : 
                       var menuItemId$1 = action[0];
-                      var newBottomItems$2 = state[/* bottomMenuItems */7].filter((function (bottomBarItem) {
+                      var newBottomItems$2 = state[/* bottomMenuItems */8].filter((function (bottomBarItem) {
                               return bottomBarItem[/* id */0] !== menuItemId$1;
                             }));
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */newBottomItems$2
                                 ]]);
                   case 3 : 
@@ -233,21 +247,23 @@ function make(_children) {
                                     /* notes */state[/* notes */0],
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
-                                    /* menuBarOpen */state[/* menuBarOpen */3],
-                                    /* currentFilterElement */state[/* currentFilterElement */4],
+                                    /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                    /* menuBarOpen */state[/* menuBarOpen */4],
+                                    /* currentFilterElement */state[/* currentFilterElement */5],
                                     /* searchFilter */(function (_note) {
                                         return true;
                                       }),
-                                    /* topMenuItems */state[/* topMenuItems */6],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    /* topMenuItems */state[/* topMenuItems */7],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       } else {
                         return /* Update */Block.__(0, [/* record */[
                                     /* notes */state[/* notes */0],
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
-                                    /* menuBarOpen */state[/* menuBarOpen */3],
-                                    /* currentFilterElement */state[/* currentFilterElement */4],
+                                    /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                    /* menuBarOpen */state[/* menuBarOpen */4],
+                                    /* currentFilterElement */state[/* currentFilterElement */5],
                                     /* searchFilter */(function (note) {
                                         var regex = new RegExp(searchString);
                                         var result = regex.exec(note[/* body */2]);
@@ -260,8 +276,8 @@ function make(_children) {
                                           return titleSearch;
                                         }
                                       }),
-                                    /* topMenuItems */state[/* topMenuItems */6],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    /* topMenuItems */state[/* topMenuItems */7],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
                   case 4 : 
@@ -327,11 +343,12 @@ function make(_children) {
                                   /* notes */notes,
                                   /* currentNote */note,
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
                   case 5 : 
                       var match = state[/* currentNote */1];
@@ -361,22 +378,24 @@ function make(_children) {
                                     /* notes */state[/* notes */0],
                                     /* currentNote */newNote,
                                     /* isLoaded */state[/* isLoaded */2],
-                                    /* menuBarOpen */state[/* menuBarOpen */3],
-                                    /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* searchFilter */state[/* searchFilter */5],
-                                    /* topMenuItems */state[/* topMenuItems */6],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                    /* menuBarOpen */state[/* menuBarOpen */4],
+                                    /* currentFilterElement */state[/* currentFilterElement */5],
+                                    /* searchFilter */state[/* searchFilter */6],
+                                    /* topMenuItems */state[/* topMenuItems */7],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       } else {
                         return /* Update */Block.__(0, [/* record */[
                                     /* notes */state[/* notes */0],
                                     /* currentNote */undefined,
                                     /* isLoaded */state[/* isLoaded */2],
-                                    /* menuBarOpen */state[/* menuBarOpen */3],
-                                    /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* searchFilter */state[/* searchFilter */5],
-                                    /* topMenuItems */state[/* topMenuItems */6],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                    /* menuBarOpen */state[/* menuBarOpen */4],
+                                    /* currentFilterElement */state[/* currentFilterElement */5],
+                                    /* searchFilter */state[/* searchFilter */6],
+                                    /* topMenuItems */state[/* topMenuItems */7],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
                   case 6 : 
@@ -396,22 +415,24 @@ function make(_children) {
                                       /* notes */notes$1,
                                       /* currentNote */note$1,
                                       /* isLoaded */state[/* isLoaded */2],
-                                      /* menuBarOpen */state[/* menuBarOpen */3],
-                                      /* currentFilterElement */state[/* currentFilterElement */4],
-                                      /* searchFilter */state[/* searchFilter */5],
-                                      /* topMenuItems */state[/* topMenuItems */6],
-                                      /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                      /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                      /* menuBarOpen */state[/* menuBarOpen */4],
+                                      /* currentFilterElement */state[/* currentFilterElement */5],
+                                      /* searchFilter */state[/* searchFilter */6],
+                                      /* topMenuItems */state[/* topMenuItems */7],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */8]
                                     ]]);
                         } else {
                           return /* Update */Block.__(0, [/* record */[
                                       /* notes */notes$1,
                                       /* currentNote */state[/* currentNote */1],
                                       /* isLoaded */state[/* isLoaded */2],
-                                      /* menuBarOpen */state[/* menuBarOpen */3],
-                                      /* currentFilterElement */state[/* currentFilterElement */4],
-                                      /* searchFilter */state[/* searchFilter */5],
-                                      /* topMenuItems */state[/* topMenuItems */6],
-                                      /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                      /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                      /* menuBarOpen */state[/* menuBarOpen */4],
+                                      /* currentFilterElement */state[/* currentFilterElement */5],
+                                      /* searchFilter */state[/* searchFilter */6],
+                                      /* topMenuItems */state[/* topMenuItems */7],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */8]
                                     ]]);
                         }
                       } else {
@@ -419,17 +440,18 @@ function make(_children) {
                                     /* notes */notes$1,
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
-                                    /* menuBarOpen */state[/* menuBarOpen */3],
-                                    /* currentFilterElement */state[/* currentFilterElement */4],
-                                    /* searchFilter */state[/* searchFilter */5],
-                                    /* topMenuItems */state[/* topMenuItems */6],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                    /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                    /* menuBarOpen */state[/* menuBarOpen */4],
+                                    /* currentFilterElement */state[/* currentFilterElement */5],
+                                    /* searchFilter */state[/* searchFilter */6],
+                                    /* topMenuItems */state[/* topMenuItems */7],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
                   case 7 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
-                      var note_008 = /* folderID */state[/* currentFilterElement */4][/* id */0];
+                      var note_008 = /* folderID */state[/* currentFilterElement */5][/* id */0];
                       var note$2 = /* record */[
                         /* noteID */noteID2,
                         /* title */"New Note",
@@ -445,11 +467,12 @@ function make(_children) {
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
                   case 8 : 
                       var noteId = action[0];
@@ -474,15 +497,16 @@ function make(_children) {
                                   /* notes */newNotes,
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
-                                  /* currentFilterElement */state[/* currentFilterElement */4],
-                                  /* searchFilter */state[/* searchFilter */5],
-                                  /* topMenuItems */state[/* topMenuItems */6],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */7]
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
                   case 9 : 
                       var element = action[0];
-                      var newTopMenuItems = state[/* topMenuItems */6].map((function (oldElement) {
+                      var newTopMenuItems = state[/* topMenuItems */7].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -503,7 +527,7 @@ function make(_children) {
                                       ];
                               }
                             }));
-                      var newBottomMenuItems = state[/* bottomMenuItems */7].map((function (oldElement) {
+                      var newBottomMenuItems = state[/* bottomMenuItems */8].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -528,9 +552,10 @@ function make(_children) {
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* menuBarOpen */state[/* menuBarOpen */3],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
                                   /* currentFilterElement */element,
-                                  /* searchFilter */state[/* searchFilter */5],
+                                  /* searchFilter */state[/* searchFilter */6],
                                   /* topMenuItems */newTopMenuItems,
                                   /* bottomMenuItems */newBottomMenuItems
                                 ]]);

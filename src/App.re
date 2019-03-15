@@ -2,6 +2,7 @@ type state = {
   notes: array(Note.note),
   currentNote: option(Note.note),
   isLoaded: bool,
+  isUserSignedIn: bool,
   menuBarOpen: bool,
   currentFilterElement: NoteUIElement.noteUIElement,
   searchFilter: Note.note => bool,
@@ -80,6 +81,7 @@ let make = _children => {
     isLoaded: false,
     menuBarOpen: true,
     currentNote: None,
+    isUserSignedIn: false,
     currentFilterElement: initialTopItems[0],
     searchFilter: _note => true,
     topMenuItems: initialTopItems,
@@ -294,18 +296,24 @@ let make = _children => {
       );
     let searchFilteredNotes =
       Js.Array.filter(self.state.searchFilter, filteredNotes);
-    <div style=appStyle>
-      <ReactFiletree
-        topItems={augmentMenuItems(self.state.notes, self.state.topMenuItems)}
-        bottomItems={augmentMenuItems(
-          self.state.notes,
-          self.state.bottomMenuItems,
-        )}
-        dispatch={self.send}
-        isOpen={self.state.menuBarOpen}
-      />
-      <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
-      editorView
-    </div>;
+    let noteApplication =
+      <div style=appStyle>
+        <ReactFiletree
+          topItems={augmentMenuItems(
+            self.state.notes,
+            self.state.topMenuItems,
+          )}
+          bottomItems={augmentMenuItems(
+            self.state.notes,
+            self.state.bottomMenuItems,
+          )}
+          dispatch={self.send}
+          isOpen={self.state.menuBarOpen}
+        />
+        <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
+        editorView
+      </div>;
+    let signinPage = <SigninPage />;
+    self.state.isUserSignedIn ? noteApplication : signinPage;
   },
 };
