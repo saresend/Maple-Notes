@@ -34,8 +34,15 @@ let topNoteStyle =
 
 let folderStyle =
   ReactDOMRe.Style.make(~marginTop="100px", ~overflow="hidden", ());
-let scrollStyle =
+let scrollStylePre =
   ReactDOMRe.Style.make(~overflow="auto", ~maxHeight="40vh", ());
+
+let scrollStyle =
+  ReactDOMRe.Style.unsafeAddProp(
+    scrollStylePre,
+    "scrollbar-color",
+    "gray transparent",
+  );
 
 let make =
     (

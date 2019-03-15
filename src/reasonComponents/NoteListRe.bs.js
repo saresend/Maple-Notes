@@ -4,6 +4,7 @@
 var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var NoteDescriptionViewRe$ReactTemplate = require("./NoteDescriptionViewRe.bs.js");
 
@@ -32,10 +33,12 @@ var searchBarStyle = {
   outline: "0px"
 };
 
-var scrollStyle = {
+var scrollStylePre = {
   maxHeight: "90vh",
   overflow: "auto"
 };
+
+var scrollStyle = ReactDOMRe.Style[/* unsafeAddProp */1](scrollStylePre, "scrollbar-color", "#aaaaaa transparent");
 
 function make(dispatch, notes, _children) {
   return /* record */[
@@ -89,6 +92,7 @@ exports.component = component;
 exports.containerStyle = containerStyle;
 exports.horizontalContainer = horizontalContainer;
 exports.searchBarStyle = searchBarStyle;
+exports.scrollStylePre = scrollStylePre;
 exports.scrollStyle = scrollStyle;
 exports.make = make;
 /* component Not a pure module */

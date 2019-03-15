@@ -3,6 +3,7 @@
 
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var FolderviewRe$ReactTemplate = require("./reasonComponents/FolderviewRe.bs.js");
 var NoteElementRe$ReactTemplate = require("./reasonComponents/NoteElementRe.bs.js");
@@ -44,10 +45,12 @@ var folderStyle = {
   overflow: "hidden"
 };
 
-var scrollStyle = {
+var scrollStylePre = {
   maxHeight: "40vh",
   overflow: "auto"
 };
+
+var scrollStyle = ReactDOMRe.Style[/* unsafeAddProp */1](scrollStylePre, "scrollbar-color", "gray transparent");
 
 function make(dispatch, topItems, bottomItems, width, opacity, _children) {
   return /* record */[
@@ -126,6 +129,7 @@ exports.iconStyle = iconStyle;
 exports.iconContainerStyle = iconContainerStyle;
 exports.topNoteStyle = topNoteStyle;
 exports.folderStyle = folderStyle;
+exports.scrollStylePre = scrollStylePre;
 exports.scrollStyle = scrollStyle;
 exports.make = make;
 exports.$$default = $$default;

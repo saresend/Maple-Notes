@@ -28,8 +28,15 @@ let searchBarStyle =
     (),
   );
 
-let scrollStyle =
+let scrollStylePre =
   ReactDOMRe.Style.make(~overflow="auto", ~maxHeight="90vh", ());
+
+let scrollStyle =
+  ReactDOMRe.Style.unsafeAddProp(
+    scrollStylePre,
+    "scrollbar-color",
+    "#aaaaaa transparent",
+  );
 
 let make = (~dispatch, ~notes, _children) => {
   ...component,
