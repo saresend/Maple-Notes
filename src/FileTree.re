@@ -34,6 +34,8 @@ let topNoteStyle =
 
 let folderStyle =
   ReactDOMRe.Style.make(~marginTop="100px", ~overflow="hidden", ());
+let scrollStyle =
+  ReactDOMRe.Style.make(~overflow="auto", ~maxHeight="40vh", ());
 
 let make =
     (
@@ -90,7 +92,7 @@ let make =
       </div>
       <div style=optionStyle> {ReasonReact.array(topUIElements)} </div>
       <FolderviewRe dispatch style=folderStyle>
-        {ReasonReact.array(bottomUIElements)}
+        <div style=scrollStyle> {ReasonReact.array(bottomUIElements)} </div>
       </FolderviewRe>
     </div>;
   },

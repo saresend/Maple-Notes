@@ -44,6 +44,11 @@ var folderStyle = {
   overflow: "hidden"
 };
 
+var scrollStyle = {
+  maxHeight: "40vh",
+  overflow: "auto"
+};
+
 function make(dispatch, topItems, bottomItems, width, opacity, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -99,7 +104,9 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                                   style: fadedIconStyle
                                 })), React.createElement("div", {
                               style: optionStyle
-                            }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(dispatch, folderStyle, /* array */[bottomUIElements])));
+                            }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(dispatch, folderStyle, /* array */[React.createElement("div", {
+                                        style: scrollStyle
+                                      }, bottomUIElements)])));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -119,6 +126,7 @@ exports.iconStyle = iconStyle;
 exports.iconContainerStyle = iconContainerStyle;
 exports.topNoteStyle = topNoteStyle;
 exports.folderStyle = folderStyle;
+exports.scrollStyle = scrollStyle;
 exports.make = make;
 exports.$$default = $$default;
 exports.default = $$default;
