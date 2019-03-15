@@ -32,6 +32,11 @@ var searchBarStyle = {
   outline: "0px"
 };
 
+var scrollStyle = {
+  maxHeight: "90vh",
+  overflow: "auto"
+};
+
 function make(dispatch, notes, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -69,7 +74,9 @@ function make(dispatch, notes, _children) {
                                       var uuid = Curry._1(uuidGen, /* () */0);
                                       return Curry._1(dispatch, /* AddNewNote */Block.__(7, [uuid]));
                                     })
-                                })), noteUi);
+                                })), React.createElement("div", {
+                              style: scrollStyle
+                            }, noteUi));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -82,5 +89,6 @@ exports.component = component;
 exports.containerStyle = containerStyle;
 exports.horizontalContainer = horizontalContainer;
 exports.searchBarStyle = searchBarStyle;
+exports.scrollStyle = scrollStyle;
 exports.make = make;
 /* component Not a pure module */

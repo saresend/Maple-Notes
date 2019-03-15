@@ -28,6 +28,9 @@ let searchBarStyle =
     (),
   );
 
+let scrollStyle =
+  ReactDOMRe.Style.make(~overflow="auto", ~maxHeight="90vh", ());
+
 let make = (~dispatch, ~notes, _children) => {
   ...component,
   render: _self => {
@@ -58,7 +61,7 @@ let make = (~dispatch, ~notes, _children) => {
           }}
         />
       </div>
-      {ReasonReact.array(noteUi)}
+      <div style=scrollStyle> {ReasonReact.array(noteUi)} </div>
     </div>;
   },
 };
