@@ -6,16 +6,60 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.statelessComponent("SigninPage");
 
-var containerStyle = {
+var horizontalStyle = {
+  display: "flex",
+  flexDirection: "row"
+};
+
+var leftBarStyle = {
+  backgroundColor: "#ff9d84",
   display: "flex",
   height: "100vh",
-  width: "100vw",
+  width: "40vw",
   alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "flex-end"
+};
+
+var rightBarStyle = {
+  backgroundColor: "#ffffff",
+  display: "flex",
+  height: "100vh",
+  width: "60vw",
+  alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "flex-start"
+};
+
+var leftLoginBlockStyle = {
+  backgroundColor: "#ff9d84",
+  display: "flex",
+  height: "80vh",
+  verticalAlign: "super",
+  width: "30vw",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  alignItems: "center",
+  flexDirection: "column",
   justifyContent: "center"
 };
 
-var innerSigninCardStyle = {
-  boxShadow: "5px 5px 5px #bbbbbb"
+var logoTitleStyle = {
+  color: "#ffffff",
+  fontSize: "30px",
+  margin: "5px"
+};
+
+var logoStyle = {
+  color: "#ffffff",
+  fontSize: "50px"
+};
+
+var rightLoginBlockStyle = {
+  backgroundColor: "#ffffff",
+  height: "80vh",
+  verticalAlign: "super",
+  width: "50vw",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
 };
 
 function make(_children) {
@@ -31,10 +75,21 @@ function make(_children) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
               return React.createElement("div", {
-                          style: containerStyle
+                          style: horizontalStyle
                         }, React.createElement("div", {
-                              style: innerSigninCardStyle
-                            }, React.createElement("p", undefined, "Signin Page")));
+                              style: leftBarStyle
+                            }, React.createElement("div", {
+                                  style: leftLoginBlockStyle
+                                }, React.createElement("i", {
+                                      className: "fab fa-pagelines",
+                                      style: logoStyle
+                                    }), React.createElement("p", {
+                                      style: logoTitleStyle
+                                    }, "Maple"))), React.createElement("div", {
+                              style: rightBarStyle
+                            }, React.createElement("div", {
+                                  style: rightLoginBlockStyle
+                                })));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -44,7 +99,12 @@ function make(_children) {
 }
 
 exports.component = component;
-exports.containerStyle = containerStyle;
-exports.innerSigninCardStyle = innerSigninCardStyle;
+exports.horizontalStyle = horizontalStyle;
+exports.leftBarStyle = leftBarStyle;
+exports.rightBarStyle = rightBarStyle;
+exports.leftLoginBlockStyle = leftLoginBlockStyle;
+exports.logoTitleStyle = logoTitleStyle;
+exports.logoStyle = logoStyle;
+exports.rightLoginBlockStyle = rightLoginBlockStyle;
 exports.make = make;
 /* component Not a pure module */
