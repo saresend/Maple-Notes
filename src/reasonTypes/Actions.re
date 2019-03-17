@@ -1,4 +1,5 @@
 type action =
+  | SignInUserSuccessfully(string)
   | UpdateBottomBarItem(NoteUIElement.noteUIElement)
   | SetEditableBottomBarItem(string)
   | DeleteBottomBarItem(string)

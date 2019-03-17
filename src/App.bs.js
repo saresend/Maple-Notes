@@ -91,7 +91,7 @@ function make(_children) {
           /* render */(function (self) {
               var updateFunction = function (_value) {
                 var bodyText = ( _value() );
-                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(5, [bodyText]));
+                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(6, [bodyText]));
               };
               var match = self[/* state */1][/* currentNote */1];
               var editorView;
@@ -110,7 +110,7 @@ function make(_children) {
               var noteApplication = React.createElement("div", {
                     style: appStyle
                   }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */4], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */7]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */8]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
-              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(/* array */[]));
+              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(self[/* send */3], /* array */[]));
               var match$1 = self[/* state */1][/* isUserSignedIn */3];
               if (match$1) {
                 return noteApplication;
@@ -178,6 +178,18 @@ function make(_children) {
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* isUserSignedIn */true,
+                                  /* menuBarOpen */state[/* menuBarOpen */4],
+                                  /* currentFilterElement */state[/* currentFilterElement */5],
+                                  /* searchFilter */state[/* searchFilter */6],
+                                  /* topMenuItems */state[/* topMenuItems */7],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */8]
+                                ]]);
+                  case 1 : 
                       var newMenuItem = action[0];
                       var updatedMenuItems = state[/* bottomMenuItems */8].map((function (menuItem) {
                               if (menuItem[/* id */0] === newMenuItem[/* id */0]) {
@@ -197,7 +209,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */updatedMenuItems
                                 ]]);
-                  case 1 : 
+                  case 2 : 
                       var menuItemId = action[0];
                       var newBottomItems$1 = state[/* bottomMenuItems */8].map((function (menuItem) {
                               if (menuItem[/* id */0] === menuItemId) {
@@ -224,7 +236,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */newBottomItems$1
                                 ]]);
-                  case 2 : 
+                  case 3 : 
                       var menuItemId$1 = action[0];
                       var newBottomItems$2 = state[/* bottomMenuItems */8].filter((function (bottomBarItem) {
                               return bottomBarItem[/* id */0] !== menuItemId$1;
@@ -240,7 +252,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */newBottomItems$2
                                 ]]);
-                  case 3 : 
+                  case 4 : 
                       var searchString = action[0];
                       if (searchString === "") {
                         return /* Update */Block.__(0, [/* record */[
@@ -280,7 +292,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
-                  case 4 : 
+                  case 5 : 
                       var note = action[0];
                       var notes = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note[/* noteID */0]) {
@@ -350,7 +362,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
-                  case 5 : 
+                  case 6 : 
                       var match = state[/* currentNote */1];
                       if (match !== undefined) {
                         var currNote = match;
@@ -398,7 +410,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
-                  case 6 : 
+                  case 7 : 
                       var note$1 = action[0];
                       var notes$1 = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note$1[/* noteID */0]) {
@@ -448,7 +460,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */8]
                                   ]]);
                       }
-                  case 7 : 
+                  case 8 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
                       var note_008 = /* folderID */state[/* currentFilterElement */5][/* id */0];
@@ -474,7 +486,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
-                  case 8 : 
+                  case 9 : 
                       var noteId = action[0];
                       var newNotes = state[/* notes */0].map((function (note) {
                               if (note[/* noteID */0] === noteId) {
@@ -504,7 +516,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */7],
                                   /* bottomMenuItems */state[/* bottomMenuItems */8]
                                 ]]);
-                  case 9 : 
+                  case 10 : 
                       var element = action[0];
                       var newTopMenuItems = state[/* topMenuItems */7].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {

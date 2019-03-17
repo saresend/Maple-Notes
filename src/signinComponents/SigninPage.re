@@ -59,11 +59,46 @@ let rightLoginBlockStyle =
     ~height="80vh",
     ~width="50vw",
     ~backgroundColor="#ffffff",
+    ~display="flex",
+    ~flexDirection="column",
+    ~justifyContent="center",
     ~verticalAlign="super",
+    ~alignItems="center",
     (),
   );
 
-let make = _children => {
+let signinTitleStyle =
+  ReactDOMRe.Style.make(
+    ~fontSize="30px",
+    ~color="#939393",
+    ~marginBottom="5px",
+    (),
+  );
+
+let inputStyle =
+  ReactDOMRe.Style.make(
+    ~marginTop="20px",
+    ~fontSize="17px",
+    ~display="block",
+    ~borderBottom="1px solid gray",
+    ~width="200px",
+    (),
+  );
+let buttonStyle =
+  ReactDOMRe.Style.make(
+    ~marginTop="20px",
+    ~fontSize="17px",
+    ~width="200px",
+    ~color="#ffffff",
+    ~outline="0px",
+    ~border="0px",
+    ~padding="8px",
+    ~borderRadius="3px",
+    ~backgroundColor="#1ae5b6",
+    ~fontFamily="Aleo",
+    (),
+  );
+let make = (~dispatch, _children) => {
   ...component,
   render: _self =>
     <div style=horizontalStyle>
@@ -73,6 +108,28 @@ let make = _children => {
           <p style=logoTitleStyle> {ReasonReact.string("Maple")} </p>
         </div>
       </div>
-      <div style=rightBarStyle> <div style=rightLoginBlockStyle /> </div>
+      <div style=rightBarStyle>
+        <div style=rightLoginBlockStyle>
+          <p style=signinTitleStyle> {ReasonReact.string("Sign In")} </p>
+          <input style=inputStyle placeholder="Email" />
+          <input style=inputStyle placeholder="Password" />
+          <button
+            style=buttonStyle
+            className="hover"
+            onClick={_data =>
+              dispatch(Actions.SignInUserSuccessfully("asdfasdf"))
+            }>
+            {ReasonReact.string("Log In")}
+          </button>
+          <button
+            className="hover"
+            onClick={_data =>
+              dispatch(Actions.SignInUserSuccessfully("asdfasdf"))
+            }
+            style=buttonStyle>
+            {ReasonReact.string("Sign Up")}
+          </button>
+        </div>
+      </div>
     </div>,
 };

@@ -27,15 +27,15 @@ function generateColor(param) {
 }
 
 function sendDeleteFolderMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(2, [messageId]));
+  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(3, [messageId]));
 }
 
 function sendRenameFolderMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(1, [messageId]));
+  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(2, [messageId]));
 }
 
 function sendRenameNoteMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* SetEditableNote */Block.__(8, [messageId]));
+  return Curry._1(dispatchFunc, /* SetEditableNote */Block.__(9, [messageId]));
 }
 
 exports.genRandomValue = genRandomValue;

@@ -90,6 +90,8 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | SignInUserSuccessfully(_token) =>
+      ReasonReact.Update({...state, isUserSignedIn: true})
     | SetEditableNote(noteId) =>
       let newNotes =
         Js.Array.map(
@@ -313,7 +315,7 @@ let make = _children => {
         <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
         editorView
       </div>;
-    let signinPage = <SigninPage />;
+    let signinPage = <SigninPage dispatch={self.send} />;
     self.state.isUserSignedIn ? noteApplication : signinPage;
   },
 };
