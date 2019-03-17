@@ -24,6 +24,7 @@
     "react-transition-group": "^2.5.3",
     "reason-react": ">=0.4.0",
     "rich-markdown-editor": "^8.1.9",
+    "spinkit": "^1.2.5",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
