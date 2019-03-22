@@ -154,16 +154,11 @@ let make = (~dispatch, _children) => {
             style=buttonStyle
             className="hover"
             onClick={_data =>
-              dispatch(Actions.SignInUserSuccessfully("asdfasdf"))
+              DataExports.mapleLogin(self.state.email, self.state.password)
             }>
             {ReasonReact.string("Log In")}
           </button>
-          <button
-            className="hover"
-            onClick={_data =>
-              dispatch(Actions.SignInUserSuccessfully("asdfasdf"))
-            }
-            style=buttonStyle>
+          <button className="hover" onClick={_data => ()} style=buttonStyle>
             {ReasonReact.string("Sign Up")}
           </button>
         </div>
