@@ -6,7 +6,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
-var component = ReasonReact.statelessComponent("SigninPage");
+var component = ReasonReact.reducerComponent("SigninPage");
 
 var horizontalStyle = {
   display: "flex",
@@ -106,7 +106,7 @@ function make(dispatch, _children) {
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
-          /* render */(function (_self) {
+          /* render */(function (self) {
               return React.createElement("div", {
                           style: horizontalStyle
                         }, React.createElement("div", {
@@ -126,10 +126,18 @@ function make(dispatch, _children) {
                                       style: signinTitleStyle
                                     }, "Sign In"), React.createElement("input", {
                                       style: inputStyle,
-                                      placeholder: "Email"
+                                      placeholder: "Email",
+                                      onChange: (function (_data) {
+                                          var email = ( _data.target.value );
+                                          return Curry._1(self[/* send */3], /* EmailChange */Block.__(0, [email]));
+                                        })
                                     }), React.createElement("input", {
                                       style: inputStyle,
-                                      placeholder: "Password"
+                                      placeholder: "Password",
+                                      onChange: (function (_data) {
+                                          var password = ( _data.target.value );
+                                          return Curry._1(self[/* send */3], /* PasswordChange */Block.__(1, [password]));
+                                        })
                                     }), React.createElement("button", {
                                       className: "hover",
                                       style: buttonStyle,
@@ -144,9 +152,35 @@ function make(dispatch, _children) {
                                         })
                                     }, "Sign Up"))));
             }),
-          /* initialState */component[/* initialState */10],
+          /* initialState */(function (param) {
+              return /* record */[
+                      /* email */"",
+                      /* password */"",
+                      /* didSubmit */false
+                    ];
+            }),
           /* retainedProps */component[/* retainedProps */11],
-          /* reducer */component[/* reducer */12],
+          /* reducer */(function (action, state) {
+              if (typeof action === "number") {
+                return /* Update */Block.__(0, [/* record */[
+                            /* email */state[/* email */0],
+                            /* password */state[/* password */1],
+                            /* didSubmit */true
+                          ]]);
+              } else if (action.tag) {
+                return /* Update */Block.__(0, [/* record */[
+                            /* email */state[/* email */0],
+                            /* password */action[0],
+                            /* didSubmit */state[/* didSubmit */2]
+                          ]]);
+              } else {
+                return /* Update */Block.__(0, [/* record */[
+                            /* email */action[0],
+                            /* password */state[/* password */1],
+                            /* didSubmit */state[/* didSubmit */2]
+                          ]]);
+              }
+            }),
           /* jsElementWrapped */component[/* jsElementWrapped */13]
         ];
 }

@@ -1,4 +1,15 @@
-let component = ReasonReact.statelessComponent("SigninPage");
+type state = {
+  email: string,
+  password: string,
+  didSubmit: bool,
+};
+
+type action =
+  | EmailChange(string)
+  | PasswordChange(string)
+  | HitSubmit;
+
+let component = ReasonReact.reducerComponent("SigninPage");
 
 let horizontalStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
@@ -100,7 +111,19 @@ let buttonStyle =
   );
 let make = (~dispatch, _children) => {
   ...component,
-  render: _self =>
+
+  initialState: () => {email: "", password: "", didSubmit: false},
+
+  reducer: (action, state) =>
+    switch (action) {
+    | HitSubmit => ReasonReact.Update({...state, didSubmit: true})
+    | EmailChange((newEmail: string)) =>
+      ReasonReact.Update({...state, email: newEmail})
+    | PasswordChange((newPassword: string)) =>
+      ReasonReact.Update({...state, password: newPassword})
+    },
+
+  render: self =>
     <div style=horizontalStyle>
       <div style=leftBarStyle>
         <div style=leftLoginBlockStyle>
@@ -111,8 +134,22 @@ let make = (~dispatch, _children) => {
       <div style=rightBarStyle>
         <div style=rightLoginBlockStyle>
           <p style=signinTitleStyle> {ReasonReact.string("Sign In")} </p>
-          <input style=inputStyle placeholder="Email" />
-          <input style=inputStyle placeholder="Password" />
+          <input
+            style=inputStyle
+            onChange={_data => {
+              let email: string = [%bs.raw {| _data.target.value |}];
+              self.send(EmailChange(email));
+            }}
+            placeholder="Email"
+          />
+          <input
+            style=inputStyle
+            onChange={_data => {
+              let password: string = [%bs.raw {| _data.target.value |}];
+              self.send(PasswordChange(password));
+            }}
+            placeholder="Password"
+          />
           <button
             style=buttonStyle
             className="hover"
