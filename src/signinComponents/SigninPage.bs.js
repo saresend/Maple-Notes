@@ -140,7 +140,10 @@ function make(dispatch, _children) {
                                         })
                                     }), React.createElement("button", {
                                       className: "hover",
-                                      style: buttonStyle
+                                      style: buttonStyle,
+                                      onClick: (function (_data) {
+                                          return /* () */0;
+                                        })
                                     }, "Log In"), React.createElement("button", {
                                       className: "hover",
                                       style: buttonStyle,

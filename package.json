@@ -16,6 +16,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "firebase": "^5.9.1",
     "react": "^16.2.0",
     "react-contexify": "^4.0.2",
     "react-contextmenu": "^2.10.0",

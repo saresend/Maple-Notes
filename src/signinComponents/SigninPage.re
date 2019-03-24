@@ -150,7 +150,7 @@ let make = (~dispatch, _children) => {
             }}
             placeholder="Password"
           />
-          <button style=buttonStyle className="hover">
+          <button style=buttonStyle onClick={_data => ()} className="hover">
             {ReasonReact.string("Log In")}
           </button>
           <button className="hover" onClick={_data => ()} style=buttonStyle>
