@@ -3,6 +3,7 @@ type state = {
   currentNote: option(Note.note),
   isLoaded: bool,
   isUserSignedIn: bool,
+  failureReason: option(string),
   menuBarOpen: bool,
   currentFilterElement: NoteUIElement.noteUIElement,
   searchFilter: Note.note => bool,
@@ -82,6 +83,7 @@ let make = _children => {
     menuBarOpen: true,
     currentNote: None,
     isUserSignedIn: false,
+    failureReason: None,
     currentFilterElement: initialTopItems[0],
     searchFilter: _note => true,
     topMenuItems: initialTopItems,
@@ -90,6 +92,8 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | SignInUserFailed(reason) =>
+      ReasonReact.Update({...state, failureReason: Some(reason)})
     | SignInUserSuccessfully(_token) =>
       ReasonReact.Update({...state, isUserSignedIn: true})
     | SetEditableNote(noteId) =>

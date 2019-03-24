@@ -140,15 +140,12 @@ function make(dispatch, _children) {
                                         })
                                     }), React.createElement("button", {
                                       className: "hover",
-                                      style: buttonStyle,
-                                      onClick: (function (_data) {
-                                          return Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["asdfasdf"]));
-                                        })
+                                      style: buttonStyle
                                     }, "Log In"), React.createElement("button", {
                                       className: "hover",
                                       style: buttonStyle,
                                       onClick: (function (_data) {
-                                          return Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["asdfasdf"]));
+                                          return /* () */0;
                                         })
                                     }, "Sign Up"))));
             }),

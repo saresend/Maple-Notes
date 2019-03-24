@@ -69,13 +69,13 @@ function make(dispatch, notes, _children) {
                                   placeholder: "Search",
                                   onChange: (function (_data) {
                                       var searchString = ( _data.target.value );
-                                      return Curry._1(dispatch, /* UpdateSearchFunction */Block.__(4, [searchString]));
+                                      return Curry._1(dispatch, /* UpdateSearchFunction */Block.__(5, [searchString]));
                                     })
                                 }), React.createElement("i", {
                                   className: "far fa-edit hover",
                                   onClick: (function (_data) {
                                       var uuid = Curry._1(uuidGen, /* () */0);
-                                      return Curry._1(dispatch, /* AddNewNote */Block.__(8, [uuid]));
+                                      return Curry._1(dispatch, /* AddNewNote */Block.__(9, [uuid]));
                                     })
                                 })), React.createElement("div", {
                               style: scrollStyle

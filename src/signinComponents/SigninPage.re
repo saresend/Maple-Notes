@@ -150,12 +150,7 @@ let make = (~dispatch, _children) => {
             }}
             placeholder="Password"
           />
-          <button
-            style=buttonStyle
-            className="hover"
-            onClick={_data =>
-              DataExports.mapleLogin(self.state.email, self.state.password)
-            }>
+          <button style=buttonStyle className="hover">
             {ReasonReact.string("Log In")}
           </button>
           <button className="hover" onClick={_data => ()} style=buttonStyle>
