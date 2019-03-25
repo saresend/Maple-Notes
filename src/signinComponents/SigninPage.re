@@ -38,6 +38,9 @@ let rightBarStyle =
     (),
   );
 
+let errorStyle =
+  ReactDOMRe.Style.make(~color="#868686", ~textAlign="center", ());
+
 let leftLoginBlockStyle =
   ReactDOMRe.Style.make(
     ~boxShadow=
@@ -109,6 +112,18 @@ let buttonStyle =
     ~fontFamily="Aleo",
     (),
   );
+open Firebase;
+let app = {
+  let config: options = {
+    "apiKey": "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
+    "authDomain": "maple-notes.firebaseapp.com",
+    "databaseURL": "https://maple-notes.firebaseio.com",
+    "storageBucket": "maple-notes.appspot.com",
+    "messagingSenderId": "169600693604",
+  };
+  Firebase.initializeApp(config);
+};
+
 let make = (~dispatch, ~failureReason, _children) => {
   ...component,
 
@@ -126,7 +141,8 @@ let make = (~dispatch, ~failureReason, _children) => {
   render: self => {
     let errorUI =
       switch (failureReason) {
-      | Some(message) => <p> {ReasonReact.string(message)} </p>
+      | Some(message) =>
+        <p style=errorStyle> {ReasonReact.string(message)} </p>
       | None => <div />
       };
     <div style=horizontalStyle>
@@ -153,24 +169,38 @@ let make = (~dispatch, ~failureReason, _children) => {
               let password: string = [%bs.raw {| _data.target.value |}];
               self.send(PasswordChange(password));
             }}
+            type_="password"
             placeholder="Password"
           />
-          <button style=buttonStyle className="hover">
+          <button
+            style=buttonStyle
+            onClick={_data => {
+              let authObj = Firebase.App.auth(app);
+              let fbPromise =
+                Firebase.Auth.signInAndRetrieveDataWithEmailAndPassword(
+                  authObj,
+                  ~email=self.state.email,
+                  ~password=self.state.password,
+                );
+
+              fbPromise
+              |> Js.Promise.then_(_value =>
+                   dispatch(Actions.SignInUserSuccessfully("uhhh"))
+                   |> Js.Promise.resolve
+                 )
+              |> Js.Promise.catch(_err =>
+                   {let message = [%bs.raw {|_err.message|}]
+                    dispatch(Actions.SignInUserFailed(message))}
+                   |> Js.Promise.resolve
+                 )
+              |> ignore;
+            }}
+            className="hover">
             {ReasonReact.string("Log In")}
           </button>
           <button
             className="hover"
             onClick={_data => {
-              open Firebase;
-              let config: options = {
-                "apiKey": "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
-                "authDomain": "maple-notes.firebaseapp.com",
-                "databaseURL": "https://maple-notes.firebaseio.com",
-                "storageBucket": "maple-notes.appspot.com",
-                "messagingSenderId": "169600693604",
-              };
-
-              let app = Firebase.initializeApp(config);
               let authObj = Firebase.App.auth(app);
               let fbPromise =
                 Firebase.Auth.createUserAndRetrieveDataWithEmailAndPassword(

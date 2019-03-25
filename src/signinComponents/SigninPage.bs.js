@@ -34,6 +34,11 @@ var rightBarStyle = {
   justifyContent: "flex-start"
 };
 
+var errorStyle = {
+  color: "#868686",
+  textAlign: "center"
+};
+
 var leftLoginBlockStyle = {
   backgroundColor: "#ff9d84",
   display: "flex",
@@ -96,6 +101,16 @@ var buttonStyle = {
   borderRadius: "3px"
 };
 
+var config = {
+  apiKey: "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
+  authDomain: "maple-notes.firebaseapp.com",
+  databaseURL: "https://maple-notes.firebaseio.com",
+  storageBucket: "maple-notes.appspot.com",
+  messagingSenderId: "169600693604"
+};
+
+var app = Firebase.initializeApp(config);
+
 function make(dispatch, failureReason, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -108,7 +123,9 @@ function make(dispatch, failureReason, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
-              var errorUI = failureReason !== undefined ? React.createElement("p", undefined, failureReason) : React.createElement("div", undefined);
+              var errorUI = failureReason !== undefined ? React.createElement("p", {
+                      style: errorStyle
+                    }, failureReason) : React.createElement("div", undefined);
               return React.createElement("div", {
                           style: horizontalStyle
                         }, React.createElement("div", {
@@ -136,25 +153,29 @@ function make(dispatch, failureReason, _children) {
                                     }), React.createElement("input", {
                                       style: inputStyle,
                                       placeholder: "Password",
+                                      type: "password",
                                       onChange: (function (_data) {
                                           var password = ( _data.target.value );
                                           return Curry._1(self[/* send */3], /* PasswordChange */Block.__(1, [password]));
                                         })
                                     }), React.createElement("button", {
                                       className: "hover",
-                                      style: buttonStyle
+                                      style: buttonStyle,
+                                      onClick: (function (_data) {
+                                          var authObj = app.auth();
+                                          var fbPromise = authObj.signInAndRetrieveDataWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
+                                          fbPromise.then((function (_value) {
+                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["uhhh"])));
+                                                  })).catch((function (_err) {
+                                                  var message = (_err.message);
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(1, [message])));
+                                                }));
+                                          return /* () */0;
+                                        })
                                     }, "Log In"), React.createElement("button", {
                                       className: "hover",
                                       style: buttonStyle,
                                       onClick: (function (_data) {
-                                          var config = {
-                                            apiKey: "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
-                                            authDomain: "maple-notes.firebaseapp.com",
-                                            databaseURL: "https://maple-notes.firebaseio.com",
-                                            storageBucket: "maple-notes.appspot.com",
-                                            messagingSenderId: "169600693604"
-                                          };
-                                          var app = Firebase.initializeApp(config);
                                           var authObj = app.auth();
                                           var fbPromise = authObj.createUserWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
@@ -204,6 +225,7 @@ exports.component = component;
 exports.horizontalStyle = horizontalStyle;
 exports.leftBarStyle = leftBarStyle;
 exports.rightBarStyle = rightBarStyle;
+exports.errorStyle = errorStyle;
 exports.leftLoginBlockStyle = leftLoginBlockStyle;
 exports.logoTitleStyle = logoTitleStyle;
 exports.logoStyle = logoStyle;
@@ -211,5 +233,6 @@ exports.rightLoginBlockStyle = rightLoginBlockStyle;
 exports.signinTitleStyle = signinTitleStyle;
 exports.inputStyle = inputStyle;
 exports.buttonStyle = buttonStyle;
+exports.app = app;
 exports.make = make;
 /* component Not a pure module */
