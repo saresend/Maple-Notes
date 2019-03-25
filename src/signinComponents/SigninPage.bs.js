@@ -4,6 +4,7 @@
 var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var Firebase = require("firebase");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.reducerComponent("SigninPage");
@@ -140,14 +141,26 @@ function make(dispatch, _children) {
                                         })
                                     }), React.createElement("button", {
                                       className: "hover",
-                                      style: buttonStyle,
-                                      onClick: (function (_data) {
-                                          return /* () */0;
-                                        })
+                                      style: buttonStyle
                                     }, "Log In"), React.createElement("button", {
                                       className: "hover",
                                       style: buttonStyle,
                                       onClick: (function (_data) {
+                                          var config = {
+                                            apiKey: "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
+                                            authDomain: "maple-notes.firebaseapp.com",
+                                            databaseURL: "https://maple-notes.firebaseio.com",
+                                            storageBucket: "maple-notes.appspot.com",
+                                            messagingSenderId: "169600693604"
+                                          };
+                                          var app = Firebase.initializeApp(config);
+                                          var authObj = app.auth();
+                                          var fbPromise = authObj.createUserWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
+                                          fbPromise.then((function (_value) {
+                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["uhhh"])));
+                                                  })).catch((function (err) {
+                                                  return Promise.resolve((console.log(err), /* () */0));
+                                                }));
                                           return /* () */0;
                                         })
                                     }, "Sign Up"))));

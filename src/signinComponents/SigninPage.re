@@ -150,10 +150,39 @@ let make = (~dispatch, _children) => {
             }}
             placeholder="Password"
           />
-          <button style=buttonStyle onClick={_data => ()} className="hover">
+          <button style=buttonStyle className="hover">
             {ReasonReact.string("Log In")}
           </button>
-          <button className="hover" onClick={_data => ()} style=buttonStyle>
+          <button
+            className="hover"
+            onClick={_data => {
+              open Firebase;
+              let config: options = {
+                "apiKey": "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
+                "authDomain": "maple-notes.firebaseapp.com",
+                "databaseURL": "https://maple-notes.firebaseio.com",
+                "storageBucket": "maple-notes.appspot.com",
+                "messagingSenderId": "169600693604",
+              };
+
+              let app = Firebase.initializeApp(config);
+              let authObj = Firebase.App.auth(app);
+              let fbPromise =
+                Firebase.Auth.createUserAndRetrieveDataWithEmailAndPassword(
+                  authObj,
+                  ~email=self.state.email,
+                  ~password=self.state.password,
+                );
+
+              fbPromise
+              |> Js.Promise.then_(_value =>
+                   dispatch(Actions.SignInUserSuccessfully("uhhh"))
+                   |> Js.Promise.resolve
+                 )
+              |> Js.Promise.catch(err => Js.log(err) |> Js.Promise.resolve)
+              |> ignore;
+            }}
+            style=buttonStyle>
             {ReasonReact.string("Sign Up")}
           </button>
         </div>
