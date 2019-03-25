@@ -319,7 +319,11 @@ let make = _children => {
         <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
         editorView
       </div>;
-    let signinPage = <SigninPage dispatch={self.send} />;
+    let signinPage =
+      <SigninPage
+        failureReason={self.state.failureReason}
+        dispatch={self.send}
+      />;
     self.state.isUserSignedIn ? noteApplication : signinPage;
   },
 };

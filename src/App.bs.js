@@ -110,7 +110,7 @@ function make(_children) {
               var noteApplication = React.createElement("div", {
                     style: appStyle
                   }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */5], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */8]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */9]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
-              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(self[/* send */3], /* array */[]));
+              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(self[/* send */3], self[/* state */1][/* failureReason */4], /* array */[]));
               var match$1 = self[/* state */1][/* isUserSignedIn */3];
               if (match$1) {
                 return noteApplication;

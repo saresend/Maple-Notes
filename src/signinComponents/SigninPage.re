@@ -109,7 +109,7 @@ let buttonStyle =
     ~fontFamily="Aleo",
     (),
   );
-let make = (~dispatch, _children) => {
+let make = (~dispatch, ~failureReason, _children) => {
   ...component,
 
   initialState: () => {email: "", password: "", didSubmit: false},
@@ -123,7 +123,12 @@ let make = (~dispatch, _children) => {
       ReasonReact.Update({...state, password: newPassword})
     },
 
-  render: self =>
+  render: self => {
+    let errorUI =
+      switch (failureReason) {
+      | Some(message) => <p> {ReasonReact.string(message)} </p>
+      | None => <div />
+      };
     <div style=horizontalStyle>
       <div style=leftBarStyle>
         <div style=leftLoginBlockStyle>
@@ -179,13 +184,19 @@ let make = (~dispatch, _children) => {
                    dispatch(Actions.SignInUserSuccessfully("uhhh"))
                    |> Js.Promise.resolve
                  )
-              |> Js.Promise.catch(err => Js.log(err) |> Js.Promise.resolve)
+              |> Js.Promise.catch(_err =>
+                   {let message = [%bs.raw {|_err.message|}]
+                    dispatch(Actions.SignInUserFailed(message))}
+                   |> Js.Promise.resolve
+                 )
               |> ignore;
             }}
             style=buttonStyle>
             {ReasonReact.string("Sign Up")}
           </button>
+          errorUI
         </div>
       </div>
-    </div>,
+    </div>;
+  },
 };

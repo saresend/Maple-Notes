@@ -96,7 +96,7 @@ var buttonStyle = {
   borderRadius: "3px"
 };
 
-function make(dispatch, _children) {
+function make(dispatch, failureReason, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -108,6 +108,7 @@ function make(dispatch, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
+              var errorUI = failureReason !== undefined ? React.createElement("p", undefined, failureReason) : React.createElement("div", undefined);
               return React.createElement("div", {
                           style: horizontalStyle
                         }, React.createElement("div", {
@@ -158,12 +159,13 @@ function make(dispatch, _children) {
                                           var fbPromise = authObj.createUserWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
                                                     return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["uhhh"])));
-                                                  })).catch((function (err) {
-                                                  return Promise.resolve((console.log(err), /* () */0));
+                                                  })).catch((function (_err) {
+                                                  var message = (_err.message);
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(1, [message])));
                                                 }));
                                           return /* () */0;
                                         })
-                                    }, "Sign Up"))));
+                                    }, "Sign Up"), errorUI)));
             }),
           /* initialState */(function (param) {
               return /* record */[
