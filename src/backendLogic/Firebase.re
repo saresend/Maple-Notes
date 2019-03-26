@@ -200,7 +200,7 @@ module Auth = {
     (t, ~email: string, ~password: string) => Js.Promise.t(UserCredential.t) =
     "signInWithEmailAndPassword";
   [@bs.send]
-  external signInAndRetrieveDataWithEmailAndPassword:
+  external signInWithEmailAndPassword:
     (t, ~email: string, ~password: string) => Js.Promise.t(UserCredential.t) =
     "signInAndRetrieveDataWithEmailAndPassword";
   [@bs.send]

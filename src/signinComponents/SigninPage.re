@@ -112,19 +112,8 @@ let buttonStyle =
     ~fontFamily="Aleo",
     (),
   );
-open Firebase;
-let app = {
-  let config: options = {
-    "apiKey": "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
-    "authDomain": "maple-notes.firebaseapp.com",
-    "databaseURL": "https://maple-notes.firebaseio.com",
-    "storageBucket": "maple-notes.appspot.com",
-    "messagingSenderId": "169600693604",
-  };
-  Firebase.initializeApp(config);
-};
 
-let make = (~dispatch, ~failureReason, _children) => {
+let make = (~app, ~dispatch, ~failureReason, _children) => {
   ...component,
 
   initialState: () => {email: "", password: "", didSubmit: false},
@@ -177,7 +166,7 @@ let make = (~dispatch, ~failureReason, _children) => {
             onClick={_data => {
               let authObj = Firebase.App.auth(app);
               let fbPromise =
-                Firebase.Auth.signInAndRetrieveDataWithEmailAndPassword(
+                Firebase.Auth.signInWithEmailAndPassword(
                   authObj,
                   ~email=self.state.email,
                   ~password=self.state.password,
@@ -185,7 +174,7 @@ let make = (~dispatch, ~failureReason, _children) => {
 
               fbPromise
               |> Js.Promise.then_(_value =>
-                   dispatch(Actions.SignInUserSuccessfully("uhhh"))
+                   dispatch(Actions.SignInUserSuccessfully(self.state.email))
                    |> Js.Promise.resolve
                  )
               |> Js.Promise.catch(_err =>

@@ -4,7 +4,6 @@
 var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
-var Firebase = require("firebase");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.reducerComponent("SigninPage");
@@ -101,17 +100,7 @@ var buttonStyle = {
   borderRadius: "3px"
 };
 
-var config = {
-  apiKey: "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
-  authDomain: "maple-notes.firebaseapp.com",
-  databaseURL: "https://maple-notes.firebaseio.com",
-  storageBucket: "maple-notes.appspot.com",
-  messagingSenderId: "169600693604"
-};
-
-var app = Firebase.initializeApp(config);
-
-function make(dispatch, failureReason, _children) {
+function make(app, dispatch, failureReason, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -165,7 +154,7 @@ function make(dispatch, failureReason, _children) {
                                           var authObj = app.auth();
                                           var fbPromise = authObj.signInAndRetrieveDataWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
-                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["uhhh"])));
+                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, [self[/* state */1][/* email */0]])));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
                                                   return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(1, [message])));
@@ -233,6 +222,5 @@ exports.rightLoginBlockStyle = rightLoginBlockStyle;
 exports.signinTitleStyle = signinTitleStyle;
 exports.inputStyle = inputStyle;
 exports.buttonStyle = buttonStyle;
-exports.app = app;
 exports.make = make;
 /* component Not a pure module */

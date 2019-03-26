@@ -5,10 +5,26 @@ type state = {
   isUserSignedIn: bool,
   failureReason: option(string),
   menuBarOpen: bool,
+  email: string,
   currentFilterElement: NoteUIElement.noteUIElement,
   searchFilter: Note.note => bool,
   topMenuItems: array(NoteUIElement.noteUIElement),
   bottomMenuItems: array(NoteUIElement.noteUIElement),
+};
+open Firebase;
+let app = {
+  let config: options = {
+    "apiKey": "AIzaSyC-s0dwO0vw1QU7st911o8iBw9VVlIZ1uY",
+    "authDomain": "maple-notes.firebaseapp.com",
+    "databaseURL": "https://maple-notes.firebaseio.com",
+    "storageBucket": "maple-notes.appspot.com",
+    "messagingSenderId": "169600693604",
+  };
+  Firebase.initializeApp(config);
+};
+
+let produceID = (emailString: string) => {
+
 };
 
 let appStyle =
@@ -84,6 +100,7 @@ let make = _children => {
     currentNote: None,
     isUserSignedIn: false,
     failureReason: None,
+    email: "",
     currentFilterElement: initialTopItems[0],
     searchFilter: _note => true,
     topMenuItems: initialTopItems,
@@ -94,8 +111,8 @@ let make = _children => {
     switch (action) {
     | SignInUserFailed(reason) =>
       ReasonReact.Update({...state, failureReason: Some(reason)})
-    | SignInUserSuccessfully(_token) =>
-      ReasonReact.Update({...state, isUserSignedIn: true})
+    | SignInUserSuccessfully(email) =>
+      ReasonReact.Update({...state, isUserSignedIn: true, email})
     | SetEditableNote(noteId) =>
       let newNotes =
         Js.Array.map(
@@ -265,6 +282,13 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
+      let database = Firebase.App.database(app);
+      Firebase.Database.Reference.set(
+        Firebase.Database.ref(database, ~path=state.email, ()),
+        ~value=state,
+        (),
+      )
+      |> ignore;
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),
@@ -321,6 +345,7 @@ let make = _children => {
       </div>;
     let signinPage =
       <SigninPage
+        app
         failureReason={self.state.failureReason}
         dispatch={self.send}
       />;
