@@ -23,22 +23,12 @@ let app = {
   Firebase.initializeApp(config);
 };
 
-let produceID = (emailString: string) => {
-  let regex = [%bs.re "/\w+/"];
-  let result = Js.Re.exec(emailString, regex);
-  switch (result) {
-  | Some(regexResult) =>
-    let captureGroups = Js.Re.captures(regexResult);
-    let res =
-      Js.Array.map(
-        x =>
-          switch (Js.Nullable.toOption(x)) {
-          | Some(value) => value
-          | None => ""
-          },
-        captureGroups,
-      );
-    Js.Array.reduce((x, y) => x ++ y, "", res);
+let produceID = () => {
+  let authObj = Firebase.App.auth(app);
+  let currUser = Firebase.Auth.currentUser(authObj);
+
+  switch (Js.Nullable.toOption(currUser)) {
+  | Some(user) => Firebase.Auth.User.uid(user)
   | None => ""
   };
 };
@@ -335,7 +325,7 @@ let make = _children => {
         folderID: state.currentFilterElement.id,
       };
       let database = Firebase.App.database(app);
-      let dataPath = produceID(state.email);
+      let dataPath = produceID();
       let dataValue = serializeState(state);
       Firebase.Database.Reference.set(
         Firebase.Database.ref(database, ~path=dataPath, ()),

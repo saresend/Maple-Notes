@@ -190,7 +190,7 @@ module Auth = {
     external additionalUserInfo: t => Js.nullable(AdditionalUserInfo.t) =
       "additionalUserInfo";
   };
-  [@bs.get] external currentUser: t => Js.null(User.t) = "currentUser";
+  [@bs.get] external currentUser: t => Js.nullable(User.t) = "currentUser";
   [@bs.send]
   external createUserAndRetrieveDataWithEmailAndPassword:
     (t, ~email: string, ~password: string) => Js.Promise.t(UserCredential.t) =

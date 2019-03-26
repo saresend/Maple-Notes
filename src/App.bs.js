@@ -24,22 +24,13 @@ var config = {
 
 var app = Firebase.initializeApp(config);
 
-function produceID(emailString) {
-  var regex = (/\w+/);
-  var result = regex.exec(emailString);
-  if (result !== null) {
-    var res = result.map((function (x) {
-            if (x == null) {
-              return "";
-            } else {
-              return x;
-            }
-          }));
-    return res.reduce((function (x, y) {
-                  return x + y;
-                }), "");
-  } else {
+function produceID(param) {
+  var authObj = app.auth();
+  var currUser = authObj.currentUser;
+  if (currUser == null) {
     return "";
+  } else {
+    return currUser.uid;
   }
 }
 
@@ -573,7 +564,7 @@ function make(_children) {
                         note_008
                       ];
                       var database = app.database();
-                      var dataPath = produceID(state[/* email */6]);
+                      var dataPath = produceID(/* () */0);
                       var dataValue = serializeState(state);
                       database.ref(dataPath).set(dataValue, undefined);
                       return /* Update */Block.__(0, [/* record */[
