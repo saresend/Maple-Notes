@@ -4,6 +4,7 @@
 var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var Js_json = require("bs-platform/lib/js/js_json.js");
 var Firebase = require("firebase");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
@@ -54,6 +55,12 @@ function serializeState(state) {
   };
   console.log(partialResult);
   return ( JSON.stringify(partialResult) );
+}
+
+function deserializeState(stateString) {
+  var deserializedString = Js_json.decodeObject(stateString);
+  console.log(deserializedString);
+  return /* () */0;
 }
 
 var appStyle = {
@@ -566,8 +573,6 @@ function make(_children) {
                       var database = app.database();
                       var dataPath = produceID(state[/* email */6]);
                       var dataValue = serializeState(state);
-                      console.log(dataPath);
-                      console.log(dataValue);
                       database.ref(dataPath).set(dataValue, undefined);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
@@ -682,6 +687,7 @@ function make(_children) {
 exports.app = app;
 exports.produceID = produceID;
 exports.serializeState = serializeState;
+exports.deserializeState = deserializeState;
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;
 exports.maple = maple;

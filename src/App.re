@@ -70,7 +70,10 @@ let serializeState: state => string =
     let trueResult: string = [%bs.raw {| JSON.stringify(partialResult) |}];
     trueResult;
   };
-
+let deserializeState = stateString => {
+  let deserializedString = Js.Json.decodeObject(stateString);
+  Js.log(deserializedString);
+};
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
 let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
@@ -329,8 +332,6 @@ let make = _children => {
       let database = Firebase.App.database(app);
       let dataPath = produceID(state.email);
       let dataValue = serializeState(state);
-      Js.log(dataPath);
-      Js.log(dataValue);
       Firebase.Database.Reference.set(
         Firebase.Database.ref(database, ~path=dataPath, ()),
         ~value=dataValue,
