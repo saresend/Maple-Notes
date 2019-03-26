@@ -126,6 +126,7 @@ function make(_children) {
           /* handedOffState */maple[/* handedOffState */2],
           /* willReceiveProps */maple[/* willReceiveProps */3],
           /* didMount */(function (_self) {
+              app.database();
               return /* () */0;
             }),
           /* didUpdate */maple[/* didUpdate */5],

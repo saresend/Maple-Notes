@@ -116,7 +116,7 @@ function make(dispatch, info, _children) {
                       style: editableTextStyle,
                       onBlur: (function (_event) {
                           var init = info[/* noteElement */0];
-                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(2, [/* record */[
+                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(3, [/* record */[
                                           /* id */init[/* id */0],
                                           /* title */init[/* title */1],
                                           /* isEditable */false,
@@ -128,7 +128,7 @@ function make(dispatch, info, _children) {
                       onChange: (function ($$event) {
                           var textValue = $$event.target.value;
                           var init = info[/* noteElement */0];
-                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(2, [/* record */[
+                          return Curry._1(dispatch, /* UpdateBottomBarItem */Block.__(3, [/* record */[
                                           /* id */init[/* id */0],
                                           /* title */textValue,
                                           /* isEditable */init[/* isEditable */2],
@@ -144,7 +144,7 @@ function make(dispatch, info, _children) {
                     className: "hover",
                     style: containerStyle,
                     onClick: (function (_data) {
-                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(11, [info[/* noteElement */0]]));
+                        return Curry._1(dispatch, /* SelectMenuBarItem */Block.__(12, [info[/* noteElement */0]]));
                       })
                   }, React.createElement("div", {
                         style: iconContainerStyle

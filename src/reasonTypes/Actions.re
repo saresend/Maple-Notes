@@ -1,4 +1,5 @@
 type action =
+  | NewSerializedState(string)
   | SignInUserSuccessfully(string)
   | SignInUserFailed(string)
   | UpdateBottomBarItem(NoteUIElement.noteUIElement)

@@ -154,10 +154,10 @@ function make(app, dispatch, failureReason, _children) {
                                           var authObj = app.auth();
                                           var fbPromise = authObj.signInAndRetrieveDataWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
-                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, [self[/* state */1][/* email */0]])));
+                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, [self[/* state */1][/* email */0]])));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
-                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(1, [message])));
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
                                                 }));
                                           return /* () */0;
                                         })
@@ -168,10 +168,10 @@ function make(app, dispatch, failureReason, _children) {
                                           var authObj = app.auth();
                                           var fbPromise = authObj.createUserWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
-                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(0, ["uhhh"])));
+                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, ["uhhh"])));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
-                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(1, [message])));
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
                                                 }));
                                           return /* () */0;
                                         })

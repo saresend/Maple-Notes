@@ -144,9 +144,23 @@ let make = _children => {
     bottomMenuItems: initialBottomItems,
   },
 
-  didMount: _self => {
+  didMount: self => {
     ();
-      // TODO: Load data from firebase
+    // TODO: Load data from firebase
+    let db = Firebase.App.database(app);
+    Firebase.Database.Reference.once(
+      Firebase.Database.ref(db, ~path=produceID(), ()),
+      ~eventType="value",
+      (),
+    )
+    |> Js.Promise.then_(data =>
+         Firebase.Database.DataSnapshot.val_(data)
+         |> (
+           serializedState =>
+             self.send(Actions.NewSerializedState(serializedState))
+             |> Js.Promise.resolve
+         )
+       );
   },
 
   reducer: (action, state) => {

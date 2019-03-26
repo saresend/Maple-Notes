@@ -129,7 +129,7 @@ function make(dispatch, note, _children) {
                             newNote_007,
                             newNote_008
                           ];
-                          return Curry._1(dispatch, /* EditNote */Block.__(8, [newNote]));
+                          return Curry._1(dispatch, /* EditNote */Block.__(9, [newNote]));
                         }),
                       onChange: (function (_data) {
                           var noteTitle = ( _data.target.value );
@@ -152,7 +152,7 @@ function make(dispatch, note, _children) {
                             newNote_007,
                             newNote_008
                           ];
-                          return Curry._1(dispatch, /* EditNote */Block.__(8, [newNote]));
+                          return Curry._1(dispatch, /* EditNote */Block.__(9, [newNote]));
                         })
                     }) : React.createElement("p", {
                       style: titleStyle
@@ -163,7 +163,7 @@ function make(dispatch, note, _children) {
                                   React.createElement("div", {
                                         style: horizontalStyle,
                                         onClick: (function (_data) {
-                                            return Curry._1(dispatch, /* SelectNote */Block.__(6, [note]));
+                                            return Curry._1(dispatch, /* SelectNote */Block.__(7, [note]));
                                           })
                                       }, React.createElement("i", {
                                             className: "far fa-file-alt",
@@ -199,7 +199,7 @@ function make(dispatch, note, _children) {
                                                       newNote_007,
                                                       newNote_008
                                                     ];
-                                                    return Curry._1(dispatch, /* EditNote */Block.__(8, [newNote]));
+                                                    return Curry._1(dispatch, /* EditNote */Block.__(9, [newNote]));
                                                   })
                                               }), React.createElement("i", {
                                                 className: "fas fa-trash hover",
@@ -225,7 +225,7 @@ function make(dispatch, note, _children) {
                                                       newNote_007,
                                                       newNote_008
                                                     ];
-                                                    return Curry._1(dispatch, /* EditNote */Block.__(8, [newNote]));
+                                                    return Curry._1(dispatch, /* EditNote */Block.__(9, [newNote]));
                                                   })
                                               })))
                                 ])));
