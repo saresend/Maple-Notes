@@ -24,8 +24,52 @@ let app = {
 };
 
 let produceID = (emailString: string) => {
-
+  let regex = [%bs.re "/\w+/"];
+  let result = Js.Re.exec(emailString, regex);
+  switch (result) {
+  | Some(regexResult) =>
+    let captureGroups = Js.Re.captures(regexResult);
+    let res =
+      Js.Array.map(
+        x =>
+          switch (Js.Nullable.toOption(x)) {
+          | Some(value) => value
+          | None => ""
+          },
+        captureGroups,
+      );
+    Js.Array.reduce((x, y) => x ++ y, "", res);
+  | None => ""
+  };
 };
+
+[@bs.deriving abstract]
+type serializedState = {
+  notes: array(Note.note),
+  isLoaded: bool,
+  isUserSignedIn: bool,
+  menuBarOpen: bool,
+  email: string,
+  topMenuItems: array(NoteUIElement.noteUIElement),
+  bottomMenuItems: array(NoteUIElement.noteUIElement),
+};
+
+let serializeState: state => string =
+  state => {
+    let partialResult =
+      serializedState(
+        ~notes=state.notes,
+        ~isLoaded=state.isLoaded,
+        ~isUserSignedIn=state.isUserSignedIn,
+        ~menuBarOpen=state.menuBarOpen,
+        ~email=state.email,
+        ~topMenuItems=state.topMenuItems,
+        ~bottomMenuItems=state.bottomMenuItems,
+      );
+    Js.log(partialResult);
+    let trueResult: string = [%bs.raw {| JSON.stringify(partialResult) |}];
+    trueResult;
+  };
 
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
@@ -283,9 +327,13 @@ let make = _children => {
         folderID: state.currentFilterElement.id,
       };
       let database = Firebase.App.database(app);
+      let dataPath = produceID(state.email);
+      let dataValue = serializeState(state);
+      Js.log(dataPath);
+      Js.log(dataValue);
       Firebase.Database.Reference.set(
-        Firebase.Database.ref(database, ~path=state.email, ()),
-        ~value=state,
+        Firebase.Database.ref(database, ~path=dataPath, ()),
+        ~value=dataValue,
         (),
       )
       |> ignore;

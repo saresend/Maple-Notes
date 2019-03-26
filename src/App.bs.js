@@ -7,7 +7,6 @@ var React = require("react");
 var Firebase = require("firebase");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
-var CamlinternalOO = require("bs-platform/lib/js/camlinternalOO.js");
 var Utils$ReactTemplate = require("./Utils.bs.js");
 var Editor$ReactTemplate = require("./Editor.bs.js");
 var NoteListRe$ReactTemplate = require("./reasonComponents/NoteListRe.bs.js");
@@ -24,25 +23,37 @@ var config = {
 
 var app = Firebase.initializeApp(config);
 
-var class_tables = [
-  0,
-  0,
-  0
-];
-
 function produceID(emailString) {
-  if (!class_tables[0]) {
-    var $$class = CamlinternalOO.create_table(0);
-    var env = CamlinternalOO.new_variable($$class, "");
-    var env_init = function (env$1) {
-      var self = CamlinternalOO.create_object_opt(0, $$class);
-      self[env] = env$1;
-      return self;
-    };
-    CamlinternalOO.init_class($$class);
-    class_tables[0] = env_init;
+  var regex = (/\w+/);
+  var result = regex.exec(emailString);
+  if (result !== null) {
+    var res = result.map((function (x) {
+            if (x == null) {
+              return "";
+            } else {
+              return x;
+            }
+          }));
+    return res.reduce((function (x, y) {
+                  return x + y;
+                }), "");
+  } else {
+    return "";
   }
-  return Curry._1(class_tables[0], 0);
+}
+
+function serializeState(state) {
+  var partialResult = {
+    notes: state[/* notes */0],
+    isLoaded: state[/* isLoaded */2],
+    isUserSignedIn: state[/* isUserSignedIn */3],
+    menuBarOpen: state[/* menuBarOpen */5],
+    email: state[/* email */6],
+    topMenuItems: state[/* topMenuItems */9],
+    bottomMenuItems: state[/* bottomMenuItems */10]
+  };
+  console.log(partialResult);
+  return ( JSON.stringify(partialResult) );
 }
 
 var appStyle = {
@@ -553,7 +564,11 @@ function make(_children) {
                         note_008
                       ];
                       var database = app.database();
-                      database.ref(state[/* email */6]).set(state, undefined);
+                      var dataPath = produceID(state[/* email */6]);
+                      var dataValue = serializeState(state);
+                      console.log(dataPath);
+                      console.log(dataValue);
+                      database.ref(dataPath).set(dataValue, undefined);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],
@@ -666,6 +681,7 @@ function make(_children) {
 
 exports.app = app;
 exports.produceID = produceID;
+exports.serializeState = serializeState;
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;
 exports.maple = maple;
