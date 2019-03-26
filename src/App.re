@@ -154,6 +154,11 @@ let make = _children => {
     bottomMenuItems: initialBottomItems,
   },
 
+  didMount: _self => {
+    ();
+      // TODO: Load data from firebase
+  },
+
   reducer: (action, state) => {
     switch (action) {
     | SignInUserFailed(reason) =>

@@ -134,7 +134,9 @@ function make(_children) {
           /* reactClassInternal */maple[/* reactClassInternal */1],
           /* handedOffState */maple[/* handedOffState */2],
           /* willReceiveProps */maple[/* willReceiveProps */3],
-          /* didMount */maple[/* didMount */4],
+          /* didMount */(function (_self) {
+              return /* () */0;
+            }),
           /* didUpdate */maple[/* didUpdate */5],
           /* willUnmount */maple[/* willUnmount */6],
           /* willUpdate */maple[/* willUpdate */7],

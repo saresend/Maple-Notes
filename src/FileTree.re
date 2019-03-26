@@ -76,10 +76,11 @@ let make =
         ~opacity,
         (),
       );
-
+    open SynthesizedFileTreeElement;
     let topUIElements =
       Js.Array.map(
-        uiElem => <NoteElementRe dispatch info=uiElem />,
+        uiElem =>
+          <NoteElementRe key={uiElem.noteElement.id} dispatch info=uiElem />,
         topItems,
       );
     let bottomUIElements =

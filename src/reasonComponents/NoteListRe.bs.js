@@ -58,7 +58,7 @@ function make(dispatch, notes, _children) {
           return uuidv4();
         });
               var noteUi = notes.map((function (note) {
-                      return ReasonReact.element(undefined, undefined, NoteDescriptionViewRe$ReactTemplate.make(dispatch, note, /* array */[]));
+                      return ReasonReact.element(note[/* noteID */0], undefined, NoteDescriptionViewRe$ReactTemplate.make(dispatch, note, /* array */[]));
                     }));
               return React.createElement("div", {
                           style: containerStyle

@@ -87,7 +87,7 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                 opacity: opacity
               };
               var topUIElements = topItems.map((function (uiElem) {
-                      return ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(dispatch, uiElem, /* array */[]));
+                      return ReasonReact.element(uiElem[/* noteElement */0][/* id */0], undefined, NoteElementRe$ReactTemplate.make(dispatch, uiElem, /* array */[]));
                     }));
               var bottomUIElements = bottomItems.map((function (uiElem) {
                       return ReasonReact.element(undefined, undefined, NoteElementRe$ReactTemplate.make(dispatch, uiElem, /* array */[]));

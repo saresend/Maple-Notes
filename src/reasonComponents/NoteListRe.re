@@ -38,7 +38,7 @@ let scrollStyle =
     "#aaaaaa transparent",
   );
 
-let make = (~dispatch, ~notes, _children) => {
+let make = (~dispatch, ~notes: array(Note.note), _children) => {
   ...component,
   render: _self => {
     let uuidGen: unit => string = [%bs.raw
@@ -48,8 +48,12 @@ let make = (~dispatch, ~notes, _children) => {
           return uuidv4();
         }|}
     ];
+    open Note;
     let noteUi =
-      Js.Array.map(note => <NoteDescriptionViewRe note dispatch />, notes);
+      Js.Array.map(
+        note => <NoteDescriptionViewRe key={note.noteID} note dispatch />,
+        notes,
+      );
     <div style=containerStyle>
       <div style=horizontalContainer>
         <input
