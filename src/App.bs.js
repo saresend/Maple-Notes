@@ -6,6 +6,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Firebase = require("firebase");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
+var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Utils$ReactTemplate = require("./Utils.bs.js");
 var Editor$ReactTemplate = require("./Editor.bs.js");
@@ -47,28 +48,64 @@ function serializeState(state) {
 }
 
 function deserializeState(_stateString) {
-  var obj = (JSON.parse(_stateString));
-  var bottomBarItemsWithFilter = obj.bottomMenuItems.map((function (nullFilterItem) {
-          var filterFunc = function (element, note) {
-            return note[/* folderID */8] === element[/* id */0];
-          };
-          return /* record */[
-                  /* id */nullFilterItem[/* id */0],
-                  /* title */nullFilterItem[/* title */1],
-                  /* isEditable */nullFilterItem[/* isEditable */2],
-                  /* noteType */nullFilterItem[/* noteType */3],
-                  /* isSelected */nullFilterItem[/* isSelected */4],
-                  /* filterFunction */filterFunc
-                ];
+  var objOptJs = (JSON.parse(_stateString));
+  var objOption = (objOptJs == null) ? undefined : Caml_option.some(objOptJs);
+  console.log(objOption);
+  if (objOptJs == null) {
+    return undefined;
+  } else {
+    var bottomBarItemsWithFilter = objOptJs.bottomMenuItems.map((function (nullFilterItem) {
+            var filterFunc = function (element, note) {
+              return note[/* folderID */8] === element[/* id */0];
+            };
+            return /* record */[
+                    /* id */nullFilterItem[/* id */0],
+                    /* title */nullFilterItem[/* title */1],
+                    /* isEditable */nullFilterItem[/* isEditable */2],
+                    /* noteType */nullFilterItem[/* noteType */3],
+                    /* isSelected */nullFilterItem[/* isSelected */4],
+                    /* filterFunction */filterFunc
+                  ];
+          }));
+    objOptJs.bottomMenuItems = bottomBarItemsWithFilter;
+    return Caml_option.some(objOptJs);
+  }
+}
+
+function consolidateCurrentNote(state) {
+  var newNotes = state[/* notes */0].map((function (oldNote) {
+          var match = state[/* currentNote */1];
+          if (match !== undefined) {
+            var currNote = match;
+            if (oldNote[/* noteID */0] === currNote[/* noteID */0]) {
+              return currNote;
+            } else {
+              return oldNote;
+            }
+          } else {
+            return oldNote;
+          }
         }));
-  obj.bottomMenuItems = bottomBarItemsWithFilter;
-  return obj;
+  return /* record */[
+          /* notes */newNotes,
+          /* currentNote */state[/* currentNote */1],
+          /* isLoaded */state[/* isLoaded */2],
+          /* isUserSignedIn */state[/* isUserSignedIn */3],
+          /* failureReason */state[/* failureReason */4],
+          /* menuBarOpen */state[/* menuBarOpen */5],
+          /* email */state[/* email */6],
+          /* currentFilterElement */state[/* currentFilterElement */7],
+          /* searchFilter */state[/* searchFilter */8],
+          /* topMenuItems */state[/* topMenuItems */9],
+          /* bottomMenuItems */state[/* bottomMenuItems */10]
+        ];
 }
 
 function saveData(state, app) {
   var database = app.database();
   var dataPath = produceID(/* () */0);
-  var dataValue = serializeState(state);
+  var savedState = consolidateCurrentNote(state);
+  var dataValue = serializeState(savedState);
   database.ref(dataPath).set(dataValue, undefined);
   return /* () */0;
 }
@@ -262,25 +299,42 @@ function make(_children) {
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
-                      var remoteStateObj = deserializeState(action[0]);
-                      var newNotes = remoteStateObj.notes;
-                      var isLoaded = remoteStateObj.isLoaded;
-                      var isUserSignedIn = remoteStateObj.isUserSignedIn;
-                      var menuBarOpen = remoteStateObj.menuBarOpen;
-                      var bottomMenuItems = remoteStateObj.bottomMenuItems;
-                      return /* Update */Block.__(0, [/* record */[
-                                  /* notes */newNotes,
-                                  /* currentNote */state[/* currentNote */1],
-                                  /* isLoaded */isLoaded,
-                                  /* isUserSignedIn */isUserSignedIn,
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */menuBarOpen,
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */bottomMenuItems
-                                ]]);
+                      var obj = deserializeState(action[0]);
+                      if (obj !== undefined) {
+                        var remoteStateObj = Caml_option.valFromOption(obj);
+                        var newNotes = remoteStateObj.notes;
+                        var isLoaded = remoteStateObj.isLoaded;
+                        var isUserSignedIn = remoteStateObj.isUserSignedIn;
+                        var menuBarOpen = remoteStateObj.menuBarOpen;
+                        var bottomMenuItems = remoteStateObj.bottomMenuItems;
+                        return /* Update */Block.__(0, [/* record */[
+                                    /* notes */newNotes,
+                                    /* currentNote */state[/* currentNote */1],
+                                    /* isLoaded */isLoaded,
+                                    /* isUserSignedIn */isUserSignedIn,
+                                    /* failureReason */state[/* failureReason */4],
+                                    /* menuBarOpen */menuBarOpen,
+                                    /* email */state[/* email */6],
+                                    /* currentFilterElement */state[/* currentFilterElement */7],
+                                    /* searchFilter */state[/* searchFilter */8],
+                                    /* topMenuItems */state[/* topMenuItems */9],
+                                    /* bottomMenuItems */bottomMenuItems
+                                  ]]);
+                      } else {
+                        return /* Update */Block.__(0, [/* record */[
+                                    /* notes */state[/* notes */0],
+                                    /* currentNote */state[/* currentNote */1],
+                                    /* isLoaded */state[/* isLoaded */2],
+                                    /* isUserSignedIn */true,
+                                    /* failureReason */state[/* failureReason */4],
+                                    /* menuBarOpen */state[/* menuBarOpen */5],
+                                    /* email */state[/* email */6],
+                                    /* currentFilterElement */state[/* currentFilterElement */7],
+                                    /* searchFilter */state[/* searchFilter */8],
+                                    /* topMenuItems */state[/* topMenuItems */9],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  ]]);
+                      }
                   case 1 : 
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
@@ -731,6 +785,7 @@ exports.app = app;
 exports.produceID = produceID;
 exports.serializeState = serializeState;
 exports.deserializeState = deserializeState;
+exports.consolidateCurrentNote = consolidateCurrentNote;
 exports.saveData = saveData;
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;

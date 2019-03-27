@@ -59,25 +59,53 @@ let serializeState: state => string =
     trueResult;
   };
 let deserializeState = _stateString => {
-  let obj: serializedState = [%bs.raw {|JSON.parse(_stateString)|}];
-  let bottomBarItemsWithFilter =
+  let objOptJs: Js.nullable(serializedState) = [%bs.raw
+    {|JSON.parse(_stateString)|}
+  ];
+  let objOption = Js.Nullable.toOption(objOptJs);
+  Js.log(objOption);
+  switch (objOption) {
+  | Some(obj) =>
+    let bottomBarItemsWithFilter =
+      Js.Array.map(
+        nullFilterItem => {
+          open NoteUIElement;
+          open Note;
+          let filterFunc = (element, note) => note.folderID == element.id;
+          {...nullFilterItem, filterFunction: filterFunc};
+        },
+        obj->bottomMenuItemsGet,
+      );
+    obj->bottomMenuItemsSet(bottomBarItemsWithFilter);
+    Some(obj);
+  | None => None
+  };
+};
+
+let consolidateCurrentNote = state => {
+  open Note;
+  let newNotes =
     Js.Array.map(
-      nullFilterItem => {
-        open NoteUIElement;
-        open Note;
-        let filterFunc = (element, note) => note.folderID == element.id;
-        {...nullFilterItem, filterFunction: filterFunc};
-      },
-      obj->bottomMenuItemsGet,
+      (oldNote): Note.note =>
+        switch (state.currentNote) {
+        | Some(currNote) =>
+          if (oldNote.noteID == currNote.noteID) {
+            currNote;
+          } else {
+            oldNote;
+          }
+        | None => oldNote
+        },
+      state.notes,
     );
-  obj->bottomMenuItemsSet(bottomBarItemsWithFilter);
-  obj;
+  {...state, notes: newNotes};
 };
 
 let saveData = (state, app) => {
   let database = Firebase.App.database(app);
   let dataPath = produceID();
-  let dataValue = serializeState(state);
+  let savedState = consolidateCurrentNote(state);
+  let dataValue = serializeState(savedState);
   Firebase.Database.Reference.set(
     Firebase.Database.ref(database, ~path=dataPath, ()),
     ~value=dataValue,
@@ -171,21 +199,25 @@ let make = _children => {
       saveData(state, app);
       ReasonReact.Update({...state, isUserSignedIn: true});
     | NewSerializedState(newState) =>
-      let remoteStateObj = deserializeState(newState);
-      let newNotes: array(Note.note) = remoteStateObj->notesGet;
-      let isLoaded = remoteStateObj->isLoadedGet;
-      let isUserSignedIn = remoteStateObj->isUserSignedInGet;
-      let menuBarOpen = remoteStateObj->menuBarOpenGet;
-      let bottomMenuItems = remoteStateObj->bottomMenuItemsGet;
+      let obj: option(serializedState) = deserializeState(newState);
+      switch (obj) {
+      | Some(remoteStateObj) =>
+        let newNotes: array(Note.note) = remoteStateObj->notesGet;
+        let isLoaded = remoteStateObj->isLoadedGet;
+        let isUserSignedIn = remoteStateObj->isUserSignedInGet;
+        let menuBarOpen = remoteStateObj->menuBarOpenGet;
+        let bottomMenuItems = remoteStateObj->bottomMenuItemsGet;
 
-      ReasonReact.Update({
-        ...state,
-        notes: newNotes,
-        isLoaded,
-        isUserSignedIn,
-        menuBarOpen,
-        bottomMenuItems,
-      });
+        ReasonReact.Update({
+          ...state,
+          notes: newNotes,
+          isLoaded,
+          isUserSignedIn,
+          menuBarOpen,
+          bottomMenuItems,
+        });
+      | None => ReasonReact.Update({...state, isUserSignedIn: true})
+      };
 
     | SignInUserFailed(reason) =>
       ReasonReact.Update({...state, failureReason: Some(reason)})
