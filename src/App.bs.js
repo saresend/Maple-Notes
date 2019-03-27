@@ -65,6 +65,14 @@ function deserializeState(_stateString) {
   return obj;
 }
 
+function saveData(state, app) {
+  var database = app.database();
+  var dataPath = produceID(/* () */0);
+  var dataValue = serializeState(state);
+  database.ref(dataPath).set(dataValue, undefined);
+  return /* () */0;
+}
+
 var appStyle = {
   display: "flex",
   flexDirection: "row"
@@ -208,6 +216,19 @@ function make(_children) {
                     newBottomItem_005
                   ];
                   var newBottomItems = state[/* bottomMenuItems */10].concat(/* array */[newBottomItem]);
+                  saveData(/* record */[
+                        /* notes */state[/* notes */0],
+                        /* currentNote */state[/* currentNote */1],
+                        /* isLoaded */state[/* isLoaded */2],
+                        /* isUserSignedIn */state[/* isUserSignedIn */3],
+                        /* failureReason */state[/* failureReason */4],
+                        /* menuBarOpen */state[/* menuBarOpen */5],
+                        /* email */state[/* email */6],
+                        /* currentFilterElement */state[/* currentFilterElement */7],
+                        /* searchFilter */state[/* searchFilter */8],
+                        /* topMenuItems */state[/* topMenuItems */9],
+                        /* bottomMenuItems */newBottomItems
+                      ], app);
                   return /* Update */Block.__(0, [/* record */[
                               /* notes */state[/* notes */0],
                               /* currentNote */state[/* currentNote */1],
@@ -594,10 +615,19 @@ function make(_children) {
                         /* isTrash */false,
                         note_008
                       ];
-                      var database = app.database();
-                      var dataPath = produceID(/* () */0);
-                      var dataValue = serializeState(state);
-                      database.ref(dataPath).set(dataValue, undefined);
+                      saveData(/* record */[
+                            /* notes */state[/* notes */0].concat(/* array */[note$2]),
+                            /* currentNote */state[/* currentNote */1],
+                            /* isLoaded */state[/* isLoaded */2],
+                            /* isUserSignedIn */state[/* isUserSignedIn */3],
+                            /* failureReason */state[/* failureReason */4],
+                            /* menuBarOpen */state[/* menuBarOpen */5],
+                            /* email */state[/* email */6],
+                            /* currentFilterElement */state[/* currentFilterElement */7],
+                            /* searchFilter */state[/* searchFilter */8],
+                            /* topMenuItems */state[/* topMenuItems */9],
+                            /* bottomMenuItems */state[/* bottomMenuItems */10]
+                          ], app);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],
@@ -712,6 +742,7 @@ exports.app = app;
 exports.produceID = produceID;
 exports.serializeState = serializeState;
 exports.deserializeState = deserializeState;
+exports.saveData = saveData;
 exports.appStyle = appStyle;
 exports.editorContainerStyle = editorContainerStyle;
 exports.maple = maple;

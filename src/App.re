@@ -73,6 +73,18 @@ let deserializeState = _stateString => {
   obj->bottomMenuItemsSet(bottomBarItemsWithFilter);
   obj;
 };
+
+let saveData = (state, app) => {
+  let database = Firebase.App.database(app);
+  let dataPath = produceID();
+  let dataValue = serializeState(state);
+  Firebase.Database.Reference.set(
+    Firebase.Database.ref(database, ~path=dataPath, ()),
+    ~value=dataValue,
+    (),
+  )
+  |> ignore;
+};
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
 let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
@@ -262,6 +274,7 @@ let make = _children => {
       };
       let newBottomItems =
         Js.Array.concat([|newBottomItem|], state.bottomMenuItems);
+      saveData({...state, bottomMenuItems: newBottomItems}, app);
       ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
     | TypeCurrentNote(inside) =>
       switch (state.currentNote) {
@@ -350,15 +363,10 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
-      let database = Firebase.App.database(app);
-      let dataPath = produceID();
-      let dataValue = serializeState(state);
-      Firebase.Database.Reference.set(
-        Firebase.Database.ref(database, ~path=dataPath, ()),
-        ~value=dataValue,
-        (),
-      )
-      |> ignore;
+      saveData(
+        {...state, notes: Js.Array.concat([|note|], state.notes)},
+        app,
+      );
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),

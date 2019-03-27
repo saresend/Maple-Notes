@@ -72,13 +72,11 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                 padding: "20px",
                 width: width
               };
-              var fadedIconStyle = {
-                color: "#48d3f2",
-                fontSize: "20px",
-                opacity: opacity
-              };
               var optionStyle = {
                 marginTop: "30px",
+                opacity: opacity
+              };
+              var fadedStyle = {
                 opacity: opacity
               };
               var folderStyle = {
@@ -102,10 +100,12 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                                   onClick: (function (_data) {
                                       return Curry._1(dispatch, /* ToggleMenuBar */1);
                                     })
-                                }), React.createElement("i", {
-                                  className: "fas fa-ellipsis-h hover",
-                                  style: fadedIconStyle
-                                })), React.createElement("div", {
+                                }), React.createElement("div", {
+                                  style: fadedStyle
+                                }, React.createElement("i", {
+                                      className: "fas fa-save hover",
+                                      style: iconStyle
+                                    }))), React.createElement("div", {
                               style: optionStyle
                             }, topUIElements), ReasonReact.element(undefined, undefined, FolderviewRe$ReactTemplate.make(dispatch, folderStyle, /* array */[React.createElement("div", {
                                         style: scrollStyle

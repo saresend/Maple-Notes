@@ -65,9 +65,8 @@ let make =
         ~height="100vh",
         (),
       );
-    let fadedIconStyle =
-      ReactDOMRe.Style.make(~color="#48d3f2", ~fontSize="20px", ~opacity, ());
     let optionStyle = ReactDOMRe.Style.make(~marginTop="30px", ~opacity, ());
+    let fadedStyle = ReactDOMRe.Style.make(~opacity, ());
 
     let folderStyle =
       ReactDOMRe.Style.make(
@@ -96,7 +95,9 @@ let make =
           onClick={_data => dispatch(ToggleMenuBar)}
           className="fas fa-bars hover"
         />
-        <i style=fadedIconStyle className="fas fa-ellipsis-h hover" />
+        <div style=fadedStyle>
+          <i style=iconStyle className="fas fa-save hover" />
+        </div>
       </div>
       <div style=optionStyle> {ReasonReact.array(topUIElements)} </div>
       <FolderviewRe dispatch style=folderStyle>
