@@ -11,6 +11,39 @@ type action =
 
 let component = ReasonReact.reducerComponent("SigninPage");
 
+let produceID = (~app) => {
+  let authObj = Firebase.App.auth(app);
+  let currUser = Firebase.Auth.currentUser(authObj);
+
+  switch (Js.Nullable.toOption(currUser)) {
+  | Some(user) => Firebase.Auth.User.uid(user)
+  | None => ""
+  };
+};
+
+let dispatchDataLoadRequest = (~app, ~dispatch) => {
+  let db = Firebase.App.database(app);
+  Firebase.Database.Reference.once(
+    Firebase.Database.ref(db, ~path=produceID(~app), ()),
+    ~eventType="value",
+    (),
+  )
+  |> Js.Promise.then_(data =>
+       {
+         Firebase.Database.DataSnapshot.val_(data);
+       }
+       |> (
+         serializedState =>
+           {
+             dispatch(Actions.NewSerializedState(serializedState));
+           }
+           |> Js.Promise.resolve
+       )
+     )
+  |> ignore;
+  dispatch(Actions.SignInUserSuccessfully("asdfas"));
+};
+
 let horizontalStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
 
@@ -174,7 +207,7 @@ let make = (~app, ~dispatch, ~failureReason, _children) => {
 
               fbPromise
               |> Js.Promise.then_(_value =>
-                   dispatch(Actions.SignInUserSuccessfully(self.state.email))
+                   dispatchDataLoadRequest(~dispatch, ~app)
                    |> Js.Promise.resolve
                  )
               |> Js.Promise.catch(_err =>
@@ -200,7 +233,7 @@ let make = (~app, ~dispatch, ~failureReason, _children) => {
 
               fbPromise
               |> Js.Promise.then_(_value =>
-                   dispatch(Actions.SignInUserSuccessfully("uhhh"))
+                   dispatchDataLoadRequest(~dispatch, ~app)
                    |> Js.Promise.resolve
                  )
               |> Js.Promise.catch(_err =>

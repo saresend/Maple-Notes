@@ -60,9 +60,9 @@ let serializeState: state => string =
     let trueResult: string = [%bs.raw {| JSON.stringify(partialResult) |}];
     trueResult;
   };
-let deserializeState = stateString => {
-  let deserializedString = Js.Json.decodeObject(stateString);
-  Js.log(deserializedString);
+let deserializeState = _stateString => {
+  let obj: serializedState = [%bs.raw {|JSON.parse(_stateString)|}];
+  obj;
 };
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
@@ -146,25 +146,38 @@ let make = _children => {
 
   didMount: self => {
     ();
-    // TODO: Load data from firebase
-    let db = Firebase.App.database(app);
-    Firebase.Database.Reference.once(
-      Firebase.Database.ref(db, ~path=produceID(), ()),
-      ~eventType="value",
-      (),
-    )
-    |> Js.Promise.then_(data =>
-         Firebase.Database.DataSnapshot.val_(data)
-         |> (
-           serializedState =>
-             self.send(Actions.NewSerializedState(serializedState))
-             |> Js.Promise.resolve
-         )
-       );
+      // TODO: Load data from firebase
   },
 
   reducer: (action, state) => {
     switch (action) {
+    | NewSerializedState(newState) =>
+      let remoteStateObj = deserializeState(newState);
+      /*
+           notes: array(Note.note),
+       isLoaded: bool,
+       isUserSignedIn: bool,
+       menuBarOpen: bool,
+       email: string,
+       topMenuItems: array(NoteUIElement.noteUIElement),
+       bottomMenuItems: array(NoteUIElement.noteUIElement),
+       */
+      let newNotes: array(Note.note) = remoteStateObj->notesGet;
+      let isLoaded = remoteStateObj->isLoadedGet;
+      let isUserSignedIn = remoteStateObj->isUserSignedInGet;
+      let menuBarOpen = remoteStateObj->menuBarOpenGet;
+      let topMenuItems = remoteStateObj->topMenuItemsGet;
+      let bottomMenuItems = remoteStateObj->bottomMenuItemsGet;
+      ReasonReact.Update({
+        ...state,
+        notes: newNotes,
+        isLoaded,
+        isUserSignedIn,
+        menuBarOpen,
+        topMenuItems,
+        bottomMenuItems,
+      });
+
     | SignInUserFailed(reason) =>
       ReasonReact.Update({...state, failureReason: Some(reason)})
     | SignInUserSuccessfully(email) =>

@@ -1,5 +1,5 @@
 type action =
-  | NewSerializedState(string)
+  | NewSerializedState(Js.Json.t)
   | SignInUserSuccessfully(string)
   | SignInUserFailed(string)
   | UpdateBottomBarItem(NoteUIElement.noteUIElement)

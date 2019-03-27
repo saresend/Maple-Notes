@@ -8,6 +8,25 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.reducerComponent("SigninPage");
 
+function produceID(app) {
+  var authObj = app.auth();
+  var currUser = authObj.currentUser;
+  if (currUser == null) {
+    return "";
+  } else {
+    return currUser.uid;
+  }
+}
+
+function dispatchDataLoadRequest(app, dispatch) {
+  var db = app.database();
+  db.ref(produceID(app)).once("value", undefined).then((function (data) {
+          var serializedState = data.val();
+          return Promise.resolve(Curry._1(dispatch, /* NewSerializedState */Block.__(0, [serializedState])));
+        }));
+  return Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, ["asdfas"]));
+}
+
 var horizontalStyle = {
   display: "flex",
   flexDirection: "row"
@@ -154,7 +173,7 @@ function make(app, dispatch, failureReason, _children) {
                                           var authObj = app.auth();
                                           var fbPromise = authObj.signInAndRetrieveDataWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
-                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, [self[/* state */1][/* email */0]])));
+                                                    return Promise.resolve(dispatchDataLoadRequest(app, dispatch));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
                                                   return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
@@ -168,7 +187,7 @@ function make(app, dispatch, failureReason, _children) {
                                           var authObj = app.auth();
                                           var fbPromise = authObj.createUserWithEmailAndPassword(self[/* state */1][/* email */0], self[/* state */1][/* password */1]);
                                           fbPromise.then((function (_value) {
-                                                    return Promise.resolve(Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, ["uhhh"])));
+                                                    return Promise.resolve(dispatchDataLoadRequest(app, dispatch));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
                                                   return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
@@ -211,6 +230,8 @@ function make(app, dispatch, failureReason, _children) {
 }
 
 exports.component = component;
+exports.produceID = produceID;
+exports.dispatchDataLoadRequest = dispatchDataLoadRequest;
 exports.horizontalStyle = horizontalStyle;
 exports.leftBarStyle = leftBarStyle;
 exports.rightBarStyle = rightBarStyle;
