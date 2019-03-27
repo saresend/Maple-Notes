@@ -40,7 +40,7 @@ type serializedState = {
   isUserSignedIn: bool,
   menuBarOpen: bool,
   email: string,
-  bottomMenuItems: array(NoteUIElement.noteUIElement),
+  mutable bottomMenuItems: array(NoteUIElement.noteUIElement),
 };
 
 let serializeState: state => string =
@@ -60,7 +60,17 @@ let serializeState: state => string =
   };
 let deserializeState = _stateString => {
   let obj: serializedState = [%bs.raw {|JSON.parse(_stateString)|}];
-  let bottomBarItemsWithFilter = obj;
+  let bottomBarItemsWithFilter =
+    Js.Array.map(
+      nullFilterItem => {
+        open NoteUIElement;
+        open Note;
+        let filterFunc = (element, note) => note.folderID == element.id;
+        {...nullFilterItem, filterFunction: filterFunc};
+      },
+      obj->bottomMenuItemsGet,
+    );
+  obj->bottomMenuItemsSet(bottomBarItemsWithFilter);
   obj;
 };
 let appStyle =
@@ -340,18 +350,15 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
-      /*
-       let database = Firebase.App.database(app);
-       let dataPath = produceID();
-       let dataValue = serializeState(state);
-       Firebase.Database.Reference.set(
-         Firebase.Database.ref(database, ~path=dataPath, ()),
-         ~value=dataValue,
-         (),
-       )
-       |> ignore;
-       */
-      Js.log("Wtfff");
+      let database = Firebase.App.database(app);
+      let dataPath = produceID();
+      let dataValue = serializeState(state);
+      Firebase.Database.Reference.set(
+        Firebase.Database.ref(database, ~path=dataPath, ()),
+        ~value=dataValue,
+        (),
+      )
+      |> ignore;
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),

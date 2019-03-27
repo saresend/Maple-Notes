@@ -47,7 +47,22 @@ function serializeState(state) {
 }
 
 function deserializeState(_stateString) {
-  return (JSON.parse(_stateString));
+  var obj = (JSON.parse(_stateString));
+  var bottomBarItemsWithFilter = obj.bottomMenuItems.map((function (nullFilterItem) {
+          var filterFunc = function (element, note) {
+            return note[/* folderID */8] === element[/* id */0];
+          };
+          return /* record */[
+                  /* id */nullFilterItem[/* id */0],
+                  /* title */nullFilterItem[/* title */1],
+                  /* isEditable */nullFilterItem[/* isEditable */2],
+                  /* noteType */nullFilterItem[/* noteType */3],
+                  /* isSelected */nullFilterItem[/* isSelected */4],
+                  /* filterFunction */filterFunc
+                ];
+        }));
+  obj.bottomMenuItems = bottomBarItemsWithFilter;
+  return obj;
 }
 
 var appStyle = {
@@ -579,7 +594,10 @@ function make(_children) {
                         /* isTrash */false,
                         note_008
                       ];
-                      console.log("Wtfff");
+                      var database = app.database();
+                      var dataPath = produceID(/* () */0);
+                      var dataValue = serializeState(state);
+                      database.ref(dataPath).set(dataValue, undefined);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],
