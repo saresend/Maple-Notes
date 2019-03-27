@@ -40,7 +40,6 @@ function serializeState(state) {
     isUserSignedIn: state[/* isUserSignedIn */3],
     menuBarOpen: state[/* menuBarOpen */5],
     email: state[/* email */6],
-    topMenuItems: state[/* topMenuItems */9],
     bottomMenuItems: state[/* bottomMenuItems */10]
   };
   console.log(partialResult);
@@ -230,7 +229,6 @@ function make(_children) {
                       var isLoaded = remoteStateObj.isLoaded;
                       var isUserSignedIn = remoteStateObj.isUserSignedIn;
                       var menuBarOpen = remoteStateObj.menuBarOpen;
-                      var topMenuItems = remoteStateObj.topMenuItems;
                       var bottomMenuItems = remoteStateObj.bottomMenuItems;
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */newNotes,
@@ -242,7 +240,7 @@ function make(_children) {
                                   /* email */state[/* email */6],
                                   /* currentFilterElement */state[/* currentFilterElement */7],
                                   /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */topMenuItems,
+                                  /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */bottomMenuItems
                                 ]]);
                   case 1 : 
@@ -581,10 +579,7 @@ function make(_children) {
                         /* isTrash */false,
                         note_008
                       ];
-                      var database = app.database();
-                      var dataPath = produceID(/* () */0);
-                      var dataValue = serializeState(state);
-                      database.ref(dataPath).set(dataValue, undefined);
+                      console.log("Wtfff");
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],

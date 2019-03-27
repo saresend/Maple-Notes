@@ -40,7 +40,6 @@ type serializedState = {
   isUserSignedIn: bool,
   menuBarOpen: bool,
   email: string,
-  topMenuItems: array(NoteUIElement.noteUIElement),
   bottomMenuItems: array(NoteUIElement.noteUIElement),
 };
 
@@ -53,7 +52,6 @@ let serializeState: state => string =
         ~isUserSignedIn=state.isUserSignedIn,
         ~menuBarOpen=state.menuBarOpen,
         ~email=state.email,
-        ~topMenuItems=state.topMenuItems,
         ~bottomMenuItems=state.bottomMenuItems,
       );
     Js.log(partialResult);
@@ -62,6 +60,7 @@ let serializeState: state => string =
   };
 let deserializeState = _stateString => {
   let obj: serializedState = [%bs.raw {|JSON.parse(_stateString)|}];
+  let bottomBarItemsWithFilter = obj;
   obj;
 };
 let appStyle =
@@ -153,28 +152,18 @@ let make = _children => {
     switch (action) {
     | NewSerializedState(newState) =>
       let remoteStateObj = deserializeState(newState);
-      /*
-           notes: array(Note.note),
-       isLoaded: bool,
-       isUserSignedIn: bool,
-       menuBarOpen: bool,
-       email: string,
-       topMenuItems: array(NoteUIElement.noteUIElement),
-       bottomMenuItems: array(NoteUIElement.noteUIElement),
-       */
       let newNotes: array(Note.note) = remoteStateObj->notesGet;
       let isLoaded = remoteStateObj->isLoadedGet;
       let isUserSignedIn = remoteStateObj->isUserSignedInGet;
       let menuBarOpen = remoteStateObj->menuBarOpenGet;
-      let topMenuItems = remoteStateObj->topMenuItemsGet;
       let bottomMenuItems = remoteStateObj->bottomMenuItemsGet;
+
       ReasonReact.Update({
         ...state,
         notes: newNotes,
         isLoaded,
         isUserSignedIn,
         menuBarOpen,
-        topMenuItems,
         bottomMenuItems,
       });
 
@@ -351,15 +340,18 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
-      let database = Firebase.App.database(app);
-      let dataPath = produceID();
-      let dataValue = serializeState(state);
-      Firebase.Database.Reference.set(
-        Firebase.Database.ref(database, ~path=dataPath, ()),
-        ~value=dataValue,
-        (),
-      )
-      |> ignore;
+      /*
+       let database = Firebase.App.database(app);
+       let dataPath = produceID();
+       let dataValue = serializeState(state);
+       Firebase.Database.Reference.set(
+         Firebase.Database.ref(database, ~path=dataPath, ()),
+         ~value=dataValue,
+         (),
+       )
+       |> ignore;
+       */
+      Js.log("Wtfff");
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),
