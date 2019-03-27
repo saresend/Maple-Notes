@@ -52,7 +52,7 @@ function make(dispatch, style, children) {
                                   className: "fas fa-plus hover",
                                   style: iconStyle,
                                   onClick: (function (_data) {
-                                      return Curry._1(dispatch, /* AddNewBottomBarItem */0);
+                                      return Curry._1(dispatch, /* AddNewBottomBarItem */1);
                                     })
                                 })), ReactDOMRe.createElementVariadic("div", {
                               style: scrollStyle

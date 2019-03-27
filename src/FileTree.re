@@ -95,7 +95,9 @@ let make =
           onClick={_data => dispatch(ToggleMenuBar)}
           className="fas fa-bars hover"
         />
-        <div style=fadedStyle>
+        <div style=fadedStyle onClick={_data => {
+          dispatch(Actions.SaveData)
+        }}>
           <i style=iconStyle className="fas fa-save hover" />
         </div>
       </div>

@@ -98,10 +98,13 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
                                   className: "fas fa-bars hover",
                                   style: iconStyle,
                                   onClick: (function (_data) {
-                                      return Curry._1(dispatch, /* ToggleMenuBar */1);
+                                      return Curry._1(dispatch, /* ToggleMenuBar */2);
                                     })
                                 }), React.createElement("div", {
-                                  style: fadedStyle
+                                  style: fadedStyle,
+                                  onClick: (function (_data) {
+                                      return Curry._1(dispatch, /* SaveData */0);
+                                    })
                                 }, React.createElement("i", {
                                       className: "fas fa-save hover",
                                       style: iconStyle

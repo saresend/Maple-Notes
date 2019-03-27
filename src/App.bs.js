@@ -144,9 +144,7 @@ function make(_children) {
           /* reactClassInternal */maple[/* reactClassInternal */1],
           /* handedOffState */maple[/* handedOffState */2],
           /* willReceiveProps */maple[/* willReceiveProps */3],
-          /* didMount */(function (self) {
-              return /* () */0;
-            }),
+          /* didMount */maple[/* didMount */4],
           /* didUpdate */maple[/* didUpdate */5],
           /* willUnmount */maple[/* willUnmount */6],
           /* willUpdate */maple[/* willUpdate */7],
@@ -201,61 +199,65 @@ function make(_children) {
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
               if (typeof action === "number") {
-                if (action === 0) {
-                  var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
-                  var newBottomItem_003 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
-                  var newBottomItem_005 = function (element, note) {
-                    return note[/* folderID */8] === element[/* id */0];
-                  };
-                  var newBottomItem = /* record */[
-                    newBottomItem_000,
-                    /* title */"New Folder",
-                    /* isEditable */false,
-                    newBottomItem_003,
-                    /* isSelected */false,
-                    newBottomItem_005
-                  ];
-                  var newBottomItems = state[/* bottomMenuItems */10].concat(/* array */[newBottomItem]);
-                  saveData(/* record */[
-                        /* notes */state[/* notes */0],
-                        /* currentNote */state[/* currentNote */1],
-                        /* isLoaded */state[/* isLoaded */2],
-                        /* isUserSignedIn */state[/* isUserSignedIn */3],
-                        /* failureReason */state[/* failureReason */4],
-                        /* menuBarOpen */state[/* menuBarOpen */5],
-                        /* email */state[/* email */6],
-                        /* currentFilterElement */state[/* currentFilterElement */7],
-                        /* searchFilter */state[/* searchFilter */8],
-                        /* topMenuItems */state[/* topMenuItems */9],
-                        /* bottomMenuItems */newBottomItems
-                      ], app);
-                  return /* Update */Block.__(0, [/* record */[
-                              /* notes */state[/* notes */0],
-                              /* currentNote */state[/* currentNote */1],
-                              /* isLoaded */state[/* isLoaded */2],
-                              /* isUserSignedIn */state[/* isUserSignedIn */3],
-                              /* failureReason */state[/* failureReason */4],
-                              /* menuBarOpen */state[/* menuBarOpen */5],
-                              /* email */state[/* email */6],
-                              /* currentFilterElement */state[/* currentFilterElement */7],
-                              /* searchFilter */state[/* searchFilter */8],
-                              /* topMenuItems */state[/* topMenuItems */9],
-                              /* bottomMenuItems */newBottomItems
-                            ]]);
-                } else {
-                  return /* Update */Block.__(0, [/* record */[
-                              /* notes */state[/* notes */0],
-                              /* currentNote */state[/* currentNote */1],
-                              /* isLoaded */state[/* isLoaded */2],
-                              /* isUserSignedIn */state[/* isUserSignedIn */3],
-                              /* failureReason */state[/* failureReason */4],
-                              /* menuBarOpen */!state[/* menuBarOpen */5],
-                              /* email */state[/* email */6],
-                              /* currentFilterElement */state[/* currentFilterElement */7],
-                              /* searchFilter */state[/* searchFilter */8],
-                              /* topMenuItems */state[/* topMenuItems */9],
-                              /* bottomMenuItems */state[/* bottomMenuItems */10]
-                            ]]);
+                switch (action) {
+                  case 0 : 
+                      saveData(state, app);
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* isUserSignedIn */true,
+                                  /* failureReason */state[/* failureReason */4],
+                                  /* menuBarOpen */state[/* menuBarOpen */5],
+                                  /* email */state[/* email */6],
+                                  /* currentFilterElement */state[/* currentFilterElement */7],
+                                  /* searchFilter */state[/* searchFilter */8],
+                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                ]]);
+                  case 1 : 
+                      var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
+                      var newBottomItem_003 = /* noteType : Folder */[Utils$ReactTemplate.generateColor(/* () */0)];
+                      var newBottomItem_005 = function (element, note) {
+                        return note[/* folderID */8] === element[/* id */0];
+                      };
+                      var newBottomItem = /* record */[
+                        newBottomItem_000,
+                        /* title */"New Folder",
+                        /* isEditable */false,
+                        newBottomItem_003,
+                        /* isSelected */false,
+                        newBottomItem_005
+                      ];
+                      var newBottomItems = state[/* bottomMenuItems */10].concat(/* array */[newBottomItem]);
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* failureReason */state[/* failureReason */4],
+                                  /* menuBarOpen */state[/* menuBarOpen */5],
+                                  /* email */state[/* email */6],
+                                  /* currentFilterElement */state[/* currentFilterElement */7],
+                                  /* searchFilter */state[/* searchFilter */8],
+                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* bottomMenuItems */newBottomItems
+                                ]]);
+                  case 2 : 
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */state[/* notes */0],
+                                  /* currentNote */state[/* currentNote */1],
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* failureReason */state[/* failureReason */4],
+                                  /* menuBarOpen */!state[/* menuBarOpen */5],
+                                  /* email */state[/* email */6],
+                                  /* currentFilterElement */state[/* currentFilterElement */7],
+                                  /* searchFilter */state[/* searchFilter */8],
+                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                ]]);
+                  
                 }
               } else {
                 switch (action.tag | 0) {
@@ -615,19 +617,6 @@ function make(_children) {
                         /* isTrash */false,
                         note_008
                       ];
-                      saveData(/* record */[
-                            /* notes */state[/* notes */0].concat(/* array */[note$2]),
-                            /* currentNote */state[/* currentNote */1],
-                            /* isLoaded */state[/* isLoaded */2],
-                            /* isUserSignedIn */state[/* isUserSignedIn */3],
-                            /* failureReason */state[/* failureReason */4],
-                            /* menuBarOpen */state[/* menuBarOpen */5],
-                            /* email */state[/* email */6],
-                            /* currentFilterElement */state[/* currentFilterElement */7],
-                            /* searchFilter */state[/* searchFilter */8],
-                            /* topMenuItems */state[/* topMenuItems */9],
-                            /* bottomMenuItems */state[/* bottomMenuItems */10]
-                          ], app);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0].concat(/* array */[note$2]),
                                   /* currentNote */state[/* currentNote */1],

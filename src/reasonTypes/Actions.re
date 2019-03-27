@@ -1,4 +1,5 @@
 type action =
+  | SaveData
   | NewSerializedState(Js.Json.t)
   | SignInUserSuccessfully(string)
   | SignInUserFailed(string)

@@ -165,13 +165,11 @@ let make = _children => {
     bottomMenuItems: initialBottomItems,
   },
 
-  didMount: self => {
-    ();
-      // TODO: Load data from firebase
-  },
-
   reducer: (action, state) => {
     switch (action) {
+    | SaveData =>
+      saveData(state, app);
+      ReasonReact.Update({...state, isUserSignedIn: true});
     | NewSerializedState(newState) =>
       let remoteStateObj = deserializeState(newState);
       let newNotes: array(Note.note) = remoteStateObj->notesGet;
@@ -274,7 +272,7 @@ let make = _children => {
       };
       let newBottomItems =
         Js.Array.concat([|newBottomItem|], state.bottomMenuItems);
-      saveData({...state, bottomMenuItems: newBottomItems}, app);
+
       ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
     | TypeCurrentNote(inside) =>
       switch (state.currentNote) {
@@ -363,10 +361,7 @@ let make = _children => {
         isTrash: false,
         folderID: state.currentFilterElement.id,
       };
-      saveData(
-        {...state, notes: Js.Array.concat([|note|], state.notes)},
-        app,
-      );
+
       ReasonReact.Update({
         ...state,
         notes: Js.Array.concat([|note|], state.notes),
