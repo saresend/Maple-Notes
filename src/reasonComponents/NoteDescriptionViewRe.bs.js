@@ -22,9 +22,10 @@ var unselectedTitleStyle = {
 };
 
 var selectedTitleStyle = {
-  color: "#48d3f2",
+  color: "#ff9d84",
   fontSize: "17px",
-  margin: "10px"
+  margin: "10px",
+  opacity: "1.0"
 };
 
 var iconStyle = {
@@ -60,7 +61,7 @@ var unhighlightedBookmark = {
 };
 
 var highlightedBookmark = {
-  color: "#48d3f2",
+  color: "#ff9d84",
   fontSize: "15px",
   margin: "5px"
 };

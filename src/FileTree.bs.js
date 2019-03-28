@@ -10,21 +10,12 @@ var NoteElementRe$ReactTemplate = require("./reasonComponents/NoteElementRe.bs.j
 
 var component = ReasonReact.statelessComponent("FileTree");
 
-var fileTreeStyle = {
-  backgroundColor: "#1e2326",
-  borderRight: "solid #898989 1px",
-  height: "100vh",
-  marginRight: "20px",
-  padding: "20px",
-  width: "230px"
-};
-
 var titleStyle = {
   margin: "5px"
 };
 
 var iconStyle = {
-  color: "#48d3f2",
+  color: "#5fcc82",
   fontSize: "20px"
 };
 
@@ -65,8 +56,7 @@ function make(dispatch, topItems, bottomItems, width, opacity, _children) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
               var fileTreeStyle = {
-                backgroundColor: "#1e2326",
-                borderRight: "solid #898989 1px",
+                backgroundColor: "rgb(35, 35, 35)",
                 height: "100vh",
                 marginRight: "0px",
                 padding: "20px",
@@ -126,7 +116,6 @@ var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
       }));
 
 exports.component = component;
-exports.fileTreeStyle = fileTreeStyle;
 exports.titleStyle = titleStyle;
 exports.iconStyle = iconStyle;
 exports.iconContainerStyle = iconContainerStyle;

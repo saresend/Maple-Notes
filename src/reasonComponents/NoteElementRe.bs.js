@@ -10,20 +10,20 @@ var ContextMenuRe$ReactTemplate = require("../reasonBindings/ContextMenuRe.bs.js
 var component = ReasonReact.statelessComponent("NoteElementRe");
 
 var unselectedTextStyle = {
-  color: "#aaaaaa",
+  color: "#EEDBD5",
   margin: "7px",
   marginLeft: "15px"
 };
 
 var selectedTextStyle = {
-  color: "#279af1",
+  color: "#5fcc82",
   margin: "7px",
   marginLeft: "15px",
-  opacity: "0.5"
+  opacity: "1.0"
 };
 
 var countStyle = {
-  color: "#48d3f2",
+  color: "#5fcc82",
   margin: "7px",
   marginRight: "0px",
   opacity: "1.0"

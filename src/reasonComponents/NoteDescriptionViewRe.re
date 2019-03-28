@@ -19,8 +19,9 @@ let unselectedTitleStyle =
 let selectedTitleStyle =
   ReactDOMRe.Style.make(
     ~fontSize="17px",
-    ~color="#48d3f2",
+    ~color="#ff9d84",
     ~margin="10px",
+    ~opacity="1.0",
     (),
   );
 
@@ -68,7 +69,7 @@ let unhighlightedBookmark =
 let highlightedBookmark =
   ReactDOMRe.Style.make(
     ~fontSize="15px",
-    ~color="#48d3f2",
+    ~color="#ff9d84",
     ~margin="5px",
     (),
   );

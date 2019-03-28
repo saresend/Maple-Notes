@@ -1,21 +1,10 @@
 let component = ReasonReact.statelessComponent("FileTree");
 
-let fileTreeStyle =
-  ReactDOMRe.Style.make(
-    ~width="230px",
-    ~marginRight="20px",
-    ~padding="20px",
-    ~backgroundColor="#1e2326",
-    ~borderRight="solid #898989 1px",
-    ~height="100vh",
-    (),
-  );
-
 type action =
   | ToggleMenuBar;
 
 let titleStyle = ReactDOMRe.Style.make(~margin="5px", ());
-let iconStyle = ReactDOMRe.Style.make(~color="#48d3f2", ~fontSize="20px", ());
+let iconStyle = ReactDOMRe.Style.make(~color="#5fcc82", ~fontSize="20px", ());
 let iconContainerStyle =
   ReactDOMRe.Style.make(
     ~display="flex",
@@ -60,8 +49,7 @@ let make =
         ~width,
         ~marginRight="0px",
         ~padding="20px",
-        ~backgroundColor="#1e2326",
-        ~borderRight="solid #898989 1px",
+        ~backgroundColor="rgb(35, 35, 35)",
         ~height="100vh",
         (),
       );
@@ -95,9 +83,7 @@ let make =
           onClick={_data => dispatch(ToggleMenuBar)}
           className="fas fa-bars hover"
         />
-        <div style=fadedStyle onClick={_data => {
-          dispatch(Actions.SaveData)
-        }}>
+        <div style=fadedStyle onClick={_data => dispatch(Actions.SaveData)}>
           <i style=iconStyle className="fas fa-save hover" />
         </div>
       </div>
