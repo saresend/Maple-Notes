@@ -183,6 +183,22 @@ function augmentMenuItems(notes, fileTreeElements) {
               }));
 }
 
+function deselectNotes(notes) {
+  return notes.map((function (note) {
+                return /* record */[
+                        /* noteID */note[/* noteID */0],
+                        /* title */note[/* title */1],
+                        /* body */note[/* body */2],
+                        /* timestamp */note[/* timestamp */3],
+                        /* isStarred */note[/* isStarred */4],
+                        /* isSelected */false,
+                        /* isEditable */note[/* isEditable */6],
+                        /* isTrash */note[/* isTrash */7],
+                        /* folderID */note[/* folderID */8]
+                      ];
+              }));
+}
+
 var initialBottomItems = /* array */[];
 
 function make(_children) {
@@ -771,7 +787,7 @@ function make(_children) {
                               }
                             }));
                       return /* Update */Block.__(0, [/* record */[
-                                  /* notes */state[/* notes */0],
+                                  /* notes */deselectNotes(state[/* notes */0]),
                                   /* currentNote */undefined,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
@@ -803,6 +819,7 @@ exports.maple = maple;
 exports.uuidGen = uuidGen;
 exports.initialTopItems = initialTopItems;
 exports.augmentMenuItems = augmentMenuItems;
+exports.deselectNotes = deselectNotes;
 exports.initialBottomItems = initialBottomItems;
 exports.make = make;
 /* app Not a pure module */

@@ -174,6 +174,10 @@ let augmentMenuItems:
     );
   };
 
+let deselectNotes = notes => {
+  Js.Array.map(note => {...note, isSelected: false}, notes);
+};
+
 let initialBottomItems: array(NoteUIElement.noteUIElement) = [||];
 open Actions;
 let make = _children => {
@@ -339,6 +343,7 @@ let make = _children => {
         currentFilterElement: element,
         topMenuItems: newTopMenuItems,
         currentNote: None,
+        notes: deselectNotes(state.notes),
         bottomMenuItems: newBottomMenuItems,
       });
     | SelectNote((note: Note.note)) =>
