@@ -12,14 +12,14 @@ function genRandomValue(min, max) {
 
 function generateColor(param) {
   var colorSet = /* array */[
-    "#f2a541",
-    "#f3ca40",
-    "#36f1cd",
-    "#13c4a3",
-    "#80ced7",
-    "#9e1946",
-    "#6df287",
-    "#4ce0d2",
+    "#5fcc82",
+    "#24d8b4",
+    "#4f30cc",
+    "#e71d36",
+    "#53b3cb",
+    "#f15946",
+    "#7999e0",
+    "#a9efa5",
     "#ff8ea1"
   ];
   var index = genRandomValue(0, colorSet.length);
