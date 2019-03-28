@@ -23,7 +23,7 @@ const menuTextStyle = {
   "marginTop": "5px",
   "marginBottom": "5px",
   "marginRight": "40px",
-  "fontSize": "17px",
+  "fontSize": "15px",
 }
 
 const titleMenuTextStyle = {
@@ -41,7 +41,7 @@ const horizContainerStyle = {
 }
 
 const iconStyle = {
-  "fontSize": "17px",
+  "fontSize": "15px",
 }
 
 export default class ContextMenuReact extends React.Component {

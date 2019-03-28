@@ -78,7 +78,17 @@ function consolidateCurrentNote(state) {
           if (match !== undefined) {
             var currNote = match;
             if (oldNote[/* noteID */0] === currNote[/* noteID */0]) {
-              return currNote;
+              return /* record */[
+                      /* noteID */currNote[/* noteID */0],
+                      /* title */currNote[/* title */1],
+                      /* body */currNote[/* body */2],
+                      /* timestamp */currNote[/* timestamp */3],
+                      /* isStarred */currNote[/* isStarred */4],
+                      /* isSelected */false,
+                      /* isEditable */currNote[/* isEditable */6],
+                      /* isTrash */currNote[/* isTrash */7],
+                      /* folderID */currNote[/* folderID */8]
+                    ];
             } else {
               return oldNote;
             }
@@ -762,7 +772,7 @@ function make(_children) {
                             }));
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
-                                  /* currentNote */state[/* currentNote */1],
+                                  /* currentNote */undefined,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
                                   /* failureReason */state[/* failureReason */4],

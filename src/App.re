@@ -90,7 +90,7 @@ let consolidateCurrentNote = state => {
         switch (state.currentNote) {
         | Some(currNote) =>
           if (oldNote.noteID == currNote.noteID) {
-            currNote;
+            {...currNote, isSelected: false};
           } else {
             oldNote;
           }
@@ -338,6 +338,7 @@ let make = _children => {
         ...state,
         currentFilterElement: element,
         topMenuItems: newTopMenuItems,
+        currentNote: None,
         bottomMenuItems: newBottomMenuItems,
       });
     | SelectNote((note: Note.note)) =>
