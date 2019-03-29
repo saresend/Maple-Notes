@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import { sendDeleteFolderMessage, sendRenameFolderMessage, sendRenameNoteMessage } from "../utils.bs";
+import { sendDeleteNoteMessage, sendDeleteFolderMessage, sendRenameFolderMessage, sendRenameNoteMessage } from "../utils.bs";
 
 const onClick = ({ event, props }) => console.log(event, props);
 
@@ -57,7 +57,7 @@ export default class ContextMenuReact extends React.Component {
       sendDeleteFolderMessage(this.props.dispatch, this.props.menuId);
     }
     else {
-
+      sendDeleteNoteMessage(this.props.dispatch, this.props.menuId);
     }
 
   }

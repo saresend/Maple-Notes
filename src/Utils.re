@@ -29,6 +29,10 @@ let sendDeleteFolderMessage = (dispatchFunc, messageId) => {
   dispatchFunc(Actions.DeleteBottomBarItem(messageId));
 };
 
+let sendDeleteNoteMessage = (dispatchFunc, messageId) => {
+  dispatchFunc(Actions.DeleteNote(messageId));
+};
+
 let sendRenameFolderMessage = (dispatchFunc, messageId) => {
   dispatchFunc(Actions.SetEditableBottomBarItem(messageId));
 };

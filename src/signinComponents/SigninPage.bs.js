@@ -22,9 +22,9 @@ function dispatchDataLoadRequest(app, dispatch) {
   var db = app.database();
   db.ref(produceID(app)).once("value", undefined).then((function (data) {
           var serializedState = data.val();
-          return Promise.resolve(Curry._1(dispatch, /* NewSerializedState */Block.__(0, [serializedState])));
+          return Promise.resolve(Curry._1(dispatch, /* NewSerializedState */Block.__(1, [serializedState])));
         }));
-  return Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(1, ["asdfas"]));
+  return Curry._1(dispatch, /* SignInUserSuccessfully */Block.__(2, ["asdfas"]));
 }
 
 var horizontalStyle = {
@@ -176,7 +176,7 @@ function make(app, dispatch, failureReason, _children) {
                                                     return Promise.resolve(dispatchDataLoadRequest(app, dispatch));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
-                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(3, [message])));
                                                 }));
                                           return /* () */0;
                                         })
@@ -190,7 +190,7 @@ function make(app, dispatch, failureReason, _children) {
                                                     return Promise.resolve(dispatchDataLoadRequest(app, dispatch));
                                                   })).catch((function (_err) {
                                                   var message = (_err.message);
-                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(2, [message])));
+                                                  return Promise.resolve(Curry._1(dispatch, /* SignInUserFailed */Block.__(3, [message])));
                                                 }));
                                           return /* () */0;
                                         })

@@ -54,6 +54,7 @@ let serializeState: state => string =
         ~email=state.email,
         ~bottomMenuItems=state.bottomMenuItems,
       );
+    // Load bearing Js.log because Reason Compile Optimizations
     Js.log(partialResult);
     let trueResult: string = [%bs.raw {| JSON.stringify(partialResult) |}];
     trueResult;
@@ -199,6 +200,19 @@ let make = _children => {
 
   reducer: (action, state) => {
     switch (action) {
+    | DeleteNote(noteID) =>
+      let newNotes =
+        Js.Array.filter(note => note.noteID != noteID, state.notes);
+      let newCurrent =
+        switch (state.currentNote) {
+        | Some(currNote) => currNote.noteID == noteID ? None : Some(currNote)
+        | None => None
+        };
+      ReasonReact.Update({
+        ...state,
+        notes: newNotes,
+        currentNote: newCurrent,
+      });
     | SaveData =>
       saveData(state, app);
       ReasonReact.Update({...state, isUserSignedIn: true});

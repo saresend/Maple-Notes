@@ -215,7 +215,7 @@ function make(_children) {
           /* render */(function (self) {
               var updateFunction = function (_value) {
                 var bodyText = ( _value() );
-                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(8, [bodyText]));
+                return Curry._1(self[/* send */3], /* TypeCurrentNote */Block.__(9, [bodyText]));
               };
               var match = self[/* state */1][/* currentNote */1];
               var editorView;
@@ -325,16 +325,43 @@ function make(_children) {
               } else {
                 switch (action.tag | 0) {
                   case 0 : 
+                      var noteID = action[0];
+                      var newNotes = state[/* notes */0].filter((function (note) {
+                              return note[/* noteID */0] !== noteID;
+                            }));
+                      var match = state[/* currentNote */1];
+                      var newCurrent;
+                      if (match !== undefined) {
+                        var currNote = match;
+                        var match$1 = currNote[/* noteID */0] === noteID;
+                        newCurrent = match$1 ? undefined : currNote;
+                      } else {
+                        newCurrent = undefined;
+                      }
+                      return /* Update */Block.__(0, [/* record */[
+                                  /* notes */newNotes,
+                                  /* currentNote */newCurrent,
+                                  /* isLoaded */state[/* isLoaded */2],
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* failureReason */state[/* failureReason */4],
+                                  /* menuBarOpen */state[/* menuBarOpen */5],
+                                  /* email */state[/* email */6],
+                                  /* currentFilterElement */state[/* currentFilterElement */7],
+                                  /* searchFilter */state[/* searchFilter */8],
+                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                ]]);
+                  case 1 : 
                       var obj = deserializeState(action[0]);
                       if (obj !== undefined) {
                         var remoteStateObj = Caml_option.valFromOption(obj);
-                        var newNotes = remoteStateObj.notes;
+                        var newNotes$1 = remoteStateObj.notes;
                         var isLoaded = remoteStateObj.isLoaded;
                         var isUserSignedIn = remoteStateObj.isUserSignedIn;
                         var menuBarOpen = remoteStateObj.menuBarOpen;
                         var bottomMenuItems = remoteStateObj.bottomMenuItems;
                         return /* Update */Block.__(0, [/* record */[
-                                    /* notes */newNotes,
+                                    /* notes */newNotes$1,
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */isLoaded,
                                     /* isUserSignedIn */isUserSignedIn,
@@ -361,7 +388,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */10]
                                   ]]);
                       }
-                  case 1 : 
+                  case 2 : 
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
@@ -375,7 +402,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */state[/* bottomMenuItems */10]
                                 ]]);
-                  case 2 : 
+                  case 3 : 
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
@@ -389,7 +416,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */state[/* bottomMenuItems */10]
                                 ]]);
-                  case 3 : 
+                  case 4 : 
                       var newMenuItem = action[0];
                       var updatedMenuItems = state[/* bottomMenuItems */10].map((function (menuItem) {
                               if (menuItem[/* id */0] === newMenuItem[/* id */0]) {
@@ -411,7 +438,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */updatedMenuItems
                                 ]]);
-                  case 4 : 
+                  case 5 : 
                       var menuItemId = action[0];
                       var newBottomItems$1 = state[/* bottomMenuItems */10].map((function (menuItem) {
                               if (menuItem[/* id */0] === menuItemId) {
@@ -440,7 +467,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */newBottomItems$1
                                 ]]);
-                  case 5 : 
+                  case 6 : 
                       var menuItemId$1 = action[0];
                       var newBottomItems$2 = state[/* bottomMenuItems */10].filter((function (bottomBarItem) {
                               return bottomBarItem[/* id */0] !== menuItemId$1;
@@ -458,7 +485,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */newBottomItems$2
                                 ]]);
-                  case 6 : 
+                  case 7 : 
                       var searchString = action[0];
                       if (searchString === "") {
                         return /* Update */Block.__(0, [/* record */[
@@ -502,7 +529,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */10]
                                   ]]);
                       }
-                  case 7 : 
+                  case 8 : 
                       var note = action[0];
                       var notes = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note[/* noteID */0]) {
@@ -574,19 +601,19 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */state[/* bottomMenuItems */10]
                                 ]]);
-                  case 8 : 
-                      var match = state[/* currentNote */1];
-                      if (match !== undefined) {
-                        var currNote = match;
-                        var newNote_000 = /* noteID */currNote[/* noteID */0];
-                        var newNote_001 = /* title */currNote[/* title */1];
+                  case 9 : 
+                      var match$2 = state[/* currentNote */1];
+                      if (match$2 !== undefined) {
+                        var currNote$1 = match$2;
+                        var newNote_000 = /* noteID */currNote$1[/* noteID */0];
+                        var newNote_001 = /* title */currNote$1[/* title */1];
                         var newNote_002 = /* body */action[0];
-                        var newNote_003 = /* timestamp */currNote[/* timestamp */3];
-                        var newNote_004 = /* isStarred */currNote[/* isStarred */4];
-                        var newNote_005 = /* isSelected */currNote[/* isSelected */5];
-                        var newNote_006 = /* isEditable */currNote[/* isEditable */6];
-                        var newNote_007 = /* isTrash */currNote[/* isTrash */7];
-                        var newNote_008 = /* folderID */currNote[/* folderID */8];
+                        var newNote_003 = /* timestamp */currNote$1[/* timestamp */3];
+                        var newNote_004 = /* isStarred */currNote$1[/* isStarred */4];
+                        var newNote_005 = /* isSelected */currNote$1[/* isSelected */5];
+                        var newNote_006 = /* isEditable */currNote$1[/* isEditable */6];
+                        var newNote_007 = /* isTrash */currNote$1[/* isTrash */7];
+                        var newNote_008 = /* folderID */currNote$1[/* folderID */8];
                         var newNote = /* record */[
                           newNote_000,
                           newNote_001,
@@ -626,7 +653,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */10]
                                   ]]);
                       }
-                  case 9 : 
+                  case 10 : 
                       var note$1 = action[0];
                       var notes$1 = state[/* notes */0].map((function (oldNote) {
                               if (oldNote[/* noteID */0] === note$1[/* noteID */0]) {
@@ -635,10 +662,10 @@ function make(_children) {
                                 return oldNote;
                               }
                             }));
-                      var match$1 = state[/* currentNote */1];
-                      if (match$1 !== undefined) {
-                        var match$2 = match$1[/* noteID */0] === note$1[/* noteID */0];
-                        if (match$2) {
+                      var match$3 = state[/* currentNote */1];
+                      if (match$3 !== undefined) {
+                        var match$4 = match$3[/* noteID */0] === note$1[/* noteID */0];
+                        if (match$4) {
                           return /* Update */Block.__(0, [/* record */[
                                       /* notes */notes$1,
                                       /* currentNote */note$1,
@@ -682,7 +709,7 @@ function make(_children) {
                                     /* bottomMenuItems */state[/* bottomMenuItems */10]
                                   ]]);
                       }
-                  case 10 : 
+                  case 11 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
                       var note_008 = /* folderID */state[/* currentFilterElement */7][/* id */0];
@@ -710,9 +737,9 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */state[/* bottomMenuItems */10]
                                 ]]);
-                  case 11 : 
+                  case 12 : 
                       var noteId = action[0];
-                      var newNotes$1 = state[/* notes */0].map((function (note) {
+                      var newNotes$2 = state[/* notes */0].map((function (note) {
                               if (note[/* noteID */0] === noteId) {
                                 return /* record */[
                                         /* noteID */note[/* noteID */0],
@@ -730,7 +757,7 @@ function make(_children) {
                               }
                             }));
                       return /* Update */Block.__(0, [/* record */[
-                                  /* notes */newNotes$1,
+                                  /* notes */newNotes$2,
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
@@ -742,7 +769,7 @@ function make(_children) {
                                   /* topMenuItems */state[/* topMenuItems */9],
                                   /* bottomMenuItems */state[/* bottomMenuItems */10]
                                 ]]);
-                  case 12 : 
+                  case 13 : 
                       var element = action[0];
                       var newTopMenuItems = state[/* topMenuItems */9].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {

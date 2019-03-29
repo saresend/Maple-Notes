@@ -1,4 +1,5 @@
 type action =
+  | DeleteNote(string)
   | SaveData
   | NewSerializedState(Js.Json.t)
   | SignInUserSuccessfully(string)

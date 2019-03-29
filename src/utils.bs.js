@@ -27,20 +27,25 @@ function generateColor(param) {
 }
 
 function sendDeleteFolderMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(5, [messageId]));
+  return Curry._1(dispatchFunc, /* DeleteBottomBarItem */Block.__(6, [messageId]));
+}
+
+function sendDeleteNoteMessage(dispatchFunc, messageId) {
+  return Curry._1(dispatchFunc, /* DeleteNote */Block.__(0, [messageId]));
 }
 
 function sendRenameFolderMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(4, [messageId]));
+  return Curry._1(dispatchFunc, /* SetEditableBottomBarItem */Block.__(5, [messageId]));
 }
 
 function sendRenameNoteMessage(dispatchFunc, messageId) {
-  return Curry._1(dispatchFunc, /* SetEditableNote */Block.__(11, [messageId]));
+  return Curry._1(dispatchFunc, /* SetEditableNote */Block.__(12, [messageId]));
 }
 
 exports.genRandomValue = genRandomValue;
 exports.generateColor = generateColor;
 exports.sendDeleteFolderMessage = sendDeleteFolderMessage;
+exports.sendDeleteNoteMessage = sendDeleteNoteMessage;
 exports.sendRenameFolderMessage = sendRenameFolderMessage;
 exports.sendRenameNoteMessage = sendRenameNoteMessage;
 /* No side effect */
