@@ -19,6 +19,7 @@ var containerStyle = {
 var horizontalContainer = {
   display: "flex",
   padding: "20px",
+  paddingTop: "10px",
   alignItems: "center",
   flexDirection: "row",
   justifyContent: "space-between"
@@ -33,6 +34,14 @@ var searchBarStyle = {
   outline: "0px"
 };
 
+var statusTextStyle = {
+  color: "#a6a6a6",
+  fontSize: "13px",
+  marginTop: "24px",
+  marginBottom: "5px",
+  marginLeft: "20px"
+};
+
 var scrollStylePre = {
   maxHeight: "90vh",
   overflow: "auto"
@@ -40,7 +49,7 @@ var scrollStylePre = {
 
 var scrollStyle = ReactDOMRe.Style[/* unsafeAddProp */1](scrollStylePre, "scrollbar-color", "#aaaaaa transparent");
 
-function make(dispatch, notes, _children) {
+function make(dispatch, notes, isSaved, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -60,9 +69,12 @@ function make(dispatch, notes, _children) {
               var noteUi = notes.map((function (note) {
                       return ReasonReact.element(note[/* noteID */0], undefined, NoteDescriptionViewRe$ReactTemplate.make(dispatch, note, /* array */[]));
                     }));
+              var savedText = isSaved ? "Content Saved" : "Unsaved changes...";
               return React.createElement("div", {
                           style: containerStyle
-                        }, React.createElement("div", {
+                        }, React.createElement("p", {
+                              style: statusTextStyle
+                            }, savedText), React.createElement("div", {
                               style: horizontalContainer
                             }, React.createElement("input", {
                                   style: searchBarStyle,
@@ -92,6 +104,7 @@ exports.component = component;
 exports.containerStyle = containerStyle;
 exports.horizontalContainer = horizontalContainer;
 exports.searchBarStyle = searchBarStyle;
+exports.statusTextStyle = statusTextStyle;
 exports.scrollStylePre = scrollStylePre;
 exports.scrollStyle = scrollStyle;
 exports.make = make;

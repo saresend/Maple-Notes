@@ -15,6 +15,7 @@ let horizontalContainer =
     ~justifyContent="space-between",
     ~alignItems="center",
     ~padding="20px",
+    ~paddingTop="10px",
     (),
   );
 let searchBarStyle =
@@ -28,6 +29,16 @@ let searchBarStyle =
     (),
   );
 
+let statusTextStyle =
+  ReactDOMRe.Style.make(
+    ~fontSize="13px",
+    ~marginLeft="20px",
+    ~color="#a6a6a6",
+    ~marginTop="24px",
+    ~marginBottom="5px",
+    (),
+  );
+
 let scrollStylePre =
   ReactDOMRe.Style.make(~overflow="auto", ~maxHeight="90vh", ());
 
@@ -38,7 +49,7 @@ let scrollStyle =
     "#aaaaaa transparent",
   );
 
-let make = (~dispatch, ~notes: array(Note.note), _children) => {
+let make = (~dispatch, ~notes: array(Note.note), ~isSaved, _children) => {
   ...component,
   render: _self => {
     let uuidGen: unit => string = [%bs.raw
@@ -54,7 +65,9 @@ let make = (~dispatch, ~notes: array(Note.note), _children) => {
         note => <NoteDescriptionViewRe key={note.noteID} note dispatch />,
         notes,
       );
+    let savedText = isSaved ? "Content Saved" : "Unsaved changes...";
     <div style=containerStyle>
+      <p style=statusTextStyle> {ReasonReact.string(savedText)} </p>
       <div style=horizontalContainer>
         <input
           onChange={_data => {

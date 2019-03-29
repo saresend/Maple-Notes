@@ -39,9 +39,9 @@ function serializeState(state) {
     notes: state[/* notes */0],
     isLoaded: state[/* isLoaded */2],
     isUserSignedIn: state[/* isUserSignedIn */3],
-    menuBarOpen: state[/* menuBarOpen */5],
-    email: state[/* email */6],
-    bottomMenuItems: state[/* bottomMenuItems */10]
+    menuBarOpen: state[/* menuBarOpen */6],
+    email: state[/* email */7],
+    bottomMenuItems: state[/* bottomMenuItems */11]
   };
   console.log(partialResult);
   return ( JSON.stringify(partialResult) );
@@ -101,13 +101,14 @@ function consolidateCurrentNote(state) {
           /* currentNote */state[/* currentNote */1],
           /* isLoaded */state[/* isLoaded */2],
           /* isUserSignedIn */state[/* isUserSignedIn */3],
-          /* failureReason */state[/* failureReason */4],
-          /* menuBarOpen */state[/* menuBarOpen */5],
-          /* email */state[/* email */6],
-          /* currentFilterElement */state[/* currentFilterElement */7],
-          /* searchFilter */state[/* searchFilter */8],
-          /* topMenuItems */state[/* topMenuItems */9],
-          /* bottomMenuItems */state[/* bottomMenuItems */10]
+          /* isSaved */state[/* isSaved */4],
+          /* failureReason */state[/* failureReason */5],
+          /* menuBarOpen */state[/* menuBarOpen */6],
+          /* email */state[/* email */7],
+          /* currentFilterElement */state[/* currentFilterElement */8],
+          /* searchFilter */state[/* searchFilter */9],
+          /* topMenuItems */state[/* topMenuItems */10],
+          /* bottomMenuItems */state[/* bottomMenuItems */11]
         ];
 }
 
@@ -227,14 +228,14 @@ function make(_children) {
               } else {
                 editorView = React.createElement("div", undefined);
               }
-              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */7][/* filterFunction */5], self[/* state */1][/* currentFilterElement */7]);
+              var partial_arg = Curry._1(self[/* state */1][/* currentFilterElement */8][/* filterFunction */5], self[/* state */1][/* currentFilterElement */8]);
               var filteredNotes = self[/* state */1][/* notes */0].filter(Curry.__1(partial_arg));
-              var partial_arg$1 = self[/* state */1][/* searchFilter */8];
+              var partial_arg$1 = self[/* state */1][/* searchFilter */9];
               var searchFilteredNotes = filteredNotes.filter(Curry.__1(partial_arg$1));
               var noteApplication = React.createElement("div", {
                     style: appStyle
-                  }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */5], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */9]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */10]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, /* array */[])), editorView);
-              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(app, self[/* send */3], self[/* state */1][/* failureReason */4], /* array */[]));
+                  }, ReasonReact.element(undefined, undefined, ReactFiletree$ReactTemplate.make(self[/* send */3], self[/* state */1][/* menuBarOpen */6], augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* topMenuItems */10]), augmentMenuItems(self[/* state */1][/* notes */0], self[/* state */1][/* bottomMenuItems */11]), /* array */[])), ReasonReact.element(undefined, undefined, NoteListRe$ReactTemplate.make(self[/* send */3], searchFilteredNotes, self[/* state */1][/* isSaved */4], /* array */[])), editorView);
+              var signinPage = ReasonReact.element(undefined, undefined, SigninPage$ReactTemplate.make(app, self[/* send */3], self[/* state */1][/* failureReason */5], /* array */[]));
               var match$1 = self[/* state */1][/* isUserSignedIn */3];
               if (match$1) {
                 return noteApplication;
@@ -248,6 +249,7 @@ function make(_children) {
                       /* currentNote */undefined,
                       /* isLoaded */false,
                       /* isUserSignedIn */false,
+                      /* isSaved */true,
                       /* failureReason */undefined,
                       /* menuBarOpen */true,
                       /* email */"",
@@ -269,14 +271,15 @@ function make(_children) {
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
-                                  /* isUserSignedIn */true,
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* isSaved */true,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 1 : 
                       var newBottomItem_000 = /* id */Curry._1(uuidGen, 10);
@@ -292,18 +295,19 @@ function make(_children) {
                         /* isSelected */false,
                         newBottomItem_005
                       ];
-                      var newBottomItems = state[/* bottomMenuItems */10].concat(/* array */[newBottomItem]);
+                      var newBottomItems = state[/* bottomMenuItems */11].concat(/* array */[newBottomItem]);
                       return /* Update */Block.__(0, [/* record */[
                                   /* notes */state[/* notes */0],
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* isSaved */false,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
                                   /* bottomMenuItems */newBottomItems
                                 ]]);
                   case 2 : 
@@ -312,13 +316,14 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */!state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */!state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   
                 }
@@ -343,13 +348,14 @@ function make(_children) {
                                   /* currentNote */newCurrent,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isSaved */false,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 1 : 
                       var obj = deserializeState(action[0]);
@@ -365,12 +371,13 @@ function make(_children) {
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */isLoaded,
                                     /* isUserSignedIn */isUserSignedIn,
-                                    /* failureReason */state[/* failureReason */4],
+                                    /* isSaved */state[/* isSaved */4],
+                                    /* failureReason */state[/* failureReason */5],
                                     /* menuBarOpen */menuBarOpen,
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
-                                    /* searchFilter */state[/* searchFilter */8],
-                                    /* topMenuItems */state[/* topMenuItems */9],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
+                                    /* searchFilter */state[/* searchFilter */9],
+                                    /* topMenuItems */state[/* topMenuItems */10],
                                     /* bottomMenuItems */bottomMenuItems
                                   ]]);
                       } else {
@@ -379,13 +386,14 @@ function make(_children) {
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */true,
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
-                                    /* searchFilter */state[/* searchFilter */8],
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* isSaved */state[/* isSaved */4],
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
+                                    /* searchFilter */state[/* searchFilter */9],
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       }
                   case 2 : 
@@ -394,13 +402,14 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */true,
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
                                   /* email */action[0],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 3 : 
                       return /* Update */Block.__(0, [/* record */[
@@ -408,17 +417,18 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
+                                  /* isSaved */state[/* isSaved */4],
                                   /* failureReason */action[0],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 4 : 
                       var newMenuItem = action[0];
-                      var updatedMenuItems = state[/* bottomMenuItems */10].map((function (menuItem) {
+                      var updatedMenuItems = state[/* bottomMenuItems */11].map((function (menuItem) {
                               if (menuItem[/* id */0] === newMenuItem[/* id */0]) {
                                 return newMenuItem;
                               } else {
@@ -430,17 +440,18 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* isSaved */false,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
                                   /* bottomMenuItems */updatedMenuItems
                                 ]]);
                   case 5 : 
                       var menuItemId = action[0];
-                      var newBottomItems$1 = state[/* bottomMenuItems */10].map((function (menuItem) {
+                      var newBottomItems$1 = state[/* bottomMenuItems */11].map((function (menuItem) {
                               if (menuItem[/* id */0] === menuItemId) {
                                 return /* record */[
                                         /* id */menuItem[/* id */0],
@@ -459,17 +470,18 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
                                   /* bottomMenuItems */newBottomItems$1
                                 ]]);
                   case 6 : 
                       var menuItemId$1 = action[0];
-                      var newBottomItems$2 = state[/* bottomMenuItems */10].filter((function (bottomBarItem) {
+                      var newBottomItems$2 = state[/* bottomMenuItems */11].filter((function (bottomBarItem) {
                               return bottomBarItem[/* id */0] !== menuItemId$1;
                             }));
                       return /* Update */Block.__(0, [/* record */[
@@ -477,12 +489,13 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
+                                  /* isSaved */false,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
                                   /* bottomMenuItems */newBottomItems$2
                                 ]]);
                   case 7 : 
@@ -493,15 +506,16 @@ function make(_children) {
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
+                                    /* isSaved */state[/* isSaved */4],
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
                                     /* searchFilter */(function (_note) {
                                         return true;
                                       }),
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       } else {
                         return /* Update */Block.__(0, [/* record */[
@@ -509,10 +523,11 @@ function make(_children) {
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
+                                    /* isSaved */state[/* isSaved */4],
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
                                     /* searchFilter */(function (note) {
                                         var regex = new RegExp(searchString);
                                         var result = regex.exec(note[/* body */2]);
@@ -525,8 +540,8 @@ function make(_children) {
                                           return titleSearch;
                                         }
                                       }),
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       }
                   case 8 : 
@@ -593,13 +608,14 @@ function make(_children) {
                                   /* currentNote */note,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 9 : 
                       var match$2 = state[/* currentNote */1];
@@ -630,13 +646,14 @@ function make(_children) {
                                     /* currentNote */newNote,
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
-                                    /* searchFilter */state[/* searchFilter */8],
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* isSaved */false,
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
+                                    /* searchFilter */state[/* searchFilter */9],
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       } else {
                         return /* Update */Block.__(0, [/* record */[
@@ -644,13 +661,14 @@ function make(_children) {
                                     /* currentNote */undefined,
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
-                                    /* searchFilter */state[/* searchFilter */8],
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* isSaved */false,
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
+                                    /* searchFilter */state[/* searchFilter */9],
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       }
                   case 10 : 
@@ -671,13 +689,14 @@ function make(_children) {
                                       /* currentNote */note$1,
                                       /* isLoaded */state[/* isLoaded */2],
                                       /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                      /* failureReason */state[/* failureReason */4],
-                                      /* menuBarOpen */state[/* menuBarOpen */5],
-                                      /* email */state[/* email */6],
-                                      /* currentFilterElement */state[/* currentFilterElement */7],
-                                      /* searchFilter */state[/* searchFilter */8],
-                                      /* topMenuItems */state[/* topMenuItems */9],
-                                      /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                      /* isSaved */false,
+                                      /* failureReason */state[/* failureReason */5],
+                                      /* menuBarOpen */state[/* menuBarOpen */6],
+                                      /* email */state[/* email */7],
+                                      /* currentFilterElement */state[/* currentFilterElement */8],
+                                      /* searchFilter */state[/* searchFilter */9],
+                                      /* topMenuItems */state[/* topMenuItems */10],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */11]
                                     ]]);
                         } else {
                           return /* Update */Block.__(0, [/* record */[
@@ -685,13 +704,14 @@ function make(_children) {
                                       /* currentNote */state[/* currentNote */1],
                                       /* isLoaded */state[/* isLoaded */2],
                                       /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                      /* failureReason */state[/* failureReason */4],
-                                      /* menuBarOpen */state[/* menuBarOpen */5],
-                                      /* email */state[/* email */6],
-                                      /* currentFilterElement */state[/* currentFilterElement */7],
-                                      /* searchFilter */state[/* searchFilter */8],
-                                      /* topMenuItems */state[/* topMenuItems */9],
-                                      /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                      /* isSaved */false,
+                                      /* failureReason */state[/* failureReason */5],
+                                      /* menuBarOpen */state[/* menuBarOpen */6],
+                                      /* email */state[/* email */7],
+                                      /* currentFilterElement */state[/* currentFilterElement */8],
+                                      /* searchFilter */state[/* searchFilter */9],
+                                      /* topMenuItems */state[/* topMenuItems */10],
+                                      /* bottomMenuItems */state[/* bottomMenuItems */11]
                                     ]]);
                         }
                       } else {
@@ -700,19 +720,20 @@ function make(_children) {
                                     /* currentNote */state[/* currentNote */1],
                                     /* isLoaded */state[/* isLoaded */2],
                                     /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                    /* failureReason */state[/* failureReason */4],
-                                    /* menuBarOpen */state[/* menuBarOpen */5],
-                                    /* email */state[/* email */6],
-                                    /* currentFilterElement */state[/* currentFilterElement */7],
-                                    /* searchFilter */state[/* searchFilter */8],
-                                    /* topMenuItems */state[/* topMenuItems */9],
-                                    /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                    /* isSaved */state[/* isSaved */4],
+                                    /* failureReason */state[/* failureReason */5],
+                                    /* menuBarOpen */state[/* menuBarOpen */6],
+                                    /* email */state[/* email */7],
+                                    /* currentFilterElement */state[/* currentFilterElement */8],
+                                    /* searchFilter */state[/* searchFilter */9],
+                                    /* topMenuItems */state[/* topMenuItems */10],
+                                    /* bottomMenuItems */state[/* bottomMenuItems */11]
                                   ]]);
                       }
                   case 11 : 
                       var noteID2 = Curry._1(uuidGen, 20);
                       var note_003 = /* timestamp */( Date.now() );
-                      var note_008 = /* folderID */state[/* currentFilterElement */7][/* id */0];
+                      var note_008 = /* folderID */state[/* currentFilterElement */8][/* id */0];
                       var note$2 = /* record */[
                         /* noteID */noteID2,
                         /* title */"New Note",
@@ -729,13 +750,14 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isSaved */false,
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 12 : 
                       var noteId = action[0];
@@ -761,17 +783,18 @@ function make(_children) {
                                   /* currentNote */state[/* currentNote */1],
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
-                                  /* currentFilterElement */state[/* currentFilterElement */7],
-                                  /* searchFilter */state[/* searchFilter */8],
-                                  /* topMenuItems */state[/* topMenuItems */9],
-                                  /* bottomMenuItems */state[/* bottomMenuItems */10]
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
+                                  /* currentFilterElement */state[/* currentFilterElement */8],
+                                  /* searchFilter */state[/* searchFilter */9],
+                                  /* topMenuItems */state[/* topMenuItems */10],
+                                  /* bottomMenuItems */state[/* bottomMenuItems */11]
                                 ]]);
                   case 13 : 
                       var element = action[0];
-                      var newTopMenuItems = state[/* topMenuItems */9].map((function (oldElement) {
+                      var newTopMenuItems = state[/* topMenuItems */10].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -792,7 +815,7 @@ function make(_children) {
                                       ];
                               }
                             }));
-                      var newBottomMenuItems = state[/* bottomMenuItems */10].map((function (oldElement) {
+                      var newBottomMenuItems = state[/* bottomMenuItems */11].map((function (oldElement) {
                               if (oldElement[/* id */0] === element[/* id */0]) {
                                 return /* record */[
                                         /* id */element[/* id */0],
@@ -818,11 +841,12 @@ function make(_children) {
                                   /* currentNote */undefined,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],
-                                  /* failureReason */state[/* failureReason */4],
-                                  /* menuBarOpen */state[/* menuBarOpen */5],
-                                  /* email */state[/* email */6],
+                                  /* isSaved */state[/* isSaved */4],
+                                  /* failureReason */state[/* failureReason */5],
+                                  /* menuBarOpen */state[/* menuBarOpen */6],
+                                  /* email */state[/* email */7],
                                   /* currentFilterElement */element,
-                                  /* searchFilter */state[/* searchFilter */8],
+                                  /* searchFilter */state[/* searchFilter */9],
                                   /* topMenuItems */newTopMenuItems,
                                   /* bottomMenuItems */newBottomMenuItems
                                 ]]);

@@ -3,6 +3,7 @@ type state = {
   currentNote: option(Note.note),
   isLoaded: bool,
   isUserSignedIn: bool,
+  isSaved: bool,
   failureReason: option(string),
   menuBarOpen: bool,
   email: string,
@@ -190,6 +191,7 @@ let make = _children => {
     menuBarOpen: true,
     currentNote: None,
     isUserSignedIn: false,
+    isSaved: true,
     failureReason: None,
     email: "",
     currentFilterElement: initialTopItems[0],
@@ -212,10 +214,11 @@ let make = _children => {
         ...state,
         notes: newNotes,
         currentNote: newCurrent,
+        isSaved: false,
       });
     | SaveData =>
       saveData(state, app);
-      ReasonReact.Update({...state, isUserSignedIn: true});
+      ReasonReact.Update({...state, isSaved: true});
     | NewSerializedState(newState) =>
       let obj: option(serializedState) = deserializeState(newState);
       switch (obj) {
@@ -264,7 +267,11 @@ let make = _children => {
             },
           state.bottomMenuItems,
         );
-      ReasonReact.Update({...state, bottomMenuItems: updatedMenuItems});
+      ReasonReact.Update({
+        ...state,
+        bottomMenuItems: updatedMenuItems,
+        isSaved: false,
+      });
     | SetEditableBottomBarItem(menuItemId) =>
       let newBottomItems =
         Js.Array.map(
@@ -284,7 +291,11 @@ let make = _children => {
             bottomBarItem.id != menuItemId,
           state.bottomMenuItems,
         );
-      ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
+      ReasonReact.Update({
+        ...state,
+        bottomMenuItems: newBottomItems,
+        isSaved: false,
+      });
     | UpdateSearchFunction(searchString) =>
       if (searchString == "") {
         ReasonReact.Update({...state, searchFilter: _note => true});
@@ -323,13 +334,22 @@ let make = _children => {
       let newBottomItems =
         Js.Array.concat([|newBottomItem|], state.bottomMenuItems);
 
-      ReasonReact.Update({...state, bottomMenuItems: newBottomItems});
+      ReasonReact.Update({
+        ...state,
+        bottomMenuItems: newBottomItems,
+        isSaved: false,
+      });
     | TypeCurrentNote(inside) =>
       switch (state.currentNote) {
       | Some(currNote) =>
         let newNote = {...currNote, body: inside};
-        ReasonReact.Update({...state, currentNote: Some(newNote)});
-      | None => ReasonReact.Update({...state, currentNote: None})
+        ReasonReact.Update({
+          ...state,
+          currentNote: Some(newNote),
+          isSaved: false,
+        });
+      | None =>
+        ReasonReact.Update({...state, currentNote: None, isSaved: false})
       }
     | SelectMenuBarItem((element: NoteUIElement.noteUIElement)) =>
       let newTopMenuItems =
@@ -394,8 +414,13 @@ let make = _children => {
       switch (state.currentNote) {
       | Some(currNote) =>
         currNote.noteID == note.noteID ?
-          ReasonReact.Update({...state, notes, currentNote: Some(note)}) :
-          ReasonReact.Update({...state, notes})
+          ReasonReact.Update({
+            ...state,
+            notes,
+            currentNote: Some(note),
+            isSaved: false,
+          }) :
+          ReasonReact.Update({...state, notes, isSaved: false})
 
       | None => ReasonReact.Update({...state, notes})
       };
@@ -416,6 +441,7 @@ let make = _children => {
 
       ReasonReact.Update({
         ...state,
+        isSaved: false,
         notes: Js.Array.concat([|note|], state.notes),
       });
     | ToggleMenuBar =>
@@ -465,7 +491,11 @@ let make = _children => {
           dispatch={self.send}
           isOpen={self.state.menuBarOpen}
         />
-        <NoteListRe dispatch={self.send} notes=searchFilteredNotes />
+        <NoteListRe
+          dispatch={self.send}
+          isSaved={self.state.isSaved}
+          notes=searchFilteredNotes
+        />
         editorView
       </div>;
     let signinPage =
