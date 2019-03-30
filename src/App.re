@@ -117,7 +117,13 @@ let saveData = (state, app) => {
 };
 let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
-let editorContainerStyle = ReactDOMRe.Style.make(~padding="45px", ());
+let editorContainerStyle =
+  ReactDOMRe.Style.make(
+    ~height="100vh",
+    ~overflowY="auto",
+    ~padding="25px",
+    (),
+  );
 open Note;
 let maple = ReasonReact.reducerComponent("Maple");
 let uuidGen: int => string = [%bs.raw

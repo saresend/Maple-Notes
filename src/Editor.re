@@ -10,7 +10,8 @@ type jsProps = {
   onChange: (unit => string) => unit,
 };
 
-let editorStyle = ReactDOMRe.Style.make(~fontFamily="Open Sans", ());
+let editorStyle =
+  ReactDOMRe.Style.make(~overflow="scroll", ~fontFamily="Aleo", ());
 
 let make =
     (

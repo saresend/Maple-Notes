@@ -127,7 +127,9 @@ var appStyle = {
 };
 
 var editorContainerStyle = {
-  padding: "45px"
+  height: "100vh",
+  overflowY: "auto",
+  padding: "25px"
 };
 
 var maple = ReasonReact.reducerComponent("Maple");

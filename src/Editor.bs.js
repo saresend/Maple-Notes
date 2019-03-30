@@ -5,7 +5,8 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 var RichMarkdownEditor = require("rich-markdown-editor");
 
 var editorStyle = {
-  fontFamily: "Open Sans"
+  fontFamily: "Aleo",
+  overflow: "scroll"
 };
 
 function make(defaultValue, placeholder, $staropt$star, onChange, $staropt$star$1, children) {
