@@ -839,7 +839,7 @@ function make(_children) {
                               }
                             }));
                       return /* Update */Block.__(0, [/* record */[
-                                  /* notes */deselectNotes(state[/* notes */0]),
+                                  /* notes */consolidateCurrentNote(state)[/* notes */0],
                                   /* currentNote */undefined,
                                   /* isLoaded */state[/* isLoaded */2],
                                   /* isUserSignedIn */state[/* isUserSignedIn */3],

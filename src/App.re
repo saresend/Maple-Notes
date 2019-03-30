@@ -383,7 +383,7 @@ let make = _children => {
         currentFilterElement: element,
         topMenuItems: newTopMenuItems,
         currentNote: None,
-        notes: deselectNotes(state.notes),
+        notes: consolidateCurrentNote(state).notes,
         bottomMenuItems: newBottomMenuItems,
       });
     | SelectNote((note: Note.note)) =>
