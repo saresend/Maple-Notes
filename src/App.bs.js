@@ -129,7 +129,8 @@ var appStyle = {
 var editorContainerStyle = {
   height: "100vh",
   overflowY: "auto",
-  padding: "25px"
+  padding: "25px",
+  paddingBottom: "60px"
 };
 
 var maple = ReasonReact.reducerComponent("Maple");

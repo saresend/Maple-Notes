@@ -122,6 +122,7 @@ let editorContainerStyle =
     ~height="100vh",
     ~overflowY="auto",
     ~padding="25px",
+    ~paddingBottom="60px",
     (),
   );
 open Note;
