@@ -65,7 +65,6 @@ let deserializeState = _stateString => {
     {|JSON.parse(_stateString)|}
   ];
   let objOption = Js.Nullable.toOption(objOptJs);
-  Js.log(objOption);
   switch (objOption) {
   | Some(obj) =>
     let bottomBarItemsWithFilter =
@@ -209,7 +208,6 @@ let make = _children => {
   },
 
   reducer: (action, state) => {
-    Js.log(action);
     switch (action) {
     | DeleteNote(noteID) =>
       let newNotes =

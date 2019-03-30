@@ -49,8 +49,6 @@ function serializeState(state) {
 
 function deserializeState(_stateString) {
   var objOptJs = (JSON.parse(_stateString));
-  var objOption = (objOptJs == null) ? undefined : Caml_option.some(objOptJs);
-  console.log(objOption);
   if (objOptJs == null) {
     return undefined;
   } else {
@@ -267,7 +265,6 @@ function make(_children) {
             }),
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
-              console.log(action);
               if (typeof action === "number") {
                 switch (action) {
                   case 0 : 
