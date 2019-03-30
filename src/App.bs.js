@@ -127,7 +127,8 @@ var appStyle = {
 };
 
 var editorContainerStyle = {
-  height: "100vh",
+  height: "80vh",
+  minWidth: "10vw",
   overflowY: "auto",
   padding: "25px",
   paddingBottom: "60px"
@@ -266,6 +267,7 @@ function make(_children) {
             }),
           /* retainedProps */maple[/* retainedProps */11],
           /* reducer */(function (action, state) {
+              console.log(action);
               if (typeof action === "number") {
                 switch (action) {
                   case 0 : 

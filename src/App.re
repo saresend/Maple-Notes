@@ -119,8 +119,9 @@ let appStyle =
   ReactDOMRe.Style.make(~display="flex", ~flexDirection="row", ());
 let editorContainerStyle =
   ReactDOMRe.Style.make(
-    ~height="100vh",
+    ~height="80vh",
     ~overflowY="auto",
+    ~minWidth="10vw",
     ~padding="25px",
     ~paddingBottom="60px",
     (),
@@ -208,6 +209,7 @@ let make = _children => {
   },
 
   reducer: (action, state) => {
+    Js.log(action);
     switch (action) {
     | DeleteNote(noteID) =>
       let newNotes =
